@@ -27,4 +27,4 @@ At session end update date, changed phase/task, evidence links, tests run, unres
 - Tests/checks: verified the canonical document inventory and inspected Git status. No automated tests exist to run.
 - Unresolved: implementation stack, CI, engine/API/schema versioning, and contributor workflow remain undecided. The project-owner scientific blockers B01–B04 remain unchanged.
 - Next action: select and record the engineering stack/CI decision before implementing the pure calculation engine.
-- Commit: pending for this documented repository-organization task. The worktree already contained an unrelated deleted legacy ZIP; that deletion is intentionally excluded from the pending commit.
+- Commit: `070ce3a` (`docs: canonicalize V1 project specifications`) published the canonical documentation and reference-asset organization. The worktree still contains an unrelated deleted legacy ZIP; that deletion is intentionally excluded.
