@@ -33,6 +33,10 @@ This repository contains a documentation baseline and a published documentation-
 - Existing pre-session worktree deletion `Documentation_Dot1_Five_Core_Specifications.zip` remains unstaged and untouched.
 - Checks performed: 31 Markdown files (README + 30 docs), required-doc assertions, internal-link scan (0 broken), duplicate TODO-ID scan (0), contradiction/field-name scan and `git diff --check` all pass. No automated tests exist yet because no package/test scaffold exists.
 
+## Repository publication follow-up — 2026-09-19
+
+- Project Owner explicitly authorized publishing the remaining worktree state. The obsolete legacy source ZIP deletion is included so the repository has one canonical documentation tree under `docs/` rather than a duplicate archive.
+
 ## Next action
 
 Published hardening commit: `b787074` (`docs: expand implementation-ready project specifications`). Then implement `ENG-001` only: Vite/React/TypeScript scaffold and CI/tooling; do not implement chemistry in that task.
