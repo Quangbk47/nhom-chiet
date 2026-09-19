@@ -4,7 +4,7 @@ You are continuing repository `H:\IT\Webchiet` (`https://github.com/Quangbk47/nh
 
 ## Current status
 
-Documentation hardening is complete or awaiting final commit review; no application source/package/test runner exists. Phase 1 scientific readiness is BLOCKED by B01 fixed temperature, B02 default KD/source/domain, B03 validation threshold and B04 approved lab SOP. Do not invent any of them. The pre-existing deletion of `Documentation_Dot1_Five_Core_Specifications.zip` is unrelated and must remain unstaged unless Owner explicitly asks otherwise.
+Documentation hardening is published at commit `b787074`; no application source/package/test runner exists. Phase 1 scientific readiness is BLOCKED by B01 fixed temperature, B02 default KD/source/domain, B03 validation threshold and B04 approved lab SOP. Do not invent any of them. The pre-existing deletion of `Documentation_Dot1_Five_Core_Specifications.zip` is unrelated and must remain unstaged unless Owner explicitly asks otherwise.
 
 ## Read first
 

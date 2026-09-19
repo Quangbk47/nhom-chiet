@@ -2,7 +2,7 @@
 
 ## Current authoritative state
 
-This repository contains a documentation baseline and a documentation-hardening pass. No production application source, package manifest, calculation engine, UI, database, approved equilibrium constant, experimental record or validation threshold exists yet. Documentation completion does not mean application completion.
+This repository contains a documentation baseline and a published documentation-hardening pass (`b787074`). No production application source, package manifest, calculation engine, UI, database, approved equilibrium constant, experimental record or validation threshold exists yet. Documentation completion does not mean application completion.
 
 ## Phase ledger
 
@@ -35,7 +35,7 @@ This repository contains a documentation baseline and a documentation-hardening 
 
 ## Next action
 
-Commit and publish this hardening pass. Then implement `ENG-001` only: Vite/React/TypeScript scaffold and CI/tooling; do not implement chemistry in that task.
+Published hardening commit: `b787074` (`docs: expand implementation-ready project specifications`). Then implement `ENG-001` only: Vite/React/TypeScript scaffold and CI/tooling; do not implement chemistry in that task.
 
 ## Update protocol
 
