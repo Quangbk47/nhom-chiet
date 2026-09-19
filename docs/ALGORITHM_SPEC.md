@@ -1,57 +1,55 @@
-# ALGORITHM SPECIFICATION — BACKEND CALCULATION AUTHORITY
+# ALGORITHM SPECIFICATION — PURE BROWSER CALCULATION
 
 ## 1. Service boundary
-The calculation engine is a pure deterministic function:
 
-`calculateExtraction(canonicalInput, engineVersion) → SimulationResult | ValidationErrors`
+`calculateSimulation(normalizedInput, engineOptions)` is a pure deterministic domain function. It is the V1 scientific authority and can run in a browser with no network. React, Firebase and playback timers consume its immutable result but never reproduce its equations. See `CALCULATION_ENGINE.md` for the full implementation contract.
 
-It performs no database I/O, no browser/UI operation, no random generation, no clock lookup, and no display rounding. An API adapter validates identity/provenance, calls the function, saves an optional snapshot, and returns JSON. Frontend never calls formulas itself.
+## 2. Validation sequence
 
-## 2. Input validation sequence
-1. Reject missing, nonnumeric, NaN or infinite fields.
-2. Require `0≤C0`, `VR>0`, `VS,total>0`, `KD>0`; require integer `N` in [1,10].
-3. Validate `splitMode` is `equal` or `custom`.
-4. Equal: generate exactly N values `VS,total/N`.
-5. Custom: require exactly N finite values each >0 and `abs(sum(VS,i)-VS,total)≤allocationTolerance`.
-6. Validate provenance contract from `EQUILIBRIUM_MODEL.md`; emit warnings without changing arithmetic.
-7. Convert units only before this function. It receives L and mol/L only.
+1. Reject missing, empty, nonnumeric, `NaN`, infinite or unknown fields at the boundary.
+2. Require finite `C0≥0`, `VR>0`, `VS,total>0`, `KD>0`, integer `N∈[1,10]`.
+3. Require `splitMode` equal/custom.
+4. Equal mode generates exactly N `VS,total/N` values.
+5. Custom mode requires exactly N finite positive values and sum within `allocationToleranceL`.
+6. Validate KD/temperature provenance contract and produce warnings where allowed.
+7. Convert mL to L before entering this function; no units are guessed here.
 
-Errors are an array of `{code, field, message}`. Examples: `INVALID_NUMBER`, `OUT_OF_RANGE`, `INVALID_STAGE_COUNT`, `INVALID_SPLIT_MODE`, `SPLIT_COUNT_MISMATCH`, `SPLIT_TOTAL_MISMATCH`, `INVALID_KD`, `UNAPPROVED_CONSTANT`.
+Expected field errors are `{ code, field, message }`; errors prevent result creation. Warnings travel with a valid result.
 
-## 3. Calculation pseudocode
+## 3. Sequential calculation
+
 ```text
-create stage[0]: nInput=nR=n0=C0*VR; CR=C0; CE=0; nE=0
+create stage 0: nInput=nR=n0=C0*VR; CR=C0; CE=0; nE=0; recovery=0
 previousNR = n0
 for i = 1..N:
-    VS = stageSolventVolumes[i]
-    nInput = previousNR
-    denominator = VR + KD*VS
-    CR = nInput / denominator
-    CE = KD * CR
-    nR = CR * VR
-    nE = CE * VS
-    cumulativeExtracted = n0 - nR
-    cumulativeRecovery = n0==0 ? 0 : 100*cumulativeExtracted/n0
-    stageRecovery = nInput==0 ? 0 : 100*nE/nInput
-    residual = nInput-(nR+nE)
-    append immutable stage result
-    previousNR = nR
-derive final, three chart arrays and visualPlan solely from stage[]
+  nInput = previousNR
+  VS = stageSolventVolumes[i]
+  CR = nInput / (VR + KD*VS)
+  CE = KD*CR
+  nR = CR*VR
+  nE = CE*VS
+  cumulativeExtracted = n0-nR
+  cumulativeRecovery = n0==0 ? 0 : 100*cumulativeExtracted/n0
+  stageRecovery = nInput==0 ? 0 : 100*nE/nInput
+  residual = nInput-(nR+nE)
+  append StageResult and assert invariants
+  previousNR = nR
+derive final, chart arrays and visualPlan from stages only
+freeze result
 ```
 
-Every division denominator is validated positive. Do not reuse formatted output. If an invariant fails after valid inputs, return/record a calculation fault; do not silently clamp values.
+## 4. Result shape requirements
 
-## 4. Result construction
-Stage array order is 0…N. Stage 0 has no solvent and zero extraction. Each stage i includes canonical input/output quantities, recovery fields and `massBalance{residualMol,relativePercent}`. Final result includes n0, final nR/CR, total extracted amount, final cumulative recovery, N, total solvent, final mass-balance diagnostic. Chart arrays have exactly N+1 points for CR/recovery (including 0) and N points for per-stage extraction.
+Stage order is exactly `0…N`. Stage 0 has zero extraction. `final` is a read-only summary derived from the last stage. `charts.cr` and `charts.recovery` have N+1 points including stage 0; `charts.extracted` has N points for stages 1…N. Every result contains warnings, engine version, canonical input, provenance and named numeric tolerance.
 
-## 5. Warning/fault behavior
-Warnings preserve valid results: user-supplied KD, pending temperature, missing domain, small numeric residual. Errors prevent result creation. A failed result must never be animated. Server logs engine version and a correlation ID, but no personal/external data belongs in the pure result.
+## 5. Error/warning behavior
 
-## 6. Determinism and precision
-Same canonical JSON values and engine version must yield same stage count/order/numbers. `numericTolerance` is a named engineering setting recorded with result metadata and used only for floating point invariants. It is not Decision 17 validation acceptance threshold. Rounding occurs in presentation/export layer only.
+Errors: invalid input, unsupported model, numeric overflow/non-finite intermediate, or failed invariant. Never return a partial result. Warnings: user-supplied KD, pending temperature, missing domain note, or a small numerical residual within the engineering tolerance. A warning is not validation PASS.
 
-## 7. API flow
-`POST /api/simulations/calculate`: authenticate/authorize if configured → schema/provenance validation → pure engine → optional snapshot persistence → response. HTTP 422 returns field errors; 200 returns complete scientific snapshot and warnings; unexpected engine fault returns a non-scientific server error with correlation ID. No endpoint should return only a final number because visual/UI require stage data.
+## 6. Determinism
 
-## 8. Minimum test fixtures
-Cover zero solute; N boundaries 1/10; invalid numbers/KD/N; equal/custom equivalence; wrong custom count/sum; per-stage algebra/conservation; monotonic raffinate; deterministic re-run; complete stage/charts; warning/error separation. Fixture numbers are explicitly user-supplied test data, never default KD evidence.
+Same normalized JSON and engine version produce identical stage order and values within the language's deterministic floating-point behavior. No current time, random ID, locale formatting or database state enters the result. Formatting/export occurs outside the engine.
+
+## 7. Future adapter rule
+
+A worker, server endpoint or Firestore persistence adapter may call this function but must not implement another algorithm or become a required network dependency. Any such adapter is an integration detail and must be covered by equality tests against pure-engine output.

@@ -1,26 +1,39 @@
 # REFERENCE DATA AND SCIENTIFIC PROVENANCE
 
-## 1. Purpose
-This register is the sole source for whether a scientific datum is merely found, reviewed, or allowed as a project constant. It stores provenance; it does not calculate equilibrium.
+## Purpose
 
-## 2. Required record fields
-Each record includes: immutable ID/version; status; data type; chemical system identity; numeric value/unit where applicable; KD convention; temperature/value/unit; concentration domain and composition basis; method; complete citation or raw-data location; entered-by/date; reviewer/date; Project Owner approver/date; limitations/notes. A missing system, temperature or domain prevents “Approved default” use.
+This register decides whether a datum is found, technically reviewed or approved for project use. It never calculates equilibrium and it never creates a default merely because a row exists.
 
-## 3. Status transition rules
-Candidate: source captured, no scientific claim. Reviewed: named reviewer checked that value/convention/unit/system/temperature/domain correspond to intended use. Project Owner Approved: explicit authorization for one defined scope. Rejection/deprecation retains record and reason. Approval creates a new version; old simulation snapshots retain their original reference ID/version.
+## Required record
 
-## 4. Current register (authoritative)
-| Item | Status | Permitted system behavior |
+Each immutable version contains: ID/version; status; data type; AcOH–water–EtOAc system identity; numeric value/unit; KD convention (`CE/CR`); temperature value/unit/status; concentration domain and composition basis; method; complete citation or raw-data pointer; entered-by/date; reviewer/date; Owner approver/date; uncertainty/limitations; permitted application range.
+
+Missing system, convention, temperature or domain blocks Approved-default use. A record is never edited in place after an old simulation references it.
+
+## Status lifecycle
+
+```text
+Candidate -> Reviewed -> Project Owner Approved
+     \-> Rejected/Deprecated (record retained with reason)
+```
+
+Candidate means captured but unverified. Reviewed means a named reviewer checked identity, units, convention, source, temperature and domain. Approved means explicit Owner authorization for one scope/version. A status change creates a new version; old snapshots retain their original record.
+
+## Current authoritative register
+
+| Item | Status | Application behavior |
 |---|---|---|
-| Fixed V1 temperature | PENDING | no default temperature |
+| Fixed V1 temperature | PENDING | store `pending` or declared user metadata; no default |
 | Default KD | BLOCKED | accept labelled user KD only |
-| KD literature citation/domain | PENDING | no approved prediction claim |
-| Equilibrium curve data | PENDING | unavailable to V1/V2 engine |
-| Experimental data | PENDING | no fabricated rows |
-| Validation threshold/rule | PENDING | metric-only, no PASS/FAIL |
+| KD citation/domain | PENDING | no approved prediction claim |
+| Equilibrium curve | PENDING | unavailable to V1 |
+| Experimental dataset | PENDING | no fabricated rows |
+| Validation threshold/rule | PENDING | metrics only; no PASS/FAIL |
 
-## 5. Review checklist for a proposed KD
-Confirm: AcOH–water–ethyl acetate system; definition equals CE/CR; concentrations compatible with mol/L conversion; temperature exactly known; concentration domain reported; method/reference sufficient; candidate does not confuse partition coefficient with a different phase/convention; proposed application range stated. Record uncertainty/limitations; do not average conflicting sources without an approved method.
+## KD review checklist
 
-## 6. UI/API use
-Only Approved records appear in “project-approved KD” selector. Candidate/Reviewed records may be displayed in reviewer tools with status but must not auto-populate simulation. User-supplied KD must never create a reference record automatically. Every result saves reference ID/version or source note.
+Confirm system identity, `CE/CR` convention, concentration basis, exact temperature, domain, method, source/raw data, uncertainty and proposed application range. Do not confuse partition coefficient conventions or average conflicting sources without an approved method.
+
+## Client use
+
+Only Approved records may populate a project-approved selector. Candidate/Reviewed records may be shown to reviewers but never auto-populate a run. A user-supplied KD stores its note in result provenance and raises `USER_SUPPLIED_KD`; it never creates a reference record automatically. The pure engine can run with the user input offline.

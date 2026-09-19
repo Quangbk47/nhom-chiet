@@ -1,17 +1,44 @@
 # HANDOVER
-## What exists
-The repository documentation defines V1 of AcOH–water–ethyl acetate batch cross-current extraction. All canonical specifications are in the root `docs/` directory; `EXPERT_DECISIONS.md` is authoritative. Formulas/algorithm/API/visual/UI/protocol/test/roadmap documents are implementation contracts. Read `NEXT_SESSION_PROMPT.md` first.
 
-## What a developer may do now
-Build architecture, pure constant-KD engine, API, UI, visual playback, persistence and tests using explicitly labelled **user-supplied KD**. All calculation results must be backend-authoritative and precomputed before animation.
+## What the project is
 
-## What a developer may not claim/do
-Do not invent default KD, temperature, citation/domain, experimental/equilibrium data or threshold. Do not implement frontend science, CFD, physical-time animation, V2 equilibrium curve, optimization, or PASS/FAIL validation. Do not delete/overwrite raw experiment data.
+Liquid–Liquid Extraction Simulator is a browser teaching/research tool for AcOH–water–EtOAc cross-current batch extraction. V1 uses fresh solvent per stage, constant `KD=CE/CR`, 1–10 stages and canonical units `mol/L` and `L`.
 
-## Source reconciliation
-Legacy concept examples and suggestions are background only. Superseded: frontend-only calculation; 1–4 stage framing; two-graph/MVP framing; example numerical values. Current V1 is 1–10 stages, three charts, database, validation mode and backend/API authority.
+## Current state
 
-The retained `assets/reference/legacy-ui-concept.png` is background reference material, not a requirements source. In particular, its example KD, displayed condition values, and physical-time wording must not be copied into implementation.
+The repository is documentation-only. The browser-first architecture, toolchain target, domain contracts, UI/state/output/test specifications and student backlog are documented. No `package.json`, `src/`, test runner, Firebase project or scientific dataset exists. Scientific readiness is blocked by B01–B04.
 
-## First handover check
-Before editing code: inspect repository, read all docs, locate existing changes, choose next unblocked TODO, run baseline tests, then follow IMPLEMENT→TEST→DOCS→COMMIT→PUSH. Update PROGRESS before declaring done.
+## Decided architecture
+
+React/TypeScript/Vite browser app; boundary validation/normalization → pure calculation engine → immutable `SimulationResult` → state machine/SVG/table/charts. Firebase Hosting deploys static output. Firestore is optional persistence only. There is no required custom backend/API calculation server and no network dependency for simulation.
+
+## Must not change
+
+- `EXPERT_DECISIONS.md` scientific decisions and PENDING guards.
+- `KD=CE/CR`, canonical units, cross-current fresh solvent and stage 0…N.
+- Frontend components must not duplicate chemistry; animation must not mutate results or claim physical time.
+- Do not invent default KD/temperature/citation/domain/equilibrium/experimental data/threshold.
+- Do not delete or rewrite raw experimental observations; do not tune KD to lower error.
+
+## Completed in hardening pass
+
+- Audited repository and read all Markdown/README/assets.
+- Reconciled the earlier backend-authority wording with Owner browser-first architecture.
+- Added `DOCUMENT_AUTHORITY_MAP.md`, `ARCHITECTURE.md`, `TECH_STACK.md`, `CHEMISTRY_MODEL.md`, `INPUT_SPECIFICATION.md`, `CALCULATION_ENGINE.md`, `SIMULATION_STATE_MACHINE.md`, `RESULTS_AND_CHARTS.md`, `ERROR_HANDLING.md`, `EXPERIMENTAL_VALIDATION.md`, `TESTING_STRATEGY.md`.
+- Expanded existing scope, rules, decisions, formula, model, UI, visual, validation, roadmap, TODO and status documents.
+
+## Open decisions and risks
+
+Scientific: B01 temperature, B02 default KD/source/domain, B03 threshold, B04 lab SOP. Engineering risks: locale parsing, floating-point tolerance, chart/StageResult drift, timer races, Firestore privacy/rules. These are tracked in `TODO.md`/`ROADMAP.md`.
+
+## Exact next task
+
+`ENG-001 — Scaffold Vite React TypeScript`.
+
+- Files: `package.json`, lockfile, `index.html`, `src/app/App.tsx`, `src/main.tsx`, base styles and tool-version file.
+- Tests: install, lint, typecheck, Vitest placeholder, build from a fresh clone.
+- Acceptance: scripts in `TECH_STACK.md` pass; no calculation code, Firebase Auth or server is added.
+
+## How to verify handover
+
+Read `README.md` → `DOCUMENT_AUTHORITY_MAP.md` → `EXPERT_DECISIONS.md` → `TECH_STACK.md` → `DATA_MODEL.md` → `INPUT_SPECIFICATION.md` → `CALCULATION_ENGINE.md` → relevant TODO task. Run the document inventory/link/contradiction checks described in `PROGRESS.md`; after ENG-001 exists, run the committed package scripts.

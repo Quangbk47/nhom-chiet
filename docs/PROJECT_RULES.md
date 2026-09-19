@@ -1,49 +1,56 @@
 # PROJECT RULES
 
-## 1. Rule of completion
-**NO WORK IS COMPLETE UNTIL PROGRESS IS UPDATED.**
+## 1. Authority order
 
-Required sequence for every code, data, documentation, or configuration task:
+1. Written Project Owner approval, including the browser-first architecture decision in the documentation-hardening brief.
+2. `EXPERT_DECISIONS.md` for scientific behavior.
+3. The document named authoritative for the concern in `DOCUMENT_AUTHORITY_MAP.md`.
+4. Original concept images/examples for background only.
+5. Developer assumptions never become scientific constants.
 
-`IMPLEMENT → TEST → UPDATE PROJECT DOCUMENTATION → COMMIT → PUSH`
+If documents conflict, stop, preserve the higher authority, record the conflict in `TODO.md`/`HANDOVER.md`, and update the lower document. Never average conflicting decisions.
 
-`TASK DONE ≠ PHASE DONE`. A task can be DONE only when its evidence is linked in the task/commit/progress record. A phase is DONE only when every exit criterion in `ROADMAP.md` has evidence. Allowed phase states are exactly: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`.
+## 2. Completion workflow
 
-## 2. Authority and conflict resolution
+Every implementation, data, documentation or configuration change follows:
 
-| Priority | Source | Use |
-|---:|---|---|
-| 1 | Written Project Owner approval | Can change an authoritative decision. |
-| 2 | `EXPERT_DECISIONS.md` | Binding V1 behavior. |
-| 3 | This documentation set | Implementation contract. |
-| 4 | Original concept/design document | Background only. |
-| 5 | Developer assumption/example | Never a scientific constant. |
+```text
+IMPLEMENT -> TEST -> UPDATE DOCUMENTATION/PROGRESS -> REVIEW DIFF -> COMMIT -> PUSH
+```
 
-When two sources conflict: stop using the lower-priority instruction, record the conflict in `HANDOVER.md`/`TODO.md`, and preserve the higher-priority decision. Do not “split the difference.”
+`TASK DONE` is not `PHASE DONE`. Phase states are exactly `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase is `DONE` only when its roadmap exit evidence exists.
 
-## 3. Scientific-data governance
-Every reference datum uses exactly one status:
+## 3. Browser-first calculation integrity
+
+1. `src/domain/calculation/` is a deterministic pure module: no React, DOM, Firebase, network, clock, randomness, animation timer or display rounding.
+2. Browser boundary validation normalizes to `L` and `mol/L` once, then invokes the pure engine.
+3. React components may format, animate and render returned fields, but may not independently calculate `CR`, `CE`, recovery, `KD`, phase amounts or mass balance.
+4. The state machine owns playback state only; pause/speed/replay must not mutate `SimulationResult`.
+5. Firebase is hosting/persistence infrastructure, never the calculation authority. Core simulation must run without network.
+6. A saved run stores canonical input, complete immutable result, engine version and scientific-reference provenance. New engine versions create new snapshots.
+
+## 4. Scientific data governance
 
 | Status | Meaning | Allowed use |
 |---|---|---|
-| Candidate | Located/collected, not verified. | Discussion only; not calculation default. |
-| Reviewed | Technically checked for unit/system/context. | May support review; not a constant. |
-| Project Owner Approved | Explicitly accepted with scope/version. | Versioned selectable project constant. |
+| Candidate | Located but not technically verified | Discussion/review only |
+| Reviewed | Identity, unit, convention, temperature/domain checked by named reviewer | Review support; not a project constant |
+| Project Owner Approved | Explicit scope/version approval | Selectable project constant/default |
 
-An approved KD record must contain: identity of the ternary system, `KD=CE/CR` convention, numeric value/unit, temperature, concentration range/domain, method, full source/raw data pointer, review/approval identity and date. A missing field means it cannot become the default.
+No implementation may invent fixed temperature, default KD, KD citation/domain, equilibrium data, experimental data or validation acceptance threshold. User-supplied KD is permitted only with `sourceType=user_supplied`, note/provenance, and UI warning. A missing domain or pending temperature is a visible warning, not a guessed value.
 
-## 4. Calculation integrity rules
-1. Calculation engine is a deterministic pure module: no database query, HTTP, UI state, local clock, random values, or display rounding.
-2. Backend/API validates input, invokes engine, and owns the scientific result.
-3. Frontend may sort, format, animate, and render returned values, but must not independently calculate CR, CE, recovery, KD or mass balance.
-4. A saved study stores canonical input, full result snapshot, engine version and scientific-data reference version. Recalculation with a new engine never overwrites the old snapshot.
-5. Display rounding is applied only after result calculation. Export must label displayed precision and canonical unit.
+## 5. Validation and data integrity
 
-## 5. Validation and experiment integrity
-Raw replicate values are append-only. Corrections create an audit event; exclusions remain visible with reason, person and time. An experiment may be compared only to a model run with recorded condition/provenance. No developer or student may alter KD solely to lower error without recording a proposed scientific-model change and obtaining review. A threshold may be calculated/stored only after Project Owner approval; before that UI status is `NOT EVALUATED`, never PASS/FAIL.
+Raw replicate/titration observations are append-only. Corrections create a superseding audit record with reason, actor and time. Exclusions remain visible. No KD may be tuned solely to lower error without a separately reviewed model change. Before threshold approval, validation status is exactly `NOT EVALUATED`, never PASS/FAIL.
 
-## 6. Documentation obligations
-Any implementation that changes an API field updates `DATA_MODEL.md`; any equation changes `CALCULATION_FORMULAS.md` and engine tests; UI behavior changes `UI_UX_SPEC.md`/`SIMULATION_VISUAL_SPEC.md`; scientific scope changes `EXPERT_DECISIONS.md`, `REFERENCE_DATA.md`, and `TODO.md`. A pull request/review must reject mismatched changes.
+## 6. Scientific model boundary
 
-## 7. Branch/commit minimum
-Use a task branch. Commit message identifies area and outcome, e.g. `feat(engine): calculate constant-KD stage results` or `docs(validation): add zero-denominator rule`. Before push: run applicable tests, inspect changed files, update `PROGRESS.md`, and keep unrelated user changes untouched.
+V1 is cross-current equilibrium material balance with constant `KD=CE/CR`, fresh EtOAc each stage, nominal unchanged phase volumes and 1–10 stages. It is not CFD, kinetic extraction, physical-time prediction, molecular simulation, phase-equilibrium curve, optimization or Aspen/HYSYS equivalence. See `CHEMISTRY_MODEL.md` and `PROJECT_SCOPE.md`.
+
+## 7. Documentation obligations
+
+Changes to TypeScript fields update `DATA_MODEL.md`, `INPUT_SPECIFICATION.md` and relevant tests. Equation changes update `CALCULATION_FORMULAS.md`, `CHEMISTRY_MODEL.md`, `CALCULATION_ENGINE.md` and reference fixtures. UI/state changes update `UI_UX_SPEC.md`, `SIMULATION_VISUAL_SPEC.md` and `SIMULATION_STATE_MACHINE.md`. Scientific scope/provenance changes update `EXPERT_DECISIONS.md`, `REFERENCE_DATA.md`, `TODO.md` and `PROGRESS.md`.
+
+## 8. Git/contributor rules
+
+Work on a task branch when possible; direct `main` push is allowed only when the Project Owner explicitly requests it and no concurrent change is at risk. Never force-push. Preserve unrelated worktree changes, especially a pre-existing legacy ZIP deletion. Before push run applicable tests, `git diff --check`, inspect the staged diff and update progress with evidence/commit SHA after publication.

@@ -1,39 +1,48 @@
-# PROCESS MODEL — CONSTANT-KD CROSS-CURRENT EXTRACTION
+# PROCESS MODEL — CROSS-CURRENT BATCH EXTRACTION
 
-## 1. Stage topology
-The process is **cross-current batch extraction**, not counter-current column extraction. The aqueous raffinate is retained between stages. Each stage receives a *new* ethyl acetate portion. Extract from earlier stages is collected and does not re-contact the raffinate.
+## Topology
 
-`Stage 0 feed → [Stage 1: + fresh S1] → E1 + R1 → [Stage 2: R1 + fresh S2] → E2 + R2 → … → EN + RN`
+V1 is not counter-current column extraction. The aqueous raffinate remains available as the next feed; each stage receives fresh EtOAc and produces a collected extract:
 
-## 2. Components and stream naming
+```text
+R0 -> [S1] -> R1 + E1
+R1 -> [S2] -> R2 + E2
+...
+R(N-1) -> [SN] -> RN + EN
+```
 
-| Symbol | Meaning | Phase / scope |
+`E1…E(N-1)` never re-contact the retained raffinate. The pure engine implements this topology sequentially before any visual playback.
+
+## Stream vocabulary
+
+| Symbol | Meaning | Nominal phase |
 |---|---|---|
-| AcOH | acetic acid, solute of interest | allocated between phases |
-| H2O | initial carrier phase | aqueous raffinate nominal phase |
-| EtOAc | extraction solvent | organic extract nominal phase |
-| Ri | raffinate leaving stage i | aqueous; feed to i+1 |
-| Ei | extract leaving stage i | organic; collected |
-| nR,i / nE,i | moles AcOH in Ri/Ei | mol |
-| CR,i / CE,i | AcOH concentration Ri/Ei | mol/L |
+| AcOH | tracked solute | split between phases |
+| H2O | carrier | aqueous raffinate |
+| EtOAc | fresh solvent | organic extract |
+| `Ri` | raffinate leaving i | aqueous, feeds i+1 |
+| `Ei` | extract leaving i | organic, collected |
+| `nR,i/nE,i` | AcOH moles in phases | mol |
+| `CR,i/CE,i` | AcOH concentration | mol/L |
 
-## 3. Input-to-stream mapping
-Before any stage, set `VR=feedVolumeL`, `C0=c0MolPerL`, `nR,0=C0×VR`. For a run with N stages, establish exactly N stage solvent volumes. Equal allocation is `VS,i=VS,total/N`. Custom allocation must have N values; stage index is immutable once calculation begins.
+## Mapping to input/result
 
-At stage i, the engine takes `nIn,i=nR,i−1`, aqueous nominal volume VR and organic nominal volume VS,i. The incoming organic stream has `nAcOH,organic,in=0` by V1 assumption. After equilibrium/separation it returns E_i and R_i. Values from E_i must never be reused as part of `nIn,i+1`.
+Before stage 1, `VR=feedVolumeL`, `C0=c0MolPerL`, `nR,0=C0*VR`. Equal allocation creates N equal positive volumes; custom allocation must contain N positive values and retain stage order. For stage i, `nIn,i=nR,i-1`, `VS=stageSolventVolumesL[i-1]`, and incoming organic AcOH is zero.
 
-## 4. Assumptions that affect outputs
+## Assumption consequences
 
-| Assumption | Consequence in model | Consequence in UI/claims |
+| Assumption | Calculation | UI/claim |
 |---|---|---|
-| Equilibrium reached at each stage | KD equation may be used directly. | “Equilibrium assumed”, not measured mixing time. |
-| KD is constant within run | Same KD in all stages. | Show source/domain warning if unapproved. |
-| Negligible volume change | VR and VS,i remain nominal. | Layer heights are illustrative nominal volumes. |
-| Fresh solvent | No AcOH enters with solvent. | Stage animation starts organic particles at zero. |
-| No loss outside phases | nIn=nR+nE numerically. | Mass-balance warning indicates calculation/rounding issue. |
+| equilibrium reached | use constant-KD algebra | “equilibrium assumed”, not mixing time |
+| KD constant | same value every stage | show source/domain warning |
+| nominal volumes | `VR`, `VS,i` unchanged | heights illustrative |
+| fresh solvent | organic input AcOH zero | start organic particles at zero |
+| no outside loss | `nIn≈nR+nE` | mass-balance diagnostic |
 
-## 5. Required stage data lifecycle
-For each stage compute in this order: validate solvent volume → read prior raffinate amount → calculate equilibrium concentrations → calculate phase amounts → calculate stage/cumulative recovery → calculate residual → freeze result → hand result to visualization. No visual state, timer event or user pause may modify scientific values.
+## Stage lifecycle
 
-## 6. Edge cases
-If C0=0, all stage concentrations/amounts/recoveries are zero; N stages still exist for consistent UI. KD approaching zero is valid only when positive and yields little extraction; KD≤0 is invalid. Zero/negative solvent is invalid even when C0=0, because it violates the chosen process contract. Custom allocations may not use zero-volume “dummy” stages.
+Validation → read prior raffinate amount → calculate CR/CE/phase amounts → calculate stage/cumulative recovery → calculate mass balance → freeze StageResult → hand it to visualization. No state/timer/pause can modify a scientific field.
+
+## Edge cases
+
+`C0=0` keeps N stage records and all numerical values zero. Positive KD may be arbitrarily small but never zero/negative. Every stage needs positive solvent, including zero-solute runs; custom zero-volume dummy stages are invalid.

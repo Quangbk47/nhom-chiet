@@ -1,85 +1,79 @@
-# CALCULATION FORMULAS — V1
+# CALCULATION FORMULAS — V1 CANONICAL EQUATIONS
 
-## 1. Canonical notation and units
+## Notation and units
 
-| Symbol | Definition | Unit |
+| Symbol | Meaning | Unit |
 |---|---|---|
-| C0 | initial aqueous AcOH concentration | mol/L |
-| VR | nominal aqueous/feed volume | L |
-| VS,i | fresh organic solvent volume at stage i | L |
-| n0 | initial AcOH amount | mol |
-| nIn,i | AcOH amount entering stage i | mol |
-| CR,i / CE,i | final aqueous/organic AcOH concentration stage i | mol/L |
-| nR,i / nE,i | final raffinate/extract AcOH amount stage i | mol |
-| KD | distribution coefficient CE/CR | dimensionless |
+| `C0` | initial aqueous AcOH concentration | mol/L |
+| `VR` | nominal aqueous/feed volume | L |
+| `VS,i` | fresh EtOAc volume at stage i | L |
+| `n0` | initial AcOH amount | mol |
+| `nIn,i` | AcOH amount entering stage i | mol |
+| `CR,i` / `CE,i` | final aqueous/organic AcOH concentration | mol/L |
+| `nR,i` / `nE,i` | final raffinate/extract AcOH amount | mol |
+| `KD` | `CE/CR`, constant for the run | dimensionless |
 
-Convert all input mL to L exactly once before formula evaluation. Carry at least implementation floating-point precision through calculation; apply decimal formatting solely at response/UI/export presentation.
+Convert displayed mL to L exactly once at the browser boundary. Carry full floating-point precision through calculation; round only in presentation/export.
 
-## 2. Initial condition
+## Initial state
 
-`n0 = C0 × VR`
+```text
+n0 = C0 * VR
+nR,0 = n0
+CR,0 = C0
+CE,0 = 0
+nE,0 = 0
+cumulativeExtracted,0 = 0
+cumulativeRecovery,0 = 0%
+```
 
-`nR,0=n0`; `CR,0=C0`; `nE,0=0`; cumulative extracted amount at stage 0 is 0; cumulative recovery at stage 0 is 0%.
+## One-stage derivation
 
-## 3. One-stage derivation
-At stage i the incoming AcOH is entirely in incoming raffinate, so:
+Incoming AcOH is entirely in the retained aqueous feed:
 
-`nIn,i = nR,i−1`
+```text
+nIn,i = nR,i-1
+nIn,i = CR,i*VR + CE,i*VS,i
+KD = CE,i/CR,i
+CE,i = KD*CR,i
 
-At equilibrium, Decision 02 fixes:
+CR,i = nIn,i / (VR + KD*VS,i)
+CE,i = KD*CR,i
+nR,i = CR,i*VR
+nE,i = CE,i*VS,i
+```
 
-`KD = CE,i / CR,i`
+Retained and extracted fractions:
 
-The V1 stage material balance is:
+```text
+q_i = VR/(VR + KD*VS,i)
+fractionRemaining_i = q_i
+fractionExtracted_i = 1-q_i
+```
 
-`nIn,i = CR,i × VR + CE,i × VS,i`
+Use the fraction definitions as zero when `nIn,i=0` for reporting; never return NaN/Infinity.
 
-Substituting `CE,i=KD×CR,i`:
+## Multistage
 
-`CR,i = nIn,i / (VR + KD × VS,i)`
+```text
+nR,N = n0 * product(q_i for i=1..N)
+cumulativeExtracted_i = n0 - nR,i
+cumulativeRecovery_i = n0==0 ? 0 : 100*cumulativeExtracted_i/n0
+stageRecovery_i = nIn,i==0 ? 0 : 100*nE,i/nIn,i
+```
 
-Then calculate without using rounded CR:
+Equal split sets `VS,i=VS,total/N` for every i. The engine still loops sequentially; the product is a test oracle only. Custom split preserves its ordered list after the input sum tolerance check.
 
-`CE,i = KD × CR,i`
+## Mass balance
 
-`nR,i = CR,i × VR`
+```text
+residual_i = nIn,i - (nR,i+nE,i)
+absoluteError_i = abs(residual_i)
+relativeErrorPercent_i = nIn,i==0 ? 0 : 100*absoluteError_i/abs(nIn,i)
+```
 
-`nE,i = CE,i × VS,i`
+This is a numerical conservation diagnostic. The named engine `numericTolerance` is not the Owner's experimental validation threshold. Any non-finite or out-of-tolerance invariant is a calculation fault, not a reason to clamp values.
 
-The retained fraction (for diagnostic/closed form) is:
+## Required properties
 
-`q_i = VR / (VR + KD × VS,i)`
-
-Thus `nR,i=nIn,i×q_i`.
-
-## 4. Multistage calculations
-
-`nR,N = n0 × ∏(i=1…N) q_i`
-
-`nExtracted,cumulative,i = n0 − nR,i`
-
-If n0>0:
-
-`Recovery,cumulative,i (%) = 100 × (n0 − nR,i) / n0`
-
-If nIn,i>0:
-
-`Recovery,stage,i (%) = 100 × nE,i / nIn,i`
-
-When denominator is zero, report recovery as 0% for this zero-solute stage, not NaN/Infinity. The API must preserve that this is a defined edge-case convention.
-
-For equal split, `VS,i=VS,total/N`; because all q are equal, `nR,N=n0×q^N`. This closed form is a test oracle only; the engine must still generate each stage sequentially for outputs.
-
-## 5. Mass-balance diagnostic
-Per stage:
-
-`residual_i = nIn,i − (nR,i+nE,i)`
-
-For nIn,i≠0:
-
-`MB_error_i(%) = 100 × |residual_i| / |nIn,i|`
-
-For nIn,i=0, residual must equal zero; return 0% only in that case. A nonzero residual is an engine defect/warning. This diagnostic checks numerical preservation under the model; it is not an experimental validation threshold.
-
-## 6. Required properties for implementation tests
-For all valid positive-KD inputs: CR, CE, nR and nE are nonnegative; `nR+nE≈nIn`; `CE/CR≈KD` when CR>0; nR never increases across stages; cumulative recovery stays [0,100] and never decreases; total solvent is unchanged by split mode. Use a named floating-point `numericTolerance` in test/configuration and return/record it separately from Project Owner validation threshold.
+For valid positive KD inputs: all concentrations/amounts are nonnegative; `nR+nE` equals incoming within engineering tolerance; `CE/CR≈KD` when CR>0; nR and cumulative recovery are monotonic in the expected direction; total solvent is unchanged by split mode. See `CHEMISTRY_MODEL.md` and `CALCULATION_ENGINE.md` for derivation and executable contract.

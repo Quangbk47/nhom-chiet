@@ -1,29 +1,36 @@
-# EXPERIMENTAL PROTOCOL — V1 PLANNING SOP
+# EXPERIMENTAL PROTOCOL — V1 PLANNING SPECIFICATION
 
-## 1. Status and safety boundary
-This is a data-collection specification, not an authorization to conduct laboratory work. The laboratory’s approved SOP, SDS, supervisor and local waste/PPE rules control actual operation. V1 conditions that remain BLOCKED: study temperature, concentration range, solvent/feed volumes, titrant concentration/standardization, endpoint method, contact/settling definition, apparatus and waste path.
+## Safety boundary
 
-## 2. Purpose and primary measurement
-Each experimental condition tests predicted versus measured aqueous raffinate AcOH concentration `CR` after each extraction stage. V1 quantification method is acid–base titration. Recovery may be calculated secondarily only from traceable data; it is not the primary validation variable.
+This is a data-collection specification, not permission to conduct laboratory work. Approved laboratory SOP, SDS, supervisor and local PPE/waste rules control every operation. V1 remains blocked on study temperature, concentration range, volumes, titrant standardization, endpoint, contact/settling definition, apparatus and waste path.
 
-## 3. Condition design record
-Create a unique `condition_id` before work. Record: study title, operator/date, protocol version, system identity, feed preparation/lot, initial assay and C0 mol/L, VR L, stage count, every VS,i L, solvent lot, temperature value/method of measurement, apparatus, mixing/separation handling, KD/reference/model version, and deviations. The linked simulation must use the same declared condition. Mismatch is a validation warning, not silently ignored.
+## Purpose and primary measurement
 
-## 4. Independent replicate definition
-A condition requires at least three **independent complete extraction runs**. Replicates are not repeated titrations from one raffinate sample. Each replicate has its own ID and stage records. Repeat titrations, blanks and standardization observations may be stored as raw supporting data but do not replace independent extraction replicates.
+Each condition compares model-predicted aqueous raffinate `CR` with measured `CR` after each stage. V1 quantifies AcOH by acid–base titration. Recovery is secondary and requires traceable data; it is not the primary validation variable.
 
-## 5. Controlled procedure sequence
-1. Verify approved SOP/safety, labels and waste containers; record instrument/reagent readiness.
-2. Prepare aqueous feed using approved procedure; determine/record initial AcOH concentration and conversion basis.
-3. Measure/record nominal feed volume VR and study temperature.
-4. Execute stage 1: contact feed with the defined fresh `VS,1`; perform mixing/settling/phase collection exactly per approved SOP; collect the aqueous raffinate sample without changing stage identifier.
-5. Titrate AcOH using the approved acid–base SOP. Store raw burette/sample/dilution/standardization observations and calculated CR mol/L, not merely final typed CR.
-6. Use retained aqueous raffinate as feed to next stage; add fresh solvent `VS,i`; repeat 4–5 through N.
-7. Record incidents, emulsions, sample loss, phase ambiguity or deviation. Do not fabricate a replacement value.
-8. Dispose/clean according to local SOP; finalize data review.
+## Condition record
 
-## 6. Data integrity rules
-Raw observations are append-only. A correction creates a superseding record with rationale, actor and timestamp. An excluded replicate remains stored with explicit exclusion reason and reviewer; validation reports included/excluded counts. Never tune KD to reduce current error. A proposed revised KD is a separate Candidate reference requiring the lifecycle in `REFERENCE_DATA.md`.
+Create `conditionId` before work. Record study title, operator/date, protocol version, system identity, feed lot/preparation, initial assay/C0, VR, N, every VS,i, solvent lot, temperature value/method, apparatus, mixing/separation handling, KD/reference/model version and deviations. Link exactly one simulation snapshot. A mismatch is a warning, never silently repaired.
 
-## 7. Completion checklist
-For every condition: linked run exists; each stage has CR values; ≥3 independent replicate IDs; units/conversions are traceable; temperature/KD provenance recorded; deviations reviewed; raw data archived; validation results reproducible. Missing item means condition is incomplete, not failed.
+## Independent replicates
+
+At least three independent complete extraction runs are required per condition. Repeat titrations from one raffinate are supporting observations, not independent runs. Each replicate has its own ID and stage rows; blanks and standardization observations remain raw supporting data.
+
+## Controlled sequence (only under approved SOP)
+
+1. Verify safety, labels, waste and instrument/reagent readiness.
+2. Prepare feed under approved method; record initial assay and conversion basis.
+3. Measure nominal VR and temperature.
+4. For stage 1, contact feed with fresh VS,1, mix/settle/collect per SOP and preserve stage identifier.
+5. Titrate AcOH and store raw burette/sample/dilution/standardization observations plus calculated CR mol/L.
+6. Retain aqueous raffinate as stage 2 feed, add fresh VS,2 and repeat through N.
+7. Record emulsions, phase ambiguity, sample loss and deviations; never fabricate replacements.
+8. Dispose/clean under local SOP and finalize review.
+
+## Application data integrity
+
+Manual and CSV capture normalize to `ExperimentalStageData` in `DATA_MODEL.md`. Raw records are append-only. Corrections create superseding records with reason, actor and timestamp. Exclusions remain visible with reviewer/reason. Firestore, if later enabled, stores snapshots/raw audit but is not required during the experiment or calculation.
+
+## Completion checklist
+
+Linked simulation exists; all stages have CR; ≥3 independent replicate IDs; unit conversions are traceable; temperature/KD provenance recorded; deviations reviewed; raw data archived; validation metrics reproducible. Missing evidence means incomplete, not failed.

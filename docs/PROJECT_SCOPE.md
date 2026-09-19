@@ -1,67 +1,81 @@
 # PROJECT SCOPE — V1
 
 ## 1. Product definition
-**Liquid–Liquid Extraction Simulator** is a web application for teaching and research support. V1 models the *equilibrium material balance* of cross-current, batch extraction of acetic acid (AcOH) from water using fresh ethyl acetate in each extraction stage.
 
-The core product chain is mandatory:
+Liquid–Liquid Extraction Simulator is a browser teaching and research-support application for equilibrium material balance of multistage, cross-current batch extraction of AcOH from water with fresh EtOAc. A user changes canonical inputs, the browser validates/normalizes them, the pure engine computes a complete immutable stage sequence, and the UI visualizes that exact snapshot.
 
-`validated input → backend calculation → immutable stage-result snapshot → frontend animation/table/graphs → optional experimental comparison`.
+```text
+validated input -> normalized domain input -> pure engine
+  -> SimulationResult -> SVG/state machine/table/three charts
+  -> optional experimental comparison and persistence
+```
 
-The web page is therefore not an illustrative video. A user changing solvent allocation, KD, feed concentration, or stage count must obtain a newly calculated stage sequence; all numerical labels, particles, charts, and final values must be derived from that sequence.
+## 2. MVP in scope
 
-## 2. Intended users and use cases
+### Science and calculation
 
-| User | Primary goal | System outcome |
-|---|---|---|
-| Student | Learn how multistage extraction changes raffinate/extract amount. | Visible stage-by-stage material balance with assumptions shown. |
-| Instructor | Demonstrate effect of KD, solvent volume, and stage allocation. | Reproducible scenario and graphs. |
-| Student researcher | Compare a defined constant-KD prediction with measurements. | Saved conditions, raw replicate inputs, errors and audit trail. |
-| Project Owner/reviewer | Control scientific assumptions and data approval. | Provenance/status, not silently changed constants. |
+- Components: AcOH solute, water nominal carrier/raffinate, EtOAc nominal extract solvent.
+- Cross-current topology: aqueous raffinate retained; fresh solvent at each stage; extracts removed.
+- Constant `KD=CE/CR`, concentration unit `mol/L`, volume unit `L`.
+- `N=1…10`, equal split or custom positive ordered split.
+- Stage 0 and every stage 1…N, per-stage/cumulative quantities and material-balance diagnostic.
+- Deterministic reference fixtures and invariant tests.
 
-## 3. V1 functional scope
+### Product
 
-### 3.1 Inputs
-V1 accepts only canonical calculation inputs:
+- Desktop three-region workspace and responsive stack.
+- Single Simulation, Scenario Comparison, Experimental Validation modes.
+- Calculation-driven symbolic funnel/SVG animation with start/pause/resume/next stage/restart/reset and 0.5×/1×/2× playback speed.
+- Stage table, final summary and three charts: raffinate `CR` by stage, cumulative recovery by stage, AcOH extracted in each stage.
+- Accessible textual/table alternatives and warnings.
+- Manual entry and all-or-nothing CSV import of experimental stage `CR`; raw replicate/audit semantics.
+- Firebase Hosting deployment target; optional Firestore persistence only after the persistence gate.
 
-| Field | Symbol | Canonical unit | Rule |
-|---|---:|---|---|
-| Initial AcOH concentration | C0 | mol/L | finite, ≥0 |
-| Aqueous feed volume | VR | L | finite, >0 |
-| Total ethyl acetate volume | VS,total | L | finite, >0 |
-| Stage count | N | integer | 1–10 inclusive |
-| Distribution coefficient | KD | dimensionless | finite, >0 |
-| Solvent allocation | VS,i | L | equal or N custom positive values |
+## 3. MVP is not
 
-The UI may accept mL only through a visible converter, but API/engine input is L. The UI may not submit unit-free numbers.
+- A REST/backend calculation service, CFD package, kinetic/mass-transfer simulator, droplet simulator, molecular-dynamics model, or Aspen/HYSYS replacement.
+- A promise that colors, interface height, particle count or animation seconds are physical observations.
+- A complete ternary equilibrium model, `KD(C)`, activity coefficient model, pH/speciation model, solvent-loss/density/phase-contraction model.
+- Automatic fitting/optimization/recommended stage count.
+- A validation PASS/FAIL system while Owner threshold/aggregation is pending.
 
-### 3.2 Required V1 capabilities
-1. One calculation run with equal/custom fresh-solvent split.
-2. Complete result for stage 0 and stages 1…N.
-3. Mass-balance residual and relative numerical error for every stage and final result.
-4. Calculation-driven funnel visual playback and controls.
-5. Table and three graphs: `CR vs stage`, `cumulative recovery vs stage`, `AcOH extracted at each stage`.
-6. Named scenario comparison.
-7. Manual entry and CSV import of experimental raffinate concentration.
-8. Replicate mean, sample standard deviation, absolute/relative error, MAE and RMSE.
-9. Database persistence of research records while keeping calculation engine independent.
+## 4. Assumptions and constraints
 
-## 4. Explicit scientific model boundary
-V1 assumes: each stage reaches equilibrium; KD is constant within the one declared run; fresh organic solvent initially contains no AcOH; nominal aqueous and organic phase volumes do not change appreciably. It does **not** calculate mutual solubility, phase contraction, solvent loss, density, interface position from physical properties, chemical association, pH speciation, kinetic transfer, mixing rate, droplet sizes, emulsion formation, settling time, CFD, or complete ternary liquid–liquid equilibrium.
+1. Equilibrium is assumed at every stage.
+2. KD is constant in one declared run and must carry source/status/domain note.
+3. Fresh organic solvent enters with zero AcOH.
+4. Nominal `VR` and each `VS,i` remain unchanged.
+5. No loss outside phases; `nIn ≈ nR+nE` is an engineering invariant.
+6. Canonical inputs are finite; `C0≥0`, volumes/KD positive and N within bounds.
+7. Temperature is stored as `pending` or explicitly declared; no project default is invented.
+8. User-supplied KD calculations are exploratory and warn that they are not an Approved project default.
 
-The output is valid only as a calculation under this model and the declared KD context. It is not a claim that the physical system will be predicted accurately outside a Project Owner-approved temperature/concentration range.
+## 5. Future scope gates
 
-## 5. Out of scope and deferred work
+| Candidate capability | Gate before implementation |
+|---|---|
+| `CE=f(CR)` curve/V2 | Approved data, equation, solver bounds/convergence and validation plan |
+| Approved default KD | Complete Reference Data record and Owner approval |
+| Scientific validation PASS/FAIL | Owner threshold scope/value/undefined-RE rule/version |
+| Saved studies/experiments | Firestore schema/rules/privacy review |
+| Optimization | Objective, constraints, approved model and user-facing claim review |
+| Lab execution | Approved SOP, SDS, supervision, apparatus and waste controls |
 
-| Item | Status | Reason |
-|---|---|---|
-| `CE=f(CR)` equilibrium curve | V2 | Requires approved data and nonlinear solver contract. |
-| Automatic KD fitting | Deferred | Would create circular “validation”; must be controlled research work. |
-| Process optimization/recommended N | V3 consideration | Needs objective, constraints, approved model/data. |
-| Actual extraction timing | Excluded | No kinetics model. |
-| Aspen/HYSYS or CFD equivalence | Excluded | Not product purpose. |
+## 6. Success criteria
 
-## 6. Scientific constants that must not be invented
-Fixed V1 temperature, default KD, KD citation, KD validity domain, equilibrium data, experimental data and validation PASS/FAIL threshold are PENDING/BLOCKED. Until approval, the user may supply KD but the application must persist and display `user_supplied`, never label it as an approved project default.
+V1 is successful only when:
 
-## 7. Done criteria for V1 scope
-V1 scope is not complete because a screen exists. It is complete only when the required calculation/API/UI/data/validation features have passing evidence in `TEST_PLAN.md`, the limitations above are visible in product UI, and `PROGRESS.md` is updated under the mandatory workflow.
+- a fresh clone can run documented checks;
+- pure engine T01–T10 equivalents pass without React/Firebase/network;
+- validation and normalization reject invalid units/fields without silent guessing;
+- result stages/charts/table are all sourced from one `SimulationResult`;
+- playback can pause/replay without changing result bytes;
+- UI explicitly shows assumptions, warnings, limitations and stale state;
+- manual and valid CSV experimental records normalize identically;
+- n<3 and threshold pending are visible as non-compliant/not evaluated;
+- roadmap evidence and progress are updated;
+- no unapproved scientific constant is present in source.
+
+## 7. Ownership and evidence
+
+Scientific decisions belong to the Project Owner; software decisions may be made by the implementation team when documented in `TECH_STACK.md`/`ARCHITECTURE.md`. The authoritative mapping is `DOCUMENT_AUTHORITY_MAP.md`; task-level acceptance is in `TODO.md` and `TESTING_STRATEGY.md`.

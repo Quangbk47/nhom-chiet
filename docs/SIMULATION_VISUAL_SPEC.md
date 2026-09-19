@@ -1,35 +1,88 @@
 # SIMULATION VISUAL SPECIFICATION
 
 ## 1. Principle
-Visual state is a rendering of precomputed `SimulationResult`. Animation neither estimates equilibrium nor writes result values. The runtime owns only playback position; the result snapshot is read-only.
 
-## 2. Stage playback state machine
-`IDLE → READY → LOAD_RAFFINATE → ADD_SOLVENT → MIXING → EQUILIBRIUM → SETTLING → SEPARATE → COLLECT → STAGE_COMPLETE → (READY next stage | FINAL)`.
+Visual state is a rendering of precomputed `SimulationResult`. Animation does not estimate equilibrium, alter values or imply laboratory time. All numeric labels bind to the indexed `StageResult`; a timer changes only the visual cursor.
 
-| State | Required visible content | Result fields consumed |
+## 2. Funnel component contract
+
+```text
+FunnelSVG
+├── defs / clipPath
+├── funnelOutline / neck / stopper
+├── organicPhase (conventional upper layer)
+├── aqueousPhase (conventional lower layer)
+├── phaseInterface
+├── soluteParticles
+├── stopcock / drainStream
+├── labels / legends
+└── state overlay / reduced-motion text
+```
+
+The conventional layer order is a UI convention for the water/EtOAc teaching view, not a density claim. Labels must state “nominal organic phase (EtOAc)” and “nominal aqueous phase (water)”. SVG uses `viewBox="0 0 640 720"`, `preserveAspectRatio="xMidYMid meet"`, and a clip path inside the funnel body; geometry scales from the viewBox rather than fixed CSS pixels.
+
+## 3. Volume-to-height mapping
+
+At each displayed stage, use actual nominal volumes `VR` and `VS,i`. A deterministic renderer chooses:
+
+```text
+referenceVolume = max(VR, VS,i, smallPositive)
+normalR = clamp(VR / referenceVolume, 0, 1)
+normalE = clamp(VS,i / referenceVolume, 0, 1)
+heightR = minHeight + normalR * (maxHeight - minHeight)
+heightE = minHeight + normalE * (maxHeight - minHeight)
+```
+
+`minHeight`, `maxHeight` and funnel interior coordinates are software display constants documented in the visualization module. They are not a physical calibration. The clip path prevents overflow. Larger nominal volume must never produce a smaller fill within the same run. Stage 0 uses `VS=0` and renders no organic layer or an explicit zero-volume placeholder.
+
+## 4. Particle mapping
+
+Particles are semi-quantitative symbols, never molecules or measured moles. Choose one fixed software constant `PARTICLE_CAPACITY` and record it in `VisualPlan`. For stage `i`:
+
+```text
+fractionExtracted = nE / nInput when nInput > 0, else 0
+extractParticles  = round(PARTICLE_CAPACITY * fractionExtracted)
+raffinateParticles = PARTICLE_CAPACITY - extractParticles
+```
+
+The renderer must use `fractionExtracted` from the result, not derive a fraction from rounded labels. `C0=0` yields zero solute particles; if `nInput=0`, both groups are zero. This stage fraction is not cumulative recovery. Particle positions use a deterministic seeded layout derived from `(stageNumber, particleIndex, phase)`; do not use random values during render.
+
+## 5. State-to-visual mapping
+
+| State | Funnel | Caption |
 |---|---|---|
-| READY | stage number and prior raffinate | prior stage nR/CR |
-| LOAD_RAFFINATE | aqueous feed enters funnel | `nInputMol`, VR |
-| ADD_SOLVENT | fresh organic stream/label | `solventVolumeL` |
-| MIXING | symbolic mixed particles | no new calculation |
-| EQUILIBRIUM | distribution caption | CR, CE, nR, nE |
-| SETTLING/SEPARATE | two labelled conventional phases | nominal VR, VS; particles |
-| COLLECT | Ei collected; Ri retained | nE, nR, recovery, MB |
-| FINAL | final summary/table/charts unlocked | final result |
+| READY | prior raffinate or empty setup | “Ready — calculated result is available” |
+| LOADING_FEED | aqueous fill grows into body | “Loading raffinate” |
+| ADDING_SOLVENT | organic stream enters | “Adding fresh EtOAc” |
+| MIXING | two fills merge/particles move symbolically | “Mixing — visual representation” |
+| EQUILIBRATING | particles settle into proportional regions | “Equilibrium assumed; KD = CE/CR” |
+| SEPARATING | interface becomes horizontal, labels appear | “Separating phases” |
+| SHOWING_STAGE_RESULT | stable layers and result labels | “Stage i result” |
+| DRAINING | organic stream to collected extract; raffinate stays | “Collecting extract” |
+| PAUSED | freeze exact frame and show text badge | “Paused — result unchanged” |
+| COMPLETED | final stable layers, tables/charts enabled | “Completed — final result” |
 
-## 3. Control rules
-Start is enabled only READY with valid complete result. Pause freezes current visual progress. Resume continues the same state. Next Stage completes remaining substeps without recalculation and advances exactly one stage. Reset clears only playback state and returns stage 0. Speed 0.5×/1×/2× multiplies animation durations only. Controls are disabled when no valid result or while a transition is being committed.
+## 6. Accessibility and disclaimers
 
-## 4. Calculation-to-visual mappings
-Use fixed configurable particle count P. If `nInput>0`: `pExtract=round(P*nE/nInput)`, `pRaffinate=P-pExtract`; otherwise both zero. Particles are labelled `relative AcOH distribution`, not molecules or moles. Nominal liquid heights are normalized from VR and VS against a display maximum chosen for the current run; they must not imply true density/interface physics. Show actual nominal volume as text.
+Persistent text:
 
-All numerical labels bind directly to stage JSON fields. At visual equilibrium, extract fraction is `nE/nInput`; no independently recomputed fraction from rounded labels is allowed. The chart/table update uses the same indexed stage record after COLLECT.
+- `Visual representation — not actual liquid colour.`
+- `Animation time is not actual extraction time.`
+- `Particles show relative AcOH distribution; they are not molecules.`
+- `Phase volumes and heights are nominal visualization inputs.`
 
-## 5. Required disclaimers/accessibility
-Show persistent text: `Visual representation—not actual liquid colour.` and `Animation time is not actual extraction time.` Phase must be distinguishable with label/pattern/icon, not color alone. State changes have text captions for keyboard/screen-reader users. Reduced-motion preference must show static state transitions while preserving numerical learning content.
+Use labels/patterns/icons in addition to color. Every state caption is available to a live region without spamming every animation frame. `prefers-reduced-motion` switches to static state transitions while preserving stage values and control semantics. Keyboard focus order follows the state controls; pause is reachable and announced.
 
-## 6. Error/replay behavior
-If response is invalid/missing stage fields, do not start animation; show calculation error. If user edits input after calculation, show stale-result state and disable Start until recalculation. Replaying, pausing, speed changing and resetting must leave snapshot byte-equivalent. Browser reload can restore saved snapshot only when its engine version/provenance are displayed.
+## 7. Error and replay behavior
 
-## 7. Visual acceptance tests
-Verify all result stages exist before Start; every label/chart equals result JSON; particle counts sum P; zero solute has zero particles; pause/resume/reset/next/speed never mutate values; correct stage order; disclaimer text visible; UI does not convert animation duration to physical seconds.
+Missing/invalid result fields enter `ERROR`; the funnel cannot start. Input edits mark the snapshot stale and disable playback. Replay, pause, speed change, reset and restart must leave `JSON.stringify(result)` byte-equivalent. Browser reload may restore a saved snapshot only when engine/schema/provenance are displayed.
+
+## 8. Acceptance checks
+
+- All stages exist before Start.
+- Every label/table/chart value matches result JSON.
+- Particle counts sum to capacity when input amount is positive.
+- Zero-solute run has zero particles and N stage records.
+- Volume mapping is monotonic and clipped.
+- Conventional phase order and disclaimers are visible.
+- No code path converts animation duration into physical extraction time.

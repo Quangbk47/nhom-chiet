@@ -1,26 +1,49 @@
-# TEST PLAN
+# TEST PLAN — REQUIRED EVIDENCE IDS
 
-## 1. Evidence standard
-Every test records ID, requirement/decision, fixture, expected result, actual result, engine/UI version, executor, date and issue link. Tests below are minimum; failed/blocked is evidence, not deletion.
+Every evidence row records ID, requirement, fixture/action, expected, actual, code/schema version, executor/date and issue/commit. Failed or blocked cases remain visible.
 
-## 2. Calculation engine tests
+## Domain engine T01–T10
+
 | ID | Fixture/action | Expected |
 |---|---|---|
-| T01 | C0=0 valid inputs | N stages; all amounts/concentrations/recovery zero |
-| T02/T03 | N=1/N=10 | accepted exact number stage records |
-| T04 | N=0,11,noninteger | field error |
-| T05 | KD 0/negative/nonfinite | field error |
-| T06 | negative/nonfinite C/volumes | field error |
-| T07 | equal vs same custom list | same results within numeric tolerance |
-| T08 | wrong custom count/sum/zero | field error |
-| T09 | valid fixture every stage | equations, KD ratio and conservation hold |
-| T10 | identical re-run | deterministic output |
+| T01 | C0=0, valid positive volumes/KD | N+1 records; all amounts/concentrations/recoveries/particles zero |
+| T02 | N=1 | exactly stages 0 and 1 |
+| T03 | N=10 | exactly 11 records and N chart rules |
+| T04 | N=0, 11, noninteger, nonfinite | `INVALID_STAGE_COUNT` |
+| T05 | KD 0, negative, NaN, Infinity | `INVALID_KD` |
+| T06 | negative/nonfinite C0/volumes | field validation errors |
+| T07 | equal vs same custom list | snapshots equal within numeric tolerance |
+| T08 | wrong custom count/sum/zero | specific split errors; no partial result |
+| T09 | reference software case | equations, KD ratio, conservation, monotonicity hold |
+| T10 | identical normalized rerun | deterministic byte-equivalent numeric result |
 
-## 3. Integration/visual tests
-T11 API contains stage 0…N and required fields. T12 table/labels/charts equal returned fields. T13 browser has no independent scientific formula path. T14 all results exist before Start. T15 pause/resume/next/reset/speed cannot mutate snapshot. T16 particles sum P and map calculated fraction. T17 disclaimer/accessibility text appears. T18 stale input prevents presentation of old result as current.
+## UI/visual/state T11–T18
 
-## 4. Data/validation tests
-T19 manual and valid CSV normalize identically. T20 invalid CSV preview + all-or-nothing save. T21 duplicate replicate rejected. T22 mean/SD/AE/RE/MAE/RMSE hand fixtures match. T23 zero experimental denominator handled as defined. T24 n<3 marked insufficient. T25 threshold pending cannot show PASS/FAIL. T26 raw observation correction audit retained. T27 approved/unapproved KD provenance gate works.
+| ID | Action | Expected |
+|---|---|---|
+| T11 | valid calculation | complete SimulationResult with stages 0…N, final, charts, provenance |
+| T12 | inspect table/cards/charts | every value equals returned field; no duplicate formula |
+| T13 | static code/import review | React/Firebase do not own chemistry |
+| T14 | press Start | all stage results exist before first animation state |
+| T15 | pause/resume/next/restart/reset/speed | result JSON unchanged; cursor rules exact |
+| T16 | particle mapping | counts sum capacity and use this-stage fraction; C0=0 zero |
+| T17 | accessibility | labels, units, disclaimer, keyboard/reduced motion/text captions |
+| T18 | edit after success | stale state; old result cannot appear current |
 
-## 5. Release test gate
-Run all applicable automated tests plus manual visual/accessibility tests. Confirm all 30 decisions mapped, no pending constant inserted, documentation/progress updated and result exports preserve units/provenance. Scientific validation phase cannot pass until approved conditions, threshold and experiment evidence exist.
+## Data/validation T19–T27
+
+| ID | Action | Expected |
+|---|---|---|
+| T19 | manual and valid CSV same rows | identical normalized ExperimentalStageData |
+| T20 | invalid CSV | preview all row errors; all-or-nothing save |
+| T21 | duplicate condition/replicate/stage | rejected without overwrite |
+| T22 | metric hand fixtures | mean/sample SD/AE/RE/MAE/RMSE match |
+| T23 | measured zero | RE=0 when prediction zero; undefined/null otherwise |
+| T24 | n<3 | `INSUFFICIENT_INDEPENDENT_REPLICATES`, not PASS/FAIL |
+| T25 | threshold pending | exact NOT EVALUATED message; no PASS/FAIL |
+| T26 | correction/exclusion | raw record and audit reason retained |
+| T27 | KD provenance | Approved gate rejects missing record; user KD warns |
+
+## Release gate
+
+Run applicable Vitest/Testing Library/Playwright checks, review responsive/accessibility manually, check `git diff --check`, scan source for unapproved constants, verify docs/progress/evidence and confirm no persistence feature bypasses the adapter boundary. Scientific validation cannot be marked complete without approved condition, threshold and experiment evidence.

@@ -1,39 +1,174 @@
-# ROADMAP
-## Phase 0 — Documentation baseline (DONE)
-Deliverables: authoritative decisions, calculation/process/API/UI/data/validation/test specs, handover. Exit: all required docs reviewed; PENDING values not invented; progress updated.
+# ROADMAP — IMPLEMENTATION AND EVIDENCE PLAN
 
-## Phase 1 — Scientific readiness (BLOCKED)
-Tasks: identify KD literature candidates; review convention/system/units/temperature/domain; Owner approves fixed temperature, default KD/citation/domain/version or explicitly keeps default unavailable; Owner approves validation threshold/aggregation; laboratory approves detailed SOP/safety. Exit: versioned Approved reference records and threshold rule. Software may still use labelled user KD before this phase.
+Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase is DONE only with the listed evidence; writing a document or creating a screen is not enough.
 
-## Phase 2 — Engineering foundation (NOT STARTED)
-Tasks: inspect repository; select documented stack (do not assume Firebase); configure formatting/lint/tests/CI; define engine/API/schema versioning; contributor workflow. Exit: fresh clone setup/test command and architecture decision record.
+## Phase 0 — Documentation hardening
 
-## Phase 3 — Pure calculation engine (NOT STARTED)
-Tasks: canonical input types; validation; equal/custom split; stage 0 and sequential constant-KD calculation; result/chart/visual-plan output; invariant checks; T01–T10 fixtures. Exit: deterministic database-free engine, all T01–T10 pass, no default KD/temperature in source.
+- **Objective:** make a fresh clone implementable without chat history.
+- **Prerequisites:** repository audit and Owner architecture amendment.
+- **Tasks:** authority map, browser-first correction, detailed domain/UI/state/output/testing contracts, cross-links.
+- **Expected files:** README, `DOCUMENT_AUTHORITY_MAP.md`, all docs referenced there.
+- **Tests/evidence:** full Markdown inventory, link scan, contradiction scan, `git diff --check`, student second-pass checklist.
+- **Exit:** no backend-authority wording remains; every next task names files/tests/acceptance; progress/handover updated.
+- **Dependencies/risks:** Owner scientific blockers remain; stale links.
+- **Status:** IN PROGRESS (this hardening session).
 
-## Phase 4 — Backend/API authority (NOT STARTED)
-Tasks: calculate endpoint; field errors; provenance/reference gate; immutable result response; correlation logging; compare API and pure-engine outputs. Dependency: Phase 3. Exit: complete stage JSON; unapproved constant rejected/user KD warned; T11 pass.
+## Phase 1 — Scientific readiness (blocked)
 
-## Phase 5 — Single simulation UI (NOT STARTED)
-Tasks: three-region desktop/stacked mobile; input/unit/split editor; API submission/loading/error/stale states; stage table/final card; 3 graphs/accessibility alternatives; warnings. Dependency: Phase 4. Exit: T12/T13/T18; no browser science calculation.
+- **Objective:** establish optional Approved reference data and lab governance.
+- **Prerequisites:** Owner/lab decisions.
+- **Tasks:** KD candidates → review convention/system/unit/temp/domain → approve or retain no default; approve threshold and SOP.
+- **Expected files:** `REFERENCE_DATA.md`, `TODO.md`, approved records (future data directory only if authorized).
+- **Tests/evidence:** provenance checklist, reviewer/Owner identity/date, threshold governance record, SOP approval.
+- **Exit:** versioned Approved data or explicit user-KD-only decision plus threshold/SOP decision.
+- **Dependencies/risks:** B01–B04; no engineering task may invent values.
+- **Status:** BLOCKED.
 
-## Phase 6 — Visual simulation (NOT STARTED)
-Tasks: SVG/funnel; immutable playback state machine; result-bound labels/particles/heights; controls; reduced motion/keyboard; replay tests. Dependency: Phase 5. Exit: T14–T17; no animation-time scientific claim.
+## Phase 2 — Engineering foundation
 
-## Phase 7 — Scenario comparison (NOT STARTED)
-Tasks: named snapshots, common-basis checks, comparison tables/charts/export, mismatch warning. Exit: reproducible scenarios; no “optimal” claim.
+- **Objective:** create reproducible Vite/React/TypeScript baseline.
+- **Prerequisites:** `TECH_STACK.md`, Node 22 LTS and pnpm available.
+- **Tasks:** scaffold, scripts, strict TS, ESLint/Prettier, Vitest, CI, source folders.
+- **Expected files:** `package.json`, lockfile, `src/`, `tests/`, configs, `.github/workflows/ci.yml`.
+- **Tests/evidence:** fresh clone install/lint/typecheck/test/build.
+- **Exit:** ENG-001/002 acceptance in TODO.
+- **Dependencies/risks:** package/version availability; no chemistry code yet.
+- **Status:** NOT STARTED.
 
-## Phase 8 — Persistence/experimental capture (NOT STARTED)
-Tasks: migrations; immutable runs/references/conditions/replicates; manual data; CSV preview/all-or-nothing import; correction/exclusion audit. Exit: T19–T21/T26 and retained raw data.
+## Phase 3 — Domain models and input boundary
 
-## Phase 9 — Validation analytics (NOT STARTED)
-Tasks: mean/sample SD/AE/RE/MAE/RMSE; zero handling; n<3 rule; model-vs-mean±SD; threshold status. Dependency: Phase 8. Exit: T22–T25; PENDING rule shows NOT EVALUATED.
+- **Objective:** implement stable types, parser, normalizer and error taxonomy.
+- **Prerequisites:** Phase 2, `DATA_MODEL.md`, `INPUT_SPECIFICATION.md`, `ERROR_HANDLING.md`.
+- **Tasks:** DOM-001, VAL-001…; unit conversion; provenance warnings; equal/custom allocation.
+- **Expected files:** `src/domain/models/`, `src/domain/validation/`, tests/fixtures.
+- **Tests/evidence:** T04–T08, parsing/locale edge cases.
+- **Exit:** normalized input contract is tested and no UI component owns normalization.
+- **Dependencies/risks:** ambiguous locale input; no scientific defaults.
+- **Status:** NOT STARTED.
 
-## Phase 10 — Experimental validation (BLOCKED)
-Tasks: execute approved SOP; ≥3 independent extraction replicates per condition; verify solvent split experimentally; import/audit; investigate deviations without KD fitting. Dependencies: Phase 1, 8, 9. Exit: reproducible raw dataset, report and Owner review (negative result is valid).
+## Phase 4 — Pure calculation engine
 
-## Phase 11 — Release/handover (NOT STARTED)
-Tasks: full regression; security/deployment review after stack selection; update all docs/progress/TODO/handover; commit/push/tag. Exit: evidence complete; fresh contributor setup works; release makes no unapproved validation claim.
+- **Objective:** implement one-stage and sequential simulation functions.
+- **Prerequisites:** Phase 3, `CHEMISTRY_MODEL.md`, `CALCULATION_ENGINE.md`.
+- **Tasks:** CALC-001 stage; CALC-002 simulation; CALC-003 invariants/MB; chart/visual plan.
+- **Expected files:** `src/domain/calculation/`, engine fixtures.
+- **Tests/evidence:** T01–T10, worked reference case, deterministic snapshot.
+- **Exit:** engine imports without DOM/React/Firebase/network and returns complete result.
+- **Dependencies/risks:** floating precision; regression in field naming.
+- **Status:** NOT STARTED.
+
+## Phase 5 — Engine verification and contract tests
+
+- **Objective:** prove equations and schema against fixtures.
+- **Prerequisites:** Phase 4.
+- **Tasks:** property/invariant tests, schema serialization, zero and boundary cases, review against formulas.
+- **Expected files:** `tests/domain/`, contract fixture JSON, evidence record.
+- **Tests/evidence:** T01–T11 and `TESTING_STRATEGY.md` matrix.
+- **Exit:** all domain gates pass; no unapproved constants in source.
+- **Dependencies/risks:** numericTolerance misrepresented as validation threshold.
+- **Status:** NOT STARTED.
+
+## Phase 6 — Application shell and input UI
+
+- **Objective:** create mode shell and accessible InputPanel.
+- **Prerequisites:** Phase 2–3; `UI_UX_SPEC.md`.
+- **Tasks:** APP-001, UI-001/002; three regions, field errors, split editor, stale state.
+- **Expected files:** `src/app/`, `src/pages/`, `src/components/input/`.
+- **Tests/evidence:** labels, keyboard, responsive and T18.
+- **Exit:** form can produce normalized input but does not calculate locally.
+- **Dependencies/risks:** UI drift from input contract.
+- **Status:** NOT STARTED.
+
+## Phase 7 — Static and dynamic funnel visualization
+
+- **Objective:** implement deterministic SVG geometry and symbolic particles.
+- **Prerequisites:** engine result shape, `SIMULATION_VISUAL_SPEC.md`.
+- **Tasks:** VIS-001 funnel layers; VIS-002 volume mapping; VIS-003 particle mapping/disclaimers.
+- **Expected files:** `src/simulation/visualization/`, SVG tests.
+- **Tests/evidence:** T16/T17, zero volume, clipping, reduced motion.
+- **Exit:** every visual number maps to a result field; no molecule/physical-time claim.
+- **Dependencies/risks:** accessibility and conventional phase interpretation.
+- **Status:** NOT STARTED.
+
+## Phase 8 — Playback state machine and integration
+
+- **Objective:** render complete result in locked stage sequence.
+- **Prerequisites:** Phase 4, 6, 7; `SIMULATION_STATE_MACHINE.md`.
+- **Tasks:** SIM-001 reducer; SIM-002 scheduler; controls/timeline; stale/replay integration.
+- **Expected files:** `src/simulation/state-machine/`, hooks, reducer tests.
+- **Tests/evidence:** T14–T18, transition coverage and result-reference equality.
+- **Exit:** Start calculates before animation; pause/speed/restart/reset cannot mutate snapshot.
+- **Dependencies/risks:** timer race; reduced-motion behavior.
+- **Status:** NOT STARTED.
+
+## Phase 9 — Results, table and charts
+
+- **Objective:** expose exact stage/final fields and three accessible charts.
+- **Prerequisites:** Phase 4, 6, 8; `RESULTS_AND_CHARTS.md`.
+- **Tasks:** OUT-001 ResultPanel; OUT-002 StageTable; OUT-003 three charts/export labels.
+- **Expected files:** `src/components/results/`, `src/components/charts/`.
+- **Tests/evidence:** T12, chart length/Stage 0 checks, table alternative.
+- **Exit:** no chart derives chemistry; units/provenance/warnings visible.
+- **Dependencies/risks:** rounding and tooltip mismatch.
+- **Status:** NOT STARTED.
+
+## Phase 10 — Scenario comparison
+
+- **Objective:** compare named immutable snapshots on a common basis.
+- **Prerequisites:** Phase 9; persistence may remain in memory.
+- **Tasks:** COMP-001 names/snapshots; basis mismatch warnings; comparison table/export.
+- **Expected files:** `src/pages/ScenarioComparison/`, compare utilities/tests.
+- **Tests/evidence:** common/different basis, no “optimal” claim.
+- **Exit:** deterministic comparison without recalculation or experimental superiority claim.
+- **Dependencies/risks:** version/provenance mismatch.
+- **Status:** NOT STARTED.
+
+## Phase 11 — Experimental capture and validation analytics
+
+- **Objective:** manual/CSV capture, audit and metric computation.
+- **Prerequisites:** Phase 9; approved SOP/data governance for scientific use.
+- **Tasks:** VAL-001 records; CSV preview/atomic import; mean/SD/error metrics; n<3/threshold pending.
+- **Expected files:** `src/domain/validation/`, `src/pages/ExperimentalValidation/`, optional adapter.
+- **Tests/evidence:** T19–T27 and raw immutability audit.
+- **Exit:** reproducible metric-only report; no PASS/FAIL until Owner threshold.
+- **Dependencies/risks:** provenance/condition mismatch; privacy.
+- **Status:** NOT STARTED (scientific execution remains BLOCKED).
+
+## Phase 12 — Firebase persistence (optional gate)
+
+- **Objective:** save/load studies only if user need and security review approve.
+- **Prerequisites:** Phase 11, Firebase rules/privacy decision.
+- **Tasks:** PERSIST-001 converters; rules/emulator; snapshot/audit retention; offline errors.
+- **Expected files:** `src/firebase/`, `firestore.rules`, config docs/tests.
+- **Tests/evidence:** converter roundtrip, deny-by-default, adapter failure behavior.
+- **Exit:** no engine import from Firebase; core works offline.
+- **Dependencies/risks:** auth/security/PII; can be deferred.
+- **Status:** NOT STARTED.
+
+## Phase 13 — Responsive/accessibility hardening
+
+- **Objective:** verify desktop/tablet/mobile and assistive interaction.
+- **Prerequisites:** UI/features complete.
+- **Tasks:** keyboard, focus, reduced motion, chart tables, contrast, responsive review.
+- **Expected files:** component tests, accessibility checklist/evidence.
+- **Tests/evidence:** Playwright viewport runs, manual screen-reader-oriented review.
+- **Exit:** no hidden scientific content, no color-only meaning.
+- **Dependencies/risks:** chart/funnel complexity.
+- **Status:** NOT STARTED.
+
+## Phase 14 — QA and release
+
+- **Objective:** complete regression and deployment readiness.
+- **Prerequisites:** phases 5–13 as applicable.
+- **Tasks:** full matrix, performance smoke, security review, documentation/progress/handover.
+- **Expected files:** CI artifacts, release checklist, updated `PROGRESS.md`.
+- **Tests/evidence:** all applicable tests and `git diff --check`; no unapproved constants.
+- **Exit:** reproducible clone/build, limitations visible, release claim scoped.
+- **Dependencies/risks:** scientific blockers prevent validation claim.
+- **Status:** NOT STARTED.
 
 ## Critical path
-Engineering: 0→2→3→4→5→6→8→9→11. Scientific validation: 1→10→11. A phase is DONE only with exit evidence; a completed task does not auto-complete its phase.
+
+Engineering: `0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 13 → 14`.
+
+Optional research persistence: `9 → 11 → 12`. Scientific validation: `1 → 11` and remains blocked until Owner/lab decisions. A phase cannot skip its evidence because a later phase has a screen.
