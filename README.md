@@ -96,20 +96,27 @@ Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scen
 
 Documentation hardening đã hoàn tất; application code chưa tồn tại. Bốn quyết định Owner B01–B04 đã được ghi nhận: nhiệt độ V1 là 25 °C, sản phẩm sẽ hỗ trợ default KD nhưng giá trị/provenance vẫn cần xác lập, V1 metric-only không có PASS/FAIL threshold, và SOP phải được xây dựng/review/phê duyệt trước scientific validation. Task kỹ thuật kế tiếp là `ENG-001`: scaffold Vite React TypeScript và chốt toolchain theo [TECH_STACK.md](docs/TECH_STACK.md), tạo setup/test tối thiểu nhưng chưa implement chemistry.
 
-## 13. Khởi động khi source được scaffold
+## 13. Cài đặt và chạy dự án
 
-Toolchain target là Node 22 LTS, pnpm và Vite; command chính sẽ được ghi trong `package.json`/`TECH_STACK.md` khi `ENG-001` hoàn thành:
+Yêu cầu Node 22 LTS (xem `.nvmrc`) và pnpm 10 qua Corepack. Sau khi clone repository, chạy:
 
 ```text
+corepack enable
 pnpm install
 pnpm dev
+```
+
+Các kiểm tra và build:
+
+```text
+pnpm format
 pnpm lint
 pnpm typecheck
 pnpm test
 pnpm build
 ```
 
-Hiện các command trên chưa chạy được vì repository chưa có `package.json`; đó là trạng thái có chủ ý, không phải lỗi tài liệu.
+`pnpm test:e2e` chạy smoke test Playwright và cần browser của Playwright được cài riêng. Foundation hiện chỉ có shell trung lập; chưa có calculation engine, scientific input hay Firebase integration.
 
 ## 14. Giới hạn khoa học cần luôn hiển thị
 
