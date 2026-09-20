@@ -2,14 +2,36 @@
 
 Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below is intentionally executable by a student without chat history.
 
-## Scientific blockers
+## Scientific decisions and remaining evidence
 
-| ID | Decision | Blocker/evidence needed |
-|---|---|---|
-| B01 | Fixed V1 temperature | Owner approves literature/lab temperature or explicitly keeps user-KD-only |
-| B02 | Default KD/source/domain | Complete Approved reference or explicit no-default decision |
-| B03 | Validation threshold/rule | Owner sets scope, value/unit and undefined RE handling |
-| B04 | Lab SOP/safety | Lab approves apparatus, titration endpoint, contact/settling, PPE/waste |
+| ID | Owner decision | Current status | Remaining evidence |
+|---|---|---|---|
+| B01 | V1 fixed temperature is 25 °C | DONE | Apply/verify the fixed value in every V1 condition |
+| B02 | V1 supports a default KD, with user override | IN PROGRESS | SCI-001 must produce a provenance-complete 25 °C record or document the no-default state |
+| B03 | V1 is metric-only; no PASS/FAIL threshold | DONE | Keep all reports metric-only; no threshold may be invented |
+| B04 | Build and approve a laboratory SOP before scientific validation | IN PROGRESS | SOP-001 draft, review and approval evidence |
+
+### SCI-001 — Establish default KD at 25 °C
+
+- **Phase/Priority/Status:** 1 / P0 / IN PROGRESS.
+- **Dependencies:** system/convention definition, suitable literature or experimental source and Project Owner/scientific reviewer availability.
+- **Objective:** create a provenance-complete candidate and review it for the AcOH–water–EtOAc system at 25 °C without inventing a numeric value.
+- **Files:** `REFERENCE_DATA.md`, approved reference record only after evidence exists, `EXPERT_DECISIONS.md` if scope changes.
+- **Instructions:** record `CE/CR` convention, concentration basis, exact 25 °C condition, domain, method, citation/raw-data pointer, uncertainty, limitations, reviewer and Owner approval. Until approved, keep user-supplied KD only.
+- **Tests/evidence:** reference-data checklist; identity/unit/convention/temperature/domain review; reviewer and Owner identity/date; no unapproved KD in source.
+- **Acceptance criteria:** either a versioned `Project Owner Approved` record is selectable as the default, or an explicit documented no-default decision is recorded; no unsupported numeric value is added.
+- **Definition of Done:** record and provenance review are committed with evidence, or the no-default decision is committed; `git diff --check` is clean.
+
+### SOP-001 — Draft, review and approve the laboratory SOP
+
+- **Phase/Priority/Status:** 1 / P0 / IN PROGRESS.
+- **Dependencies:** fixed V1 temperature 25 °C; qualified technical reviewer/lab approver; SDS, safety and local waste requirements.
+- **Objective:** produce a versioned SOP for AcOH–water–EtOAc extraction that can govern scientific data collection.
+- **Files:** `EXPERIMENTAL_PROTOCOL.md` as the planning contract; a future versioned SOP artifact only when authored and approved.
+- **Instructions:** cover chemicals, equipment, sample preparation, phase volumes, contact/mixing, settling/separation, sampling, AcOH assay/titration, independent replicates, raw data/provenance, 25 °C operation, PPE, waste, result forms and deviations. Do not invent unapproved operating parameters.
+- **Tests/evidence:** completeness checklist; technical review; Project Owner/lab approval; version/date/approver recorded; pilot or execution evidence only after approval.
+- **Acceptance criteria:** the SOP is versioned, reviewed and explicitly approved for the stated scope; approval evidence is linked; Phase 11 can use it without guessing.
+- **Definition of Done:** approved SOP and evidence are committed, or the task remains open with each missing review item explicit; no claim of scientific validation is made early.
 
 ## ENG — foundation
 
@@ -186,13 +208,13 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 - **Phase/Priority/Status:** 11 / P2 / NOT STARTED.
 - **Dependencies:** EXP-001.
 - **Create:** mean/SD/error functions and report components.
-- **Tests:** T22–T25, zero denominator and threshold pending.
-- **Acceptance:** metric-only report, exact NOT EVALUATED wording, no KD fitting.
+- **Tests:** T22–T25, zero denominator and metric-only wording.
+- **Acceptance:** metric-only report, exact `V1 METRIC-ONLY` wording, no PASS/FAIL and no KD fitting.
 
 ### PERSIST-001 — Optional Firestore adapter
 
 - **Phase/Priority/Status:** 12 / P3 / NOT STARTED (GATED).
-- **Dependencies:** EXP-001/EXP-002, security/privacy decision B04 or Owner approval.
+- **Dependencies:** EXP-001/EXP-002 and an explicit security/privacy decision or Owner approval.
 - **Create:** `src/firebase/` converters, rules/emulator config only after gate.
 - **Tests:** snapshot roundtrip, raw append-only, offline/error, deny-by-default.
 - **Acceptance:** engine remains importable/offline; no animation-frame writes.

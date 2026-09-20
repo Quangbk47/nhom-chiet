@@ -6,7 +6,7 @@ Liquid–Liquid Extraction Simulator is a browser teaching/research tool for AcO
 
 ## Current state
 
-The repository is documentation-only. The browser-first architecture, toolchain target, domain contracts, UI/state/output/test specifications and student backlog are documented. No `package.json`, `src/`, test runner, Firebase project or scientific dataset exists. Scientific readiness is blocked by B01–B04.
+The repository is documentation-only. The browser-first architecture, toolchain target, domain contracts, UI/state/output/test specifications and student backlog are documented. No `package.json`, `src/`, test runner, Firebase project or scientific dataset exists. B01–B04 are recorded; Phase 1 remains in progress for the unapproved KD reference and SOP review/approval.
 
 ## Decided architecture
 
@@ -14,10 +14,10 @@ React/TypeScript/Vite browser app; boundary validation/normalization → pure ca
 
 ## Must not change
 
-- `EXPERT_DECISIONS.md` scientific decisions and PENDING guards.
+- `EXPERT_DECISIONS.md` scientific decisions and provenance guards.
 - `KD=CE/CR`, canonical units, cross-current fresh solvent and stage 0…N.
 - Frontend components must not duplicate chemistry; animation must not mutate results or claim physical time.
-- Do not invent default KD/temperature/citation/domain/equilibrium/experimental data/threshold.
+- Do not invent default KD/citation/domain/equilibrium/experimental data or SOP approval. V1 temperature is fixed at 25 °C and validation is metric-only with no PASS/FAIL threshold.
 - Do not delete or rewrite raw experimental observations; do not tune KD to lower error.
 
 ## Completed in hardening pass
@@ -29,7 +29,7 @@ React/TypeScript/Vite browser app; boundary validation/normalization → pure ca
 
 ## Open decisions and risks
 
-Scientific: B01 temperature, B02 default KD/source/domain, B03 threshold, B04 lab SOP. Engineering risks: locale parsing, floating-point tolerance, chart/StageResult drift, timer races, Firestore privacy/rules. These are tracked in `TODO.md`/`ROADMAP.md`.
+Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; experimental data remains future evidence. Engineering risks: locale parsing, floating-point tolerance, chart/StageResult drift, timer races, Firestore privacy/rules. These are tracked in `TODO.md`/`ROADMAP.md`.
 
 ## Exact next task
 

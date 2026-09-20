@@ -23,12 +23,13 @@ Candidate means captured but unverified. Reviewed means a named reviewer checked
 
 | Item | Status | Application behavior |
 |---|---|---|
-| Fixed V1 temperature | PENDING | store `pending` or declared user metadata; no default |
-| Default KD | BLOCKED | accept labelled user KD only |
-| KD citation/domain | PENDING | no approved prediction claim |
+| Fixed V1 temperature | OWNER-APPROVED DECISION | every V1 run declares the fixed standard `25 °C` |
+| Default KD | OPEN DATA TASK | product decision is resolved; accept labelled user KD until a provenance-complete record is approved |
+| KD citation/domain | OPEN DATA TASK | no project-approved default prediction claim until the record is complete |
 | Equilibrium curve | PENDING | unavailable to V1 |
 | Experimental dataset | PENDING | no fabricated rows |
-| Validation threshold/rule | PENDING | metrics only; no PASS/FAIL |
+| Validation threshold/rule | NOT APPLICABLE TO V1 | report AE/RE/MAE/RMSE only; no PASS/FAIL |
+| Laboratory SOP | PENDING | draft, expert/lab review and approval are required before scientific validation |
 
 ## KD review checklist
 

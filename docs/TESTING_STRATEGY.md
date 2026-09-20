@@ -9,7 +9,7 @@ Use Vitest for pure/domain tests, Testing Library for behavior-oriented React te
 | Layer | Scope | Minimum cases | Evidence |
 |---|---|---|---|
 | Unit: parsing | decimal/scientific/locale text | empty, `0`, `1e-3`, comma ambiguity, NaN/Infinity, units typed | field error assertions |
-| Unit: validation | normalized input/provenance | C0 zero, negative volumes, N bounds, KD, split count/sum, pending/declared temp | error code/message table |
+| Unit: validation | normalized input/provenance | C0 zero, negative volumes, N bounds, KD, split count/sum, fixed 25 °C | error code/message table |
 | Unit: stage engine | one-stage equations | valid positive, zero solute, small/large KD, low/large solvent | expected fields/tolerance |
 | Unit: simulation engine | sequential stages | N=1, N=10, equal/custom equivalence, deterministic rerun | stage/chart lengths |
 | Invariant | conservation/monotonicity | CR/CE/nR/nE nonnegative, KD ratio, nR monotonic, recovery range, MB | no silent clamp |
@@ -34,7 +34,7 @@ N=1 and N=10 produce exact stage counts; N=0, 11 and non-integer produce `INVALI
 
 ### T03 provenance
 
-Positive user KD calculates with `USER_SUPPLIED_KD`; invalid KD rejects; project-approved without matching approved record rejects; pending temperature warns, never invents value.
+Positive user KD calculates with `USER_SUPPLIED_KD`; invalid KD rejects; project-approved without matching approved record rejects; temperature is always declared as 25 °C and non-25 input rejects.
 
 ### T04 split
 
@@ -54,4 +54,4 @@ Same normalized JSON and engine version produce same snapshot. Every stage conse
 
 ## Definition of a passing change
 
-The affected layer tests pass, no unrelated test regresses, `git diff --check` is clean, and documentation/progress/evidence are updated. A failed or blocked test is recorded, not deleted. No green UI snapshot can substitute for a scientific reference or Owner approval.
+The affected layer tests pass, no unrelated test regresses, `git diff --check` is clean, and documentation/progress/evidence are updated. A failed or blocked test is recorded, not deleted. No green UI snapshot can substitute for a scientific reference, SOP approval or Owner approval.

@@ -10,19 +10,19 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Expected files:** README, `DOCUMENT_AUTHORITY_MAP.md`, all docs referenced there.
 - **Tests/evidence:** full Markdown inventory, link scan, contradiction scan, `git diff --check`, student second-pass checklist.
 - **Exit:** no backend-authority wording remains; every next task names files/tests/acceptance; progress/handover updated.
-- **Dependencies/risks:** Owner scientific blockers remain; stale links.
-- **Status:** IN PROGRESS (this hardening session).
+- **Dependencies/risks:** Scientific readiness is tracked separately in Phase 1; stale links.
+- **Status:** DONE.
 
-## Phase 1 — Scientific readiness (blocked)
+## Phase 1 — Scientific readiness (in progress)
 
-- **Objective:** establish optional Approved reference data and lab governance.
-- **Prerequisites:** Owner/lab decisions.
-- **Tasks:** KD candidates → review convention/system/unit/temp/domain → approve or retain no default; approve threshold and SOP.
+- **Objective:** establish provenance-complete reference data and lab governance for scientific use.
+- **Prerequisites:** Owner decisions B01–B04 are recorded; remaining evidence is still required.
+- **Tasks:** establish/approve a default KD at 25 °C or explicitly retain no populated default; review convention/system/unit/domain; draft/review/approve the laboratory SOP; collect experimental data under that SOP.
 - **Expected files:** `REFERENCE_DATA.md`, `TODO.md`, approved records (future data directory only if authorized).
-- **Tests/evidence:** provenance checklist, reviewer/Owner identity/date, threshold governance record, SOP approval.
-- **Exit:** versioned Approved data or explicit user-KD-only decision plus threshold/SOP decision.
-- **Dependencies/risks:** B01–B04; no engineering task may invent values.
-- **Status:** BLOCKED.
+- **Tests/evidence:** provenance checklist, reviewer/Owner identity/date, fixed-temperature match, SOP version/reviewer/approval evidence and raw experimental records. V1 validation remains metric-only; no threshold evidence is required.
+- **Exit:** a versioned Project Owner Approved KD record or an explicit documented no-default state, plus a reviewed/approved SOP and reproducible experimental evidence.
+- **Dependencies/risks:** default KD evidence and SOP approval remain open; no engineering task may invent values or claim scientific validation.
+- **Status:** IN PROGRESS.
 
 ## Phase 2 — Engineering foundation
 
@@ -127,12 +127,12 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 
 - **Objective:** manual/CSV capture, audit and metric computation.
 - **Prerequisites:** Phase 9; approved SOP/data governance for scientific use.
-- **Tasks:** VAL-001 records; CSV preview/atomic import; mean/SD/error metrics; n<3/threshold pending.
+- **Tasks:** VAL-001 records; CSV preview/atomic import; mean/SD/error metrics; n<3 handling; metric-only report with no PASS/FAIL classification.
 - **Expected files:** `src/domain/validation/`, `src/pages/ExperimentalValidation/`, optional adapter.
 - **Tests/evidence:** T19–T27 and raw immutability audit.
-- **Exit:** reproducible metric-only report; no PASS/FAIL until Owner threshold.
-- **Dependencies/risks:** provenance/condition mismatch; privacy.
-- **Status:** NOT STARTED (scientific execution remains BLOCKED).
+- **Exit:** reproducible metric-only report under the approved SOP and data governance; no PASS/FAIL classification in V1.
+- **Dependencies/risks:** provenance/condition mismatch, approved SOP and privacy; implementation can proceed, but scientific execution waits for those evidence gates.
+- **Status:** NOT STARTED.
 
 ## Phase 12 — Firebase persistence (optional gate)
 
@@ -171,4 +171,4 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 
 Engineering: `0 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 → 13 → 14`.
 
-Optional research persistence: `9 → 11 → 12`. Scientific validation: `1 → 11` and remains blocked until Owner/lab decisions. A phase cannot skip its evidence because a later phase has a screen.
+Optional research persistence: `9 → 11 → 12`. Scientific validation: `1 → 11` and remains gated by KD provenance, SOP approval and experimental evidence. Phase 1 does not block engineering phases 2–10; a phase cannot skip its evidence because a later phase has a screen.

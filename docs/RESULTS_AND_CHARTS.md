@@ -21,7 +21,7 @@ For the selected stage, show in this order:
 | Thu hồi tích lũy | `cumulativeRecoveryPercent` | % | 0 |
 | Cân bằng vật chất | `massBalance` | mol and % | zero |
 
-The panel always includes KD source/status, temperature status, assumption text and warnings. A pending/unapproved status cannot be represented only by green styling.
+The panel always includes KD source/status, fixed 25 °C temperature status, assumption text and warnings. An unapproved KD or out-of-domain condition cannot be represented only by green styling.
 
 ## 3. Stage table
 
@@ -95,7 +95,7 @@ absoluteErrorMol = |residualMol|
 relativeErrorPercent = 100*absoluteErrorMol/|incomingMol|, or 0 when incomingMol=0
 ```
 
-`status=warning` may indicate floating-point residual. It is not an experimental acceptance result and must not be relabeled PASS/FAIL. A `fault` hides playback and shows a developer/user diagnostic.
+`status=warning` may indicate floating-point residual. It is not an experimental acceptance result and must not be relabeled PASS/FAIL; V1 experimental reports are metric-only. A `fault` hides playback and shows a developer/user diagnostic.
 
 ## 7. Formatting and accessibility
 

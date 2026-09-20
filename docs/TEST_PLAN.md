@@ -40,10 +40,10 @@ Every evidence row records ID, requirement, fixture/action, expected, actual, co
 | T22 | metric hand fixtures | mean/sample SD/AE/RE/MAE/RMSE match |
 | T23 | measured zero | RE=0 when prediction zero; undefined/null otherwise |
 | T24 | n<3 | `INSUFFICIENT_INDEPENDENT_REPLICATES`, not PASS/FAIL |
-| T25 | threshold pending | exact NOT EVALUATED message; no PASS/FAIL |
+| T25 | metric-only validation report | exact `V1 METRIC-ONLY` message; no PASS/FAIL |
 | T26 | correction/exclusion | raw record and audit reason retained |
 | T27 | KD provenance | Approved gate rejects missing record; user KD warns |
 
 ## Release gate
 
-Run applicable Vitest/Testing Library/Playwright checks, review responsive/accessibility manually, check `git diff --check`, scan source for unapproved constants, verify docs/progress/evidence and confirm no persistence feature bypasses the adapter boundary. Scientific validation cannot be marked complete without approved condition, threshold and experiment evidence.
+Run applicable Vitest/Testing Library/Playwright checks, review responsive/accessibility manually, check `git diff --check`, scan source for unapproved constants, verify docs/progress/evidence and confirm no persistence feature bypasses the adapter boundary. Scientific validation cannot be marked complete without approved condition, SOP, KD provenance and experiment evidence; V1 does not require a threshold because it is metric-only.

@@ -30,12 +30,12 @@ Report which pairs are undefined/excluded; never substitute an arbitrary denomin
 
 ## Required outputs
 
-Per condition/stage table: model CR, raw values, n, mean, SD, AE, RE, inclusion flag and notes. Overall: m, MAE, RMSE, condition metadata, engine/schema version, KD status, temperature status and threshold status. Graph model line vs mean with SD error bars where valid.
+Per condition/stage table: model CR, raw values, n, mean, SD, AE, RE, inclusion flag and notes. Overall: m, MAE, RMSE, condition metadata, engine/schema version, KD status, fixed-temperature status and metric-only evaluation mode. Graph model line vs mean with SD error bars where valid.
 
-## Acceptance governance
+## V1 metric-only governance
 
-Threshold and aggregation rule remain `PENDING`. Until explicit Owner approval, show `NOT EVALUATED — Project Owner validation threshold pending`; never derive PASS/FAIL from MAE/RMSE or floating-point mass-balance tolerance. Owner must approve scope (stage, condition aggregate or both), value/unit, undefined-RE handling and version/date.
+V1 deliberately has no validation acceptance threshold or PASS/FAIL classification. Show `V1 METRIC-ONLY — no PASS/FAIL acceptance threshold is defined.` alongside the reported AE, RE, MAE and RMSE. Never derive an acceptance claim from MAE/RMSE or floating-point mass-balance tolerance. A future product version would require a new Owner decision and specification before adding any classification.
 
 ## Investigation
 
-Preserve snapshots and raw points. Check condition mismatch, unit conversion, temperature/domain, KD convention, phase-volume assumption, solvent/raffinate handling, titration standardization and constant-KD limitations. Do not tune KD just to lower current error. A split comparison needs both simulation and independent experiment.
+Preserve snapshots and raw points. Check condition mismatch, unit conversion, the fixed 25 °C condition, KD convention/domain, phase-volume assumption, solvent/raffinate handling, titration standardization and constant-KD limitations. Do not tune KD just to lower current error. A split comparison needs both simulation and independent experiment under the approved SOP; it remains a metric comparison, not a PASS/FAIL decision.

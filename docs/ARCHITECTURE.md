@@ -4,7 +4,7 @@
 
 V1 is a static browser application deployed to Firebase Hosting. The scientific source of truth is the pure, deterministic calculation engine under `src/domain/calculation/`. There is no custom backend server or REST endpoint required for MVP calculation. This supersedes the earlier backend/API-authority wording in `ALGORITHM_SPEC.md`, `DATA_MODEL.md`, `PROJECT_RULES.md`, `PROJECT_SCOPE.md`, `ROADMAP.md` and `HANDOVER.md`.
 
-This is a software architecture decision, not a scientific decision. Constant KD, temperature, reference data and validation thresholds remain governed by `EXPERT_DECISIONS.md`.
+This is a software architecture decision, not a scientific decision. Constant KD, the fixed 25 °C V1 condition, reference data and metric-only validation behavior remain governed by `EXPERT_DECISIONS.md`.
 
 ## 2. System diagram
 
@@ -85,7 +85,7 @@ EDITING
   -> playback state machine
 ```
 
-Validation errors return field-level messages and no result. Calculation faults return a typed error and no playback. Warnings (for example `USER_SUPPLIED_KD`, pending temperature or missing domain note) travel with a valid result and appear in the UI.
+Validation errors return field-level messages and no result. Calculation faults return a typed error and no playback. Warnings (for example `USER_SUPPLIED_KD` or missing KD domain note) travel with a valid result and appear in the UI. A V1 result always records declared temperature 25 °C.
 
 ## 7. Persistence boundary
 

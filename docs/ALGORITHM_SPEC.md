@@ -44,7 +44,7 @@ Stage order is exactly `0…N`. Stage 0 has zero extraction. `final` is a read-o
 
 ## 5. Error/warning behavior
 
-Errors: invalid input, unsupported model, numeric overflow/non-finite intermediate, or failed invariant. Never return a partial result. Warnings: user-supplied KD, pending temperature, missing domain note, or a small numerical residual within the engineering tolerance. A warning is not validation PASS.
+Errors: invalid input, unsupported model, numeric overflow/non-finite intermediate, or failed invariant. Never return a partial result. Warnings: user-supplied KD, missing domain note, or a small numerical residual within the engineering tolerance. The result is metric-only and a warning is never an experimental acceptance classification.
 
 ## 6. Determinism
 

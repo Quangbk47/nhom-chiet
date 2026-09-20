@@ -37,11 +37,11 @@ IMPLEMENT -> TEST -> UPDATE DOCUMENTATION/PROGRESS -> REVIEW DIFF -> COMMIT -> P
 | Reviewed | Identity, unit, convention, temperature/domain checked by named reviewer | Review support; not a project constant |
 | Project Owner Approved | Explicit scope/version approval | Selectable project constant/default |
 
-No implementation may invent fixed temperature, default KD, KD citation/domain, equilibrium data, experimental data or validation acceptance threshold. User-supplied KD is permitted only with `sourceType=user_supplied`, note/provenance, and UI warning. A missing domain or pending temperature is a visible warning, not a guessed value.
+No implementation may invent a default KD, KD citation/domain, equilibrium data, experimental data or SOP approval. V1 temperature is the fixed Owner-approved 25 °C standard. User-supplied KD is permitted only with `sourceType=user_supplied`, note/provenance, and UI warning. A missing KD domain is a visible exploratory warning; a non-25 °C V1 input is rejected.
 
 ## 5. Validation and data integrity
 
-Raw replicate/titration observations are append-only. Corrections create a superseding audit record with reason, actor and time. Exclusions remain visible. No KD may be tuned solely to lower error without a separately reviewed model change. Before threshold approval, validation status is exactly `NOT EVALUATED`, never PASS/FAIL.
+Raw replicate/titration observations are append-only. Corrections create a superseding audit record with reason, actor and time. Exclusions remain visible. No KD may be tuned solely to lower error without a separately reviewed model change. V1 validation status is metric-only and never PASS/FAIL; any future acceptance classification requires a new Owner decision.
 
 ## 6. Scientific model boundary
 

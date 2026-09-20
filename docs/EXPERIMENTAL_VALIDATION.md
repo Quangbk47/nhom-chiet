@@ -29,10 +29,10 @@ RMSE = sqrt(sum((p-o)^2)/m)             [mol/L]
 
 ## UI/report outputs
 
-Per condition/stage: model CR, raw values, included/excluded IDs, n, mean, sample SD, AE, RE and notes. Overall: m, MAE, RMSE, engine/schema version, KD reference/status, temperature status, mismatch warnings and threshold status. Plot model line against experimental mean with SD error bars only where valid.
+Per condition/stage: model CR, raw values, included/excluded IDs, n, mean, sample SD, AE, RE and notes. Overall: m, MAE, RMSE, engine/schema version, KD reference/status, fixed 25 °C status, mismatch warnings and metric-only evaluation mode. Plot model line against experimental mean with SD error bars only where valid.
 
-Until Owner approves threshold scope/value/undefined handling, show exactly `NOT EVALUATED — Project Owner validation threshold pending`; never derive PASS/FAIL from MAE, RMSE or mass-balance tolerance.
+V1 has no acceptance threshold by design. Show exactly `V1 METRIC-ONLY — no PASS/FAIL acceptance threshold is defined.`; never derive PASS/FAIL, “đạt” or “không đạt” from MAE/RMSE or mass-balance tolerance.
 
 ## Integrity and investigation
 
-Raw observations are append-only. Corrections supersede with reason/actor/time; exclusions remain visible. Do not tune KD to lower current error. Investigate mismatch in this order: condition identity, units, temperature, provenance domain, solvent handling, titration/standardization, phase handling, constant-KD limitation and transcription. A split-solvent conclusion requires both simulation and independent experiment.
+Raw observations are append-only. Corrections supersede with reason/actor/time; exclusions remain visible. Do not tune KD to lower current error. Investigate mismatch in this order: condition identity, units, fixed 25 °C condition, provenance domain, solvent handling, titration/standardization, phase handling, constant-KD limitation and transcription. A split-solvent conclusion requires both simulation and independent experiment under the approved SOP and remains metric-only.

@@ -19,7 +19,7 @@ Mục tiêu học tập là làm cho ảnh hưởng của số bậc, tổng dun
 - Sinh viên: hiểu raffinate, extract, material balance và lợi ích của nhiều bậc.
 - Giảng viên: trình diễn scenario có thể lặp lại, bảng và ba đồ thị.
 - Sinh viên nghiên cứu: lưu condition, nhập dữ liệu titration đã chuẩn hóa, xem AE/RE/MAE/RMSE.
-- Người duyệt: theo dõi provenance của KD, temperature, threshold và thay đổi dữ liệu.
+- Người duyệt: theo dõi provenance của KD, nhiệt độ chuẩn V1 và thay đổi dữ liệu.
 
 Sau MVP, người dùng phải biết input nào được nhận, unit canonical là gì, stage result lấy từ đâu, animation chỉ render kết quả nào, và test nào chứng minh invariant.
 
@@ -38,9 +38,9 @@ Sau MVP, người dùng phải biết input nào được nhận, unit canonical
 
 ## 4. Ngoài phạm vi V1
 
-Không implement CFD, droplet/interface physics, activity coefficient, ternary tie-line/equilibrium curve, kinetic mixing/settling, phase contraction, density, pH speciation, optimization, automatic KD fitting, PASS/FAIL khi threshold chưa được Owner duyệt, hoặc backend server riêng chỉ để tính công thức.
+Không implement CFD, droplet/interface physics, activity coefficient, ternary tie-line/equilibrium curve, kinetic mixing/settling, phase contraction, density, pH speciation, optimization, automatic KD fitting, phân loại chấp nhận PASS/FAIL trong V1, hoặc backend server riêng chỉ để tính công thức.
 
-Nhiệt độ nghiên cứu, default KD, citation/domain KD, equilibrium dataset, experimental dataset và validation acceptance threshold vẫn là `PENDING/BLOCKED`. Không tự điền dữ liệu Internet.
+V1 dùng nhiệt độ chuẩn cố định 25 °C. Giá trị default KD và citation/domain KD vẫn là data task chưa hoàn tất; experimental dataset và SOP được phê duyệt cũng chưa có. V1 chỉ báo cáo metric, không có validation acceptance threshold. Không tự điền dữ liệu Internet.
 
 ## 5. Kiến trúc và data flow
 
@@ -94,7 +94,7 @@ Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scen
 
 ## 12. Trạng thái hiện tại và task kế tiếp
 
-Documentation hardening đang hoàn thành trong phiên này; application code chưa tồn tại. Scientific readiness vẫn bị block bởi các quyết định Owner B01–B04. Task kỹ thuật kế tiếp là `ENG-001`: scaffold Vite React TypeScript và chốt toolchain theo [TECH_STACK.md](docs/TECH_STACK.md), tạo setup/test tối thiểu nhưng chưa implement chemistry.
+Documentation hardening đã hoàn tất; application code chưa tồn tại. Bốn quyết định Owner B01–B04 đã được ghi nhận: nhiệt độ V1 là 25 °C, sản phẩm sẽ hỗ trợ default KD nhưng giá trị/provenance vẫn cần xác lập, V1 metric-only không có PASS/FAIL threshold, và SOP phải được xây dựng/review/phê duyệt trước scientific validation. Task kỹ thuật kế tiếp là `ENG-001`: scaffold Vite React TypeScript và chốt toolchain theo [TECH_STACK.md](docs/TECH_STACK.md), tạo setup/test tối thiểu nhưng chưa implement chemistry.
 
 ## 13. Khởi động khi source được scaffold
 
@@ -113,4 +113,4 @@ Hiện các command trên chưa chạy được vì repository chưa có `packag
 
 ## 14. Giới hạn khoa học cần luôn hiển thị
 
-Constant KD là giả thiết trong context đã khai báo, không phải universal equilibrium claim. User-supplied KD phải hiện warning và provenance; temperature pending phải hiện rõ; animation là visualization; mass-balance numerical tolerance không phải validation acceptance threshold.
+Constant KD là giả thiết trong context đã khai báo, không phải universal equilibrium claim. V1 phải ghi nhiệt độ chuẩn 25 °C; user-supplied KD phải hiện warning và provenance; animation là visualization; mass-balance numerical tolerance không phải validation acceptance threshold. Báo cáo thực nghiệm chỉ là metric-only, không được tự gắn PASS/FAIL.

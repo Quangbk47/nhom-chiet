@@ -24,8 +24,8 @@ V1 does not implement `KD(C)`, activity coefficients, ternary tie-lines, an equi
 | `kd.sourceType` | `user_supplied` or `project_approved` | reject unknown |
 | `kd.referenceIdOrNote` | non-empty text | required for both; approved must resolve record |
 | `kd.validityDomainNote` | text or null | null gives warning |
-| `temperature.status` | `pending` or `declared` | required |
-| `temperature.valueC` | finite number or null | null iff pending; no default |
+| `temperature.status` | `declared` | required for every V1 run |
+| `temperature.valueC` | exactly `25` | fixed V1 standard; a different temperature is outside this contract |
 | `modelId` | `constant-kd-v1` | reject other model |
 
 For `project_approved`, the application may select only a record with status Project Owner Approved, matching convention/value/version, system, temperature and domain. If no such local/reference record exists, return `UNAPPROVED_CONSTANT`; do not silently downgrade. For `user_supplied`, calculate and include `USER_SUPPLIED_KD` warning.
@@ -33,7 +33,7 @@ For `project_approved`, the application may select only a record with status Pro
 ## Required UI language
 
 - User KD: `User-supplied KD — not a project-approved default.`
-- Pending temperature: `V1 fixed study temperature has not yet been approved; this run stores no default temperature.`
+- Fixed temperature: `V1 standard condition: 25 °C.`
 - Missing domain: `KD validity domain is not supplied; this result is exploratory.`
 - Constant model: `Equilibrium assumed; KD is held constant for this run.`
 

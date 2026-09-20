@@ -37,7 +37,7 @@ validated input -> normalized domain input -> pure engine
 - A promise that colors, interface height, particle count or animation seconds are physical observations.
 - A complete ternary equilibrium model, `KD(C)`, activity coefficient model, pH/speciation model, solvent-loss/density/phase-contraction model.
 - Automatic fitting/optimization/recommended stage count.
-- A validation PASS/FAIL system while Owner threshold/aggregation is pending.
+- A validation PASS/FAIL system; V1 reports metrics only.
 
 ## 4. Assumptions and constraints
 
@@ -47,7 +47,7 @@ validated input -> normalized domain input -> pure engine
 4. Nominal `VR` and each `VS,i` remain unchanged.
 5. No loss outside phases; `nIn ≈ nR+nE` is an engineering invariant.
 6. Canonical inputs are finite; `C0≥0`, volumes/KD positive and N within bounds.
-7. Temperature is stored as `pending` or explicitly declared; no project default is invented.
+7. V1 temperature is always declared as the fixed project standard 25 °C; V1 does not model temperature dependence.
 8. User-supplied KD calculations are exploratory and warn that they are not an Approved project default.
 
 ## 5. Future scope gates
@@ -56,7 +56,7 @@ validated input -> normalized domain input -> pure engine
 |---|---|
 | `CE=f(CR)` curve/V2 | Approved data, equation, solver bounds/convergence and validation plan |
 | Approved default KD | Complete Reference Data record and Owner approval |
-| Scientific validation PASS/FAIL | Owner threshold scope/value/undefined-RE rule/version |
+| Scientific validation PASS/FAIL | Not a V1 capability; a future version would require a new Owner decision |
 | Saved studies/experiments | Firestore schema/rules/privacy review |
 | Optimization | Objective, constraints, approved model and user-facing claim review |
 | Lab execution | Approved SOP, SDS, supervision, apparatus and waste controls |
@@ -72,7 +72,7 @@ V1 is successful only when:
 - playback can pause/replay without changing result bytes;
 - UI explicitly shows assumptions, warnings, limitations and stale state;
 - manual and valid CSV experimental records normalize identically;
-- n<3 and threshold pending are visible as non-compliant/not evaluated;
+- n<3 is visible as non-compliant, and every experimental report states the V1 metric-only mode;
 - roadmap evidence and progress are updated;
 - no unapproved scientific constant is present in source.
 

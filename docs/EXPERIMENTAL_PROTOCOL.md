@@ -2,7 +2,7 @@
 
 ## Safety boundary
 
-This is a data-collection specification, not permission to conduct laboratory work. Approved laboratory SOP, SDS, supervisor and local PPE/waste rules control every operation. V1 remains blocked on study temperature, concentration range, volumes, titrant standardization, endpoint, contact/settling definition, apparatus and waste path.
+This is a data-collection planning specification, not permission to conduct laboratory work. An approved laboratory SOP, SDS, supervisor and local PPE/waste rules control every operation. V1 uses the fixed standard temperature 25 °C; concentration range, volumes, titrant standardization, endpoint, contact/settling definition, apparatus and waste path remain subject to the SOP review gate.
 
 ## Purpose and primary measurement
 
@@ -11,6 +11,10 @@ Each condition compares model-predicted aqueous raffinate `CR` with measured `CR
 ## Condition record
 
 Create `conditionId` before work. Record study title, operator/date, protocol version, system identity, feed lot/preparation, initial assay/C0, VR, N, every VS,i, solvent lot, temperature value/method, apparatus, mixing/separation handling, KD/reference/model version and deviations. Link exactly one simulation snapshot. A mismatch is a warning, never silently repaired.
+
+## SOP readiness gate
+
+`SOP-001` in `TODO.md` tracks the SOP deliverable. Before scientific validation is declared ready, the project must have a versioned SOP draft covering chemicals, equipment, sample preparation, phase volumes, extraction/contact, mixing, settling/separation, sampling, AcOH assay/titration, replicates, data/provenance records, fixed 25 °C operation, PPE/safety, waste, result forms and review/approval evidence. The SOP must identify its author, technical reviewer, Project Owner/lab approver, version and approval date. This document does not assert that approval already exists and does not invent experimental parameters.
 
 ## Independent replicates
 

@@ -67,7 +67,7 @@ Each field has a visible Vietnamese label, symbol where useful, unit suffix/sele
 - `KD`: no default; requires value, source type and provenance note; warning stays visible for user KD.
 - `N`: integer 1–10; changing it regenerates custom rows by index and marks any result stale.
 - Split radio: equal shows derived read-only per-stage volumes; custom shows exactly N editable rows, running sum and difference.
-- Temperature: pending is selectable and visibly says no fixed default; declared requires a numeric °C value.
+- Temperature: show the fixed V1 value `25 °C` as declared/read-only; do not expose a temperature-dependent V1 input.
 
 Start is disabled for known invalid fields but remains keyboard discoverable with an error summary. Submit also revalidates to avoid relying on disabled styling.
 
@@ -95,7 +95,7 @@ Create named immutable snapshots. List common basis first: C0, VR, total solvent
 
 ## 10. Experimental Validation mode
 
-Select a saved condition/result first. Display its canonical input and provenance. Manual form and CSV preview both produce `ExperimentalStageData`. Show raw replicate values, n, mean, sample SD, model CR, AE, RE, MAE/RMSE and warnings. If n<3 show insufficient compliance. If threshold is pending show exactly `NOT EVALUATED — Project Owner validation threshold pending` and never PASS/FAIL.
+Select a saved condition/result first. Display its canonical input and provenance. Manual form and CSV preview both produce `ExperimentalStageData`. Show raw replicate values, n, mean, sample SD, model CR, AE, RE, MAE/RMSE and warnings. If n<3 show insufficient compliance. Show exactly `V1 METRIC-ONLY — no PASS/FAIL acceptance threshold is defined.` and never PASS/FAIL.
 
 ## 11. Interaction states
 

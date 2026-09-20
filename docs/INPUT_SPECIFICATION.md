@@ -6,7 +6,7 @@ The form may display mL, but the engine receives only finite canonical SI-like v
 
 ```ts
 type SplitMode = 'equal' | 'custom';
-type TemperatureStatus = 'pending' | 'declared';
+type TemperatureStatus = 'declared';
 type KdSourceType = 'user_supplied' | 'project_approved';
 
 interface SimulationInput {
@@ -22,7 +22,7 @@ interface SimulationInput {
     referenceIdOrNote: string;
     validityDomainNote: string | null;
   };
-  temperature: { status: TemperatureStatus; valueC: number | string | null };
+  temperature: { status: TemperatureStatus; valueC: number | string };
   modelId: 'constant-kd-v1';
 }
 ```
@@ -43,8 +43,7 @@ Raw form values may be strings because HTML inputs are text. `NormalizedSimulati
 | Nguồn KD | `kd.sourceType` | — | select | — | `user_supplied` | Required; approved requires matching reference record |
 | Ghi chú/provenance KD | `kd.referenceIdOrNote` | — | text | — | empty until entered | Required non-empty; never auto-created as approved data |
 | Miền hiệu lực KD | `kd.validityDomainNote` | — | text | — | null allowed | Null emits warning; never invent domain |
-| Trạng thái nhiệt độ | `temperature.status` | — | select | — | `pending` | Required; `pending` or `declared` |
-| Nhiệt độ khai báo | `temperature.valueC` | — | number | °C / °C | null for pending / finite for declared | Required iff declared; no V1 default |
+| Nhiệt độ V1 | `temperature` | — | read-only declared value | °C / °C | `declared`, `25` | Required; V1 uses exactly 25 °C; do not add a temperature-dependent V1 model |
 | Model | `modelId` | — | hidden/read-only | — | `constant-kd-v1` | Serverless client constant; reject other values |
 
 “No scientific max” means the input cannot be accepted if it overflows JavaScript finite-number range, but V1 does not invent a concentration/volume applicability cap. A future UI may add a technical usability warning without turning it into scientific validity.
@@ -62,11 +61,11 @@ Raw form values may be strings because HTML inputs are text. `NormalizedSimulati
 | Custom count ≠ N | `SPLIT_COUNT_MISMATCH` | `Cần đúng N giá trị dung môi.` | Add/remove rows |
 | Custom volume ≤ 0 | `INVALID_SOLVENT_VOLUME` | `Mỗi thể tích dung môi phải lớn hơn 0.` | Correct row |
 | Custom sum outside tolerance | `SPLIT_TOTAL_MISMATCH` | `Tổng chia dung môi phải bằng tổng dung môi trong sai số kỹ thuật cho phép.` | Show running difference |
-| Declared without temperature | `TEMPERATURE_VALUE_REQUIRED` | `Cần nhập nhiệt độ khi chọn đã khai báo.` | Correct field |
+| Temperature is not 25 °C | `TEMPERATURE_NOT_V1_STANDARD` | `V1 sử dụng nhiệt độ chuẩn cố định 25 °C.` | Use the V1 standard or a future approved model |
 | Approved KD has no reference | `UNAPPROVED_CONSTANT` | `KD này chưa có reference được Project Owner duyệt.` | Use user-supplied note or approved record |
 | Unknown model | `UNSUPPORTED_CONFIGURATION` | `Mô hình V1 không được hỗ trợ.` | Reset model |
 
-Warnings are not errors: user KD shows `User-supplied KD — not a project-approved default`; pending temperature and null domain are visible warnings. A valid run may proceed with these warnings.
+Warnings are not errors: user KD shows `User-supplied KD — not a project-approved default`, and a null KD domain is visible as an exploratory warning. A valid V1 run always records declared temperature 25 °C; a different temperature is rejected by this contract.
 
 ## Parsing and normalization
 
@@ -90,4 +89,4 @@ type ValidationResult =
   | { ok: false; errors: ValidationError[] };
 ```
 
-The boundary never clamps a scientific value, substitutes a default KD/temperature, or drops an invalid custom row. See `ERROR_HANDLING.md` and `DATA_MODEL.md` for serialized error types.
+The boundary never clamps a scientific value, invents a KD value or provenance, or drops an invalid custom row. It supplies only the Owner-approved V1 temperature metadata `{ status: 'declared', valueC: 25 }`. See `ERROR_HANDLING.md` and `DATA_MODEL.md` for serialized error types.

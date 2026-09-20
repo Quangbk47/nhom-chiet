@@ -24,7 +24,7 @@ It performs no I/O, no clock lookup, no random generation, no database query and
 - `allocationToleranceL = max(1e-12, 1e-9 * totalSolventVolumeL)` for custom split sum comparison. This is a software boundary tolerance, not a Project Owner threshold.
 - `engineVersion`: explicit string such as `constant-kd-engine@0.1.0`; never inferred from current date.
 
-No default KD, temperature, concentration domain or validation threshold is defined here.
+No numeric default KD, concentration domain or validation acceptance threshold is defined here. V1 input temperature is the Owner-approved fixed standard 25 °C; this engine does not model temperature dependence.
 
 ## 3. Input precondition
 
@@ -36,6 +36,7 @@ finite(VR), VR > 0
 finite(VS,total), VS,total > 0
 integer(N), 1 <= N <= 10
 finite(KD), KD > 0
+temperature.status == declared and temperature.valueC == 25
 all VS,i finite and > 0
 sum(VS,i) matches total within allocationToleranceL
 modelId == constant-kd-v1
@@ -147,7 +148,7 @@ For valid positive inputs, each stage must satisfy:
 - stage array length is `N + 1`, chart lengths are specified in `RESULTS_AND_CHARTS.md`;
 - custom and equal lists preserve total solvent by input contract.
 
-Never clamp a bad result into a plausible range. Return a calculation fault with stage index and diagnostic values. A warning for a small residual may accompany a valid result; the engineering tolerance is not an experimental PASS/FAIL threshold.
+Never clamp a bad result into a plausible range. Return a calculation fault with stage index and diagnostic values. A warning for a small residual may accompany a valid result; the engineering tolerance is not an experimental acceptance threshold or PASS/FAIL classification.
 
 ## 9. Worked software reference case
 
