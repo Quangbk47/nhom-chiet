@@ -33,7 +33,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** fresh clone install/lint/typecheck/test/build.
 - **Exit:** ENG-001/002 acceptance in TODO.
 - **Dependencies/risks:** package/version availability; no chemistry code yet.
-- **Status:** NOT STARTED.
+- **Status:** DONE.
 
 ## Phase 3 — Domain models and input boundary
 
@@ -44,7 +44,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T04–T08, parsing/locale edge cases.
 - **Exit:** normalized input contract is tested and no UI component owns normalization.
 - **Dependencies/risks:** ambiguous locale input; no scientific defaults.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 4 — Pure calculation engine
 

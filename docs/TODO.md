@@ -37,7 +37,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### ENG-001 — Scaffold Vite React TypeScript
 
-- **Phase/Priority/Status:** 2 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 2 / P0 / DONE.
 - **Dependencies:** none; read `TECH_STACK.md`, preserve pre-existing ZIP deletion.
 - **Objective:** create a minimal browser app with reproducible install/build scripts, not chemistry.
 - **Create:** `package.json`, lockfile, `index.html`, `src/app/App.tsx`, `src/main.tsx`, `src/styles/`, `.nvmrc` or tool-version file.
@@ -49,7 +49,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### ENG-002 — Configure lint, format, test and CI
 
-- **Phase/Priority/Status:** 2 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 2 / P0 / DONE.
 - **Dependencies:** ENG-001.
 - **Objective:** enforce strict, readable changes.
 - **Create:** ESLint flat config, Prettier config, Vitest config, `.github/workflows/ci.yml`.
@@ -61,7 +61,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### DOM-001 — Implement canonical TypeScript models
 
-- **Phase/Priority/Status:** 3 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 3 / P0 / IN PROGRESS.
 - **Dependencies:** ENG-001.
 - **Create:** `src/domain/models/input.ts`, `result.ts`, `errors.ts`, `provenance.ts`.
 - **Instructions:** copy names/nullability from `DATA_MODEL.md`; `StageResult` has one canonical extracted-amount field; use readonly result arrays.
@@ -70,7 +70,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### VAL-001 — Parse and normalize input
 
-- **Phase/Priority/Status:** 3 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 3 / P0 / IN PROGRESS.
 - **Dependencies:** DOM-001, `INPUT_SPECIFICATION.md`.
 - **Create:** `src/domain/validation/parseInput.ts`, `normalizeInput.ts`, `validateInput.ts`.
 - **Instructions:** trim/reject empty, finite numbers only, allow scientific notation, handle unambiguous decimal separator, convert mL once, validate provenance and equal/custom split.

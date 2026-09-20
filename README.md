@@ -94,7 +94,7 @@ Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scen
 
 ## 12. Trạng thái hiện tại và task kế tiếp
 
-Documentation hardening đã hoàn tất; application code chưa tồn tại. Bốn quyết định Owner B01–B04 đã được ghi nhận: nhiệt độ V1 là 25 °C, sản phẩm sẽ hỗ trợ default KD nhưng giá trị/provenance vẫn cần xác lập, V1 metric-only không có PASS/FAIL threshold, và SOP phải được xây dựng/review/phê duyệt trước scientific validation. Task kỹ thuật kế tiếp là `ENG-001`: scaffold Vite React TypeScript và chốt toolchain theo [TECH_STACK.md](docs/TECH_STACK.md), tạo setup/test tối thiểu nhưng chưa implement chemistry.
+Documentation hardening và Phase 2 engineering foundation đã hoàn tất. Phase 3 đang triển khai canonical domain models cùng input validation/normalization; calculation engine chưa được triển khai. Bốn quyết định Owner B01–B04 vẫn được giữ nguyên: nhiệt độ V1 là 25 °C, sản phẩm sẽ hỗ trợ default KD nhưng giá trị/provenance vẫn cần xác lập, V1 metric-only không có PASS/FAIL threshold, và SOP phải được xây dựng/review/phê duyệt trước scientific validation.
 
 ## 13. Cài đặt và chạy dự án
 

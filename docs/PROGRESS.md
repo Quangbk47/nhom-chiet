@@ -2,7 +2,7 @@
 
 ## Current authoritative state
 
-This repository contains a completed documentation baseline and a published documentation-hardening pass. No production application source, package manifest, calculation engine, UI, database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 are recorded: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation. Documentation completion does not mean application completion.
+This repository contains the completed documentation baseline and the merged Phase 2 engineering foundation. Phase 3 domain models and input-boundary validation are under review on `codex/phase-3-domain-input`; no calculation engine, production UI, database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
 
 ## Phase ledger
 
@@ -10,8 +10,8 @@ This repository contains a completed documentation baseline and a published docu
 |---|---|---|
 | 0 Documentation hardening | DONE | authority map, browser-first correction, implementation-ready contracts and second-pass checks completed |
 | 1 Scientific readiness | IN PROGRESS | B01 and B03 resolved; SCI-001 default-KD evidence and SOP-001 review/approval remain open |
-| 2 Engineering foundation | IN PROGRESS | foundation branch adds Vite/React/TypeScript scaffold, quality tooling and CI; completion awaits fresh-install command evidence and review |
-| 3 Domain models/input | NOT STARTED | no source code |
+| 2 Engineering foundation | DONE | PR #1 merged as `046c6a9`; foundation CI check passed on GitHub |
+| 3 Domain models/input | IN PROGRESS | canonical models, parser, normalization, typed validation, fixtures and tests implemented locally; review/CI pending |
 | 4 Pure calculation engine | NOT STARTED | no source code |
 | 5 Engine verification | NOT STARTED | no test runner/fixtures |
 | 6 Application shell/input UI | NOT STARTED | no source code |
@@ -52,9 +52,22 @@ This repository contains a completed documentation baseline and a published docu
 - Local verification passed: `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, and `pnpm build`.
 - CI is configured with Node `22.16.0` and pnpm `10.27.0`; it runs frozen install, format, lint, typecheck, unit tests, and build without Firebase credentials. CI execution and review remain required before Phase 2 can be marked `DONE`.
 
+## Engineering foundation publication — 2026-09-21
+
+- Phase 2 commit `0984da2` was merged by PR #1 into `main` as merge commit `046c6a9`.
+- The GitHub CI check passed; Phase 2 is now `DONE`.
+
+## Domain/input boundary — 2026-09-21 (uncommitted branch evidence)
+
+- Added canonical readonly TypeScript contracts for input, provenance, errors/warnings, result snapshots, UI state and experimental records under `src/domain/models/`.
+- Added finite-number parsing with dot/comma/scientific-notation handling, explicit mL-to-L boundary conversion, equal/custom solvent allocation, provenance gates, fixed-V1-temperature validation and immutable normalized input under `src/domain/validation/`.
+- Added software-only fixtures and tests for typed schema shape, stage/chart lengths, parsing, stage-count 1–10 boundaries, invalid/non-finite input, custom split count/value/sum, warnings and approved-reference gating.
+- Local evidence: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (48/48) and `pnpm build` all pass.
+- No calculation algorithm, production UI, Firebase/deploy integration, numeric default KD, reference data, validation threshold or SOP approval was added. DOM-001 and VAL-001 remain `IN PROGRESS` pending review/CI.
+
 ## Next action
 
-Phase 2 engineering foundation is in progress on `codex/phase-2-engineering-foundation`: Vite/React/TypeScript scaffold, quality tooling and CI only. Do not implement chemistry, Firebase or scientific inputs in this phase. Record fresh-install command evidence and review before marking Phase 2 done.
+Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. After approval, commit/push and require CI evidence before marking DOM-001, VAL-001 or Phase 3 `DONE`; Phase 4 calculation work must not begin early.
 
 ## Update protocol
 
