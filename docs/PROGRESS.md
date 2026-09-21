@@ -67,7 +67,14 @@ This repository contains the completed documentation baseline and the merged Pha
 
 ## Next action
 
-Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. After approval, commit/push and require CI evidence before marking DOM-001, VAL-001 or Phase 3 `DONE`; Phase 4 calculation work must not begin early.
+Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. Phase 4 is permitted on its descendant branch but neither Phase 3 nor Phase 4 is `DONE` before review/CI evidence.
+
+## Pure calculation engine — 2026-09-21 (uncommitted branch evidence)
+
+- On `codex/phase-4-calculation-engine`, added a pure deterministic calculation entry point under `src/domain/calculation/`. It consumes the Phase 3 normalized-input contract, defensively rejects invalid direct callers, creates immutable Stage 0…N, final summary, chart contracts and visual-plan inputs, and retains validation warnings/provenance in a valid result.
+- Unit coverage maps T01–T10: zero solute, 1/10 stages, defensive invalid-stage/KD paths, boundary validation, equal/custom equivalence, the documented software reference fixture, mass-balance/KD-ratio invariants, determinism and input immutability.
+- The documented fixture KD remains software-test-only. V1 temperature is validated as the Owner-declared `25 °C` condition; no numeric KD default, reference dataset, validation threshold, SOP approval, PASS/FAIL classification, React/UI, Firebase, network or deployment code was added.
+- Local verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (55/55) and `pnpm build`. CALC-001 through CALC-003 and Phase 4 remain `IN PROGRESS` pending review/CI; this evidence does not mark them `DONE`.
 
 ## Update protocol
 
