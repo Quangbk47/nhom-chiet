@@ -95,11 +95,11 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Objective:** render complete result in locked stage sequence.
 - **Prerequisites:** Phase 4, 6, 7; `SIMULATION_STATE_MACHINE.md`.
 - **Tasks:** SIM-001 reducer; SIM-002 scheduler; controls/timeline; stale/replay integration.
-- **Expected files:** `src/simulation/state-machine/`, hooks, reducer tests.
+- **Expected files:** `src/simulation/playback/`, playback controls, hooks and reducer tests.
 - **Tests/evidence:** T14–T18, transition coverage and result-reference equality.
 - **Exit:** Start calculates before animation; pause/speed/restart/reset cannot mutate snapshot.
 - **Dependencies/risks:** timer race; reduced-motion behavior.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 9 — Results, table and charts
 

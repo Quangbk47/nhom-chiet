@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 
 import { InputPanel, type InputFormState } from '../../components/input/InputPanel';
 import { FunnelVisualization } from '../../components/simulation/FunnelVisualization';
+import { PlaybackControls } from '../../components/simulation/PlaybackControls';
 import { calculateValidatedSimulation } from '../../domain/calculation';
 import type {
   SimulationInput,
@@ -11,6 +12,7 @@ import type {
 } from '../../domain/models';
 import { applyVolumeUnitsAtBoundary } from '../../domain/validation/normalizeInput';
 import { validateInput } from '../../domain/validation/validateInput';
+import { usePlayback } from '../../simulation/playback';
 
 type PageStatus = 'initial' | 'editing' | 'invalid' | 'valid' | 'stale' | 'error';
 
@@ -35,7 +37,7 @@ export function SingleSimulationPage() {
   const [errors, setErrors] = useState<readonly ValidationError[]>([]);
   const [warnings, setWarnings] = useState<readonly Warning[]>([]);
   const [previousResult, setPreviousResult] = useState<SimulationResult | null>(null);
-  const [selectedStage, setSelectedStage] = useState(0);
+  const playback = usePlayback();
 
   const boundaryInput = useMemo(() => makeBoundaryInput(form), [form]);
   const preview = useMemo(() => validateInput(boundaryInput), [boundaryInput]);
@@ -46,6 +48,7 @@ export function SingleSimulationPage() {
     setErrors([]);
     setWarnings([]);
     setStatus(previousResult === null ? 'editing' : 'stale');
+    if (previousResult !== null) playback.dispatch({ type: 'INPUT_CHANGED' });
   };
 
   const handleFieldChange = (field: keyof InputFormState, value: string) => {
@@ -80,13 +83,16 @@ export function SingleSimulationPage() {
       setErrors(calculation.errors.filter(isValidationError));
       setWarnings([]);
       setStatus(calculation.errors.every(isValidationError) ? 'invalid' : 'error');
+      if (!calculation.errors.every(isValidationError)) {
+        playback.dispatch({ type: 'CALCULATION_ERROR', message: 'Calculation contract error.' });
+      }
       requestAnimationFrame(() =>
         document.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(),
       );
       return;
     }
     setPreviousResult(calculation.value);
-    setSelectedStage(calculation.value.stages.length > 1 ? 1 : 0);
+    playback.dispatch({ type: 'CALCULATION_READY', result: calculation.value });
     setErrors([]);
     setWarnings(calculation.value.warnings);
     setStatus('valid');
@@ -98,7 +104,7 @@ export function SingleSimulationPage() {
     setErrors([]);
     setWarnings([]);
     setPreviousResult(null);
-    setSelectedStage(0);
+    playback.dispatch({ type: 'RESET' });
   };
 
   return (
@@ -141,21 +147,15 @@ export function SingleSimulationPage() {
           </div>
           {status === 'valid' && previousResult !== null ? (
             <>
-              <label className="stage-selector" htmlFor="visual-stage">
-                Bậc đang xem
-                <select
-                  id="visual-stage"
-                  value={selectedStage}
-                  onChange={(event) => setSelectedStage(Number(event.target.value))}
-                >
-                  {previousResult.stages.map((stage) => (
-                    <option key={stage.stageNumber} value={stage.stageNumber}>
-                      Bậc {stage.stageNumber}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <FunnelVisualization result={previousResult} stageNumber={selectedStage} />
+              <FunnelVisualization
+                result={previousResult}
+                stageNumber={playback.state.currentStageNumber}
+              />
+              <PlaybackControls
+                state={playback.state}
+                dispatch={playback.dispatch}
+                reducedMotion={playback.reducedMotion}
+              />
             </>
           ) : (
             <div className="visual-empty-state">
@@ -169,7 +169,9 @@ export function SingleSimulationPage() {
               </p>
             </div>
           )}
-          <p className="disclaimer">Playback và timeline chưa được triển khai trong Phase 7.</p>
+          <p className="disclaimer">
+            Playback duyệt qua các bậc đã được engine tính sẵn; không tính lại dữ liệu hóa học.
+          </p>
         </section>
 
         <section className="panel status-panel" aria-labelledby="status-title" aria-live="polite">
@@ -182,9 +184,7 @@ export function SingleSimulationPage() {
       </div>
 
       <section className="deferred-content" aria-label="Chức năng ở phase sau">
-        <p>
-          Timeline, bảng kết quả và biểu đồ sẽ sử dụng immutable SimulationResult ở các phase sau.
-        </p>
+        <p>Bảng kết quả và biểu đồ sẽ sử dụng immutable SimulationResult ở các phase sau.</p>
       </section>
     </main>
   );

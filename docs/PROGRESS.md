@@ -2,7 +2,7 @@
 
 ## Current authoritative state
 
-This repository contains the completed documentation baseline and the merged Phase 2 engineering foundation. Phase 3 domain/input work, Phase 4 calculation engine and Phase 5 contract verification exist on their descendant review branches; none is merged or marked complete before review/CI. No production UI, database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
+This repository contains the completed documentation baseline and the merged Phase 2 engineering foundation. Phase 3–8 engineering work exists on descendant review branches; none is merged or marked complete before review/CI. No database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
 
 ## Phase ledger
 
@@ -16,13 +16,13 @@ This repository contains the completed documentation baseline and the merged Pha
 | 5 Engine verification | IN PROGRESS | serialized contract/regression suite passes locally; review/CI pending |
 | 6 Application shell/input UI | IN PROGRESS | responsive shell, accessible boundary-connected form and component tests pass locally; review/CI pending |
 | 7 SVG visualization | IN PROGRESS | deterministic SVG, mappings, accessible alternative and desktop/mobile smoke tests pass locally; review/CI pending |
-| 8 Playback state machine | NOT STARTED | no source code |
+| 8 Playback state machine | IN PROGRESS | pure reducer, controlled scheduler, accessible controls and stale/result-reference tests pass locally; review/CI pending |
 | 9 Results/table/charts | NOT STARTED | no source code |
 | 10 Scenario comparison | NOT STARTED | no source code |
 | 11 Experimental capture/analytics | NOT STARTED | engineering can proceed; scientific execution awaits approved SOP, KD provenance and experiment evidence |
 | 12 Firebase persistence | NOT STARTED | optional gate not approved/implemented |
-| 13 Responsive/accessibility | NOT STARTED | no UI |
-| 14 QA/release | NOT STARTED | no app to release |
+| 13 Responsive/accessibility | NOT STARTED | phase-wide hardening and assistive review remain pending |
+| 14 QA/release | NOT STARTED | release gate has not been executed |
 
 ## Hardening session evidence — 2026-09-19
 
@@ -67,7 +67,7 @@ This repository contains the completed documentation baseline and the merged Pha
 
 ## Next action
 
-Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. Phase 4 is permitted on its descendant branch but neither Phase 3 nor Phase 4 is `DONE` before review/CI evidence.
+Review the stacked Phase 3–8 branches, beginning with the earliest unmerged ancestor. No review branch is `DONE` before review/CI evidence.
 
 ## Pure calculation engine — 2026-09-21 (uncommitted branch evidence)
 
@@ -101,6 +101,14 @@ Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. P
 - Playwright Chromium was installed to the user cache only. Desktop Chrome, Pixel 5 and reduced-motion projects pass the shell and valid-input visualization smoke tests, including visible SVG/table alternative, responsive width and no horizontal page overflow. Browser binaries and generated test artefacts are not repository files.
 - Manual desktop browser inspection found phase labels clipped at the SVG right edge; the labels were anchored inside the viewBox with a contrast stroke and rechecked visually with no clipping or text/particle overlap.
 - No timeline, playback controls, charts, scenario comparison, Firebase/deploy, numeric KD default, reference data, scientific threshold, PASS/FAIL or “real-time” claim was added. VIS-001/VIS-002 and Phase 7 remain `IN PROGRESS` pending review/CI and broader visual QA.
+
+## Playback integration — 2026-09-21 (uncommitted branch evidence)
+
+- Added a serializable pure playback reducer for IDLE/READY, the documented stage choreography, PAUSED, COMPLETED, STALE and ERROR. `CALCULATION_READY` validates Stage 0…N before storing the immutable result; playback events retain the same result reference and never invoke chemistry calculations.
+- Added a controlled one-shot scheduler, presentation-speed controls (0.5×/1×/2×), Start/Pause/Resume/Next Stage/Restart controls, live status text, keyboard-native buttons and reduced-motion handling. Input edits mark the prior result stale and remove the visualization/playback until recalculation.
+- Reducer/component coverage maps T14–T18, including the transition matrix, 1/10-stage boundaries, zero-concentration traversal, fake-timer pause behavior, result-reference equality, numerical snapshot immutability and invalid/stale guards.
+- Local verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (92/92), `pnpm build` and `git diff --check`. Playwright passed 9/9 checks across desktop Chromium, Pixel 5 and reduced-motion projects, covering keyboard focus, controls, stale invalidation, responsive SVG width and page overflow. Phase 8 and SIM-001/SIM-002 remain `IN PROGRESS` pending review/CI.
+- No chart, scenario comparison, Firebase/deploy, numeric KD default, reference dataset, threshold, PASS/FAIL classification or additional scientific assumption was added.
 
 ## Update protocol
 

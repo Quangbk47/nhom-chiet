@@ -154,17 +154,17 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### SIM-001 — Implement playback reducer
 
-- **Phase/Priority/Status:** 8 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 8 / P1 / IN PROGRESS.
 - **Dependencies:** CALC-002, VIS-001, `SIMULATION_STATE_MACHINE.md`.
-- **Create:** `src/simulation/state-machine/reducer.ts`, events/types/transition tests.
+- **Create:** `src/simulation/playback/playbackMachine.ts`, events/types/transition tests.
 - **Tests:** T14/T15/T18, every state/guard, stale/error, cursor range.
 - **Acceptance:** all results precomputed before START; pause/speed/restart/reset preserve result reference.
 
 ### SIM-002 — Connect controls, timeline and scheduler
 
-- **Phase/Priority/Status:** 8 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 8 / P1 / IN PROGRESS.
 - **Dependencies:** SIM-001, UI-001.
-- **Create:** controls hook/components and timeline.
+- **Create:** playback scheduler hook and controls; timeline remains part of later result presentation.
 - **Tests:** keyboard controls, reduced motion, Next Stage skips visuals without recalculation.
 - **Acceptance:** exact stage order, visible status text and disabled control rules.
 
