@@ -1,6 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 
 import { InputPanel, type InputFormState } from '../../components/input/InputPanel';
+import { FunnelVisualization } from '../../components/simulation/FunnelVisualization';
 import { calculateValidatedSimulation } from '../../domain/calculation';
 import type {
   SimulationInput,
@@ -34,6 +35,7 @@ export function SingleSimulationPage() {
   const [errors, setErrors] = useState<readonly ValidationError[]>([]);
   const [warnings, setWarnings] = useState<readonly Warning[]>([]);
   const [previousResult, setPreviousResult] = useState<SimulationResult | null>(null);
+  const [selectedStage, setSelectedStage] = useState(0);
 
   const boundaryInput = useMemo(() => makeBoundaryInput(form), [form]);
   const preview = useMemo(() => validateInput(boundaryInput), [boundaryInput]);
@@ -84,6 +86,7 @@ export function SingleSimulationPage() {
       return;
     }
     setPreviousResult(calculation.value);
+    setSelectedStage(calculation.value.stages.length > 1 ? 1 : 0);
     setErrors([]);
     setWarnings(calculation.value.warnings);
     setStatus('valid');
@@ -95,6 +98,7 @@ export function SingleSimulationPage() {
     setErrors([]);
     setWarnings([]);
     setPreviousResult(null);
+    setSelectedStage(0);
   };
 
   return (
@@ -130,18 +134,42 @@ export function SingleSimulationPage() {
           onReset={handleReset}
         />
 
-        <section className="panel simulation-placeholder" aria-labelledby="simulation-title">
+        <section className="panel simulation-workspace" aria-labelledby="simulation-title">
           <div className="panel-heading">
             <p className="step-label">Bước 2</p>
             <h2 id="simulation-title">Không gian mô phỏng</h2>
           </div>
-          <div className="placeholder-illustration" aria-hidden="true">
-            R → S → E
-          </div>
-          <p>SVG visualization và playback chưa được triển khai trong Phase 6.</p>
-          <p className="disclaimer">
-            Minh họa không đại diện màu chất lỏng hoặc thời gian chiết thực tế.
-          </p>
+          {status === 'valid' && previousResult !== null ? (
+            <>
+              <label className="stage-selector" htmlFor="visual-stage">
+                Bậc đang xem
+                <select
+                  id="visual-stage"
+                  value={selectedStage}
+                  onChange={(event) => setSelectedStage(Number(event.target.value))}
+                >
+                  {previousResult.stages.map((stage) => (
+                    <option key={stage.stageNumber} value={stage.stageNumber}>
+                      Bậc {stage.stageNumber}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <FunnelVisualization result={previousResult} stageNumber={selectedStage} />
+            </>
+          ) : (
+            <div className="visual-empty-state">
+              <div className="placeholder-illustration" aria-hidden="true">
+                R → S → E
+              </div>
+              <p>
+                {status === 'stale'
+                  ? 'Visualization đã tạm ẩn vì dữ liệu đầu vào thay đổi.'
+                  : 'Nhập dữ liệu hợp lệ để tạo visualization tĩnh theo từng bậc.'}
+              </p>
+            </div>
+          )}
+          <p className="disclaimer">Playback và timeline chưa được triển khai trong Phase 7.</p>
         </section>
 
         <section className="panel status-panel" aria-labelledby="status-title" aria-live="polite">

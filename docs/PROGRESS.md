@@ -15,7 +15,7 @@ This repository contains the completed documentation baseline and the merged Pha
 | 4 Pure calculation engine | IN PROGRESS | pure deterministic engine and T01–T10 unit coverage implemented on Phase 4 branch; review/CI pending |
 | 5 Engine verification | IN PROGRESS | serialized contract/regression suite passes locally; review/CI pending |
 | 6 Application shell/input UI | IN PROGRESS | responsive shell, accessible boundary-connected form and component tests pass locally; review/CI pending |
-| 7 SVG visualization | NOT STARTED | no source code |
+| 7 SVG visualization | IN PROGRESS | deterministic SVG, mappings, accessible alternative and desktop/mobile smoke tests pass locally; review/CI pending |
 | 8 Playback state machine | NOT STARTED | no source code |
 | 9 Results/table/charts | NOT STARTED | no source code |
 | 10 Scenario comparison | NOT STARTED | no source code |
@@ -91,6 +91,16 @@ Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. P
 - Added component tests for semantic rendering, keyboard submit, field errors/focus, boundary warnings, mL conversion, stage boundaries, equal/custom split, valid/invalid/stale/reset states. Local verification passes: format, lint, typecheck, 72/72 unit/component tests and production build.
 - Playwright smoke test was updated for the Phase 6 shell, but Chromium is not installed in the local Playwright cache, so E2E execution is not Phase 6 failure evidence. UI-001, UI-002 and Phase 6 remain `IN PROGRESS` pending review/CI and later visual QA.
 - No Firebase, deploy, SVG funnel, playback state machine, result charts, numeric KD default, reference data, scientific threshold, PASS/FAIL or “real-time” claim was added.
+
+## SVG visualization — 2026-09-21 (uncommitted branch evidence)
+
+- Added a responsive `640×720` SVG separatory-funnel renderer with clip path, outline/stopcock, patterned and labelled nominal aqueous/organic phases, stage caption and deterministic symbolic AcOH particles. The component receives only an immutable `SimulationResult` plus selected stage; it contains no chemistry equation and performs no recalculation.
+- Added software-only volume-to-height, particle allocation and deterministic-position mappings under `src/simulation/visualization/`. Stage fractions and capacity come from `VisualPlan`; zero solute creates zero particles, Stage 0 has no organic layer, and nonzero allocations sum to the plan capacity.
+- Added keyboard-focusable accessible naming, persistent scientific disclaimers, a text legend, a per-stage table alternative, contrast patterns and reduced-motion CSS. Phase 7 provides static stage selection only; playback/state machine remains deferred.
+- Unit/component evidence covers monotonic/zero volume mapping, phase bounds, particle allocation, deterministic coordinates, clipping, stage mapping, invalid stage and zero-solute behavior. Local checks pass with 83/83 unit/component tests and production build.
+- Playwright Chromium was installed to the user cache only. Desktop Chrome, Pixel 5 and reduced-motion projects pass the shell and valid-input visualization smoke tests, including visible SVG/table alternative, responsive width and no horizontal page overflow. Browser binaries and generated test artefacts are not repository files.
+- Manual desktop browser inspection found phase labels clipped at the SVG right edge; the labels were anchored inside the viewBox with a contrast stroke and rechecked visually with no clipping or text/particle overlap.
+- No timeline, playback controls, charts, scenario comparison, Firebase/deploy, numeric KD default, reference data, scientific threshold, PASS/FAIL or “real-time” claim was added. VIS-001/VIS-002 and Phase 7 remain `IN PROGRESS` pending review/CI and broader visual QA.
 
 ## Update protocol
 

@@ -9,7 +9,7 @@ export default defineConfig({
     trace: 'on-first-retry',
   },
   webServer: {
-    command: 'pnpm build && pnpm preview -- --host 127.0.0.1 --port 4173',
+    command: 'pnpm build && pnpm exec vite preview --host 127.0.0.1 --port 4173',
     url: 'http://127.0.0.1:4173',
     reuseExistingServer: !process.env.CI,
   },
@@ -17,6 +17,14 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'mobile-chromium',
+      use: { ...devices['Pixel 5'] },
+    },
+    {
+      name: 'reduced-motion-chromium',
+      use: { ...devices['Desktop Chrome'], reducedMotion: 'reduce' },
     },
   ],
 });

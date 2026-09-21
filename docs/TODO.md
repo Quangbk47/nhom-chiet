@@ -136,7 +136,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### VIS-001 — Implement funnel SVG layers
 
-- **Phase/Priority/Status:** 7 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 7 / P1 / IN PROGRESS.
 - **Dependencies:** DOM-001, `SIMULATION_VISUAL_SPEC.md`.
 - **Create:** `src/simulation/visualization/FunnelSVG.tsx`, geometry helpers and tests.
 - **Instructions:** defs/clipPath/outline/neck/layers/interface/particles/stopcock/labels/overlay; viewBox 640×720.
@@ -145,7 +145,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### VIS-002 — Implement volume and particle mappings
 
-- **Phase/Priority/Status:** 7 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 7 / P1 / IN PROGRESS.
 - **Dependencies:** VIS-001, CALC-002.
 - **Create:** `volumeToHeight.ts`, `particleMapping.ts`.
 - **Algorithm:** normalize by max(VR,VS), clamp; `round(P*fractionExtracted)` and complement; deterministic positions.

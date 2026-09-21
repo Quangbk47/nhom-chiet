@@ -88,7 +88,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T16/T17, zero volume, clipping, reduced motion.
 - **Exit:** every visual number maps to a result field; no molecule/physical-time claim.
 - **Dependencies/risks:** accessibility and conventional phase interpretation.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 8 — Playback state machine and integration
 

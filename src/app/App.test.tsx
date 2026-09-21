@@ -12,7 +12,7 @@ describe('Phase 6 app shell and input UI', () => {
     expect(screen.getByRole('heading', { name: 'Không gian mô phỏng' })).toBeInTheDocument();
     expect(screen.getByTestId('form-status')).toHaveTextContent('Initial');
     expect(
-      screen.getByText(/SVG visualization và playback chưa được triển khai/),
+      screen.getByText(/Nhập dữ liệu hợp lệ để tạo visualization tĩnh theo từng bậc/),
     ).toBeInTheDocument();
   });
 
