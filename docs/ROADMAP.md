@@ -77,7 +77,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** labels, keyboard, responsive and T18.
 - **Exit:** form can produce normalized input but does not calculate locally.
 - **Dependencies/risks:** UI drift from input contract.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 7 — Static and dynamic funnel visualization
 

@@ -1,10 +1,41 @@
-import type { NormalizedSimulationInput, SplitMode } from '../models';
+import type { NormalizedSimulationInput, SimulationInput, SplitMode } from '../models';
 import type { KdProvenance, TemperatureMetadata } from '../models/provenance';
+import { parseFiniteNumber } from './parseInput';
 
 export type VolumeUnit = 'L' | 'mL';
 
 export function convertVolumeToLitres(value: number, unit: VolumeUnit): number {
   return unit === 'mL' ? value / 1000 : value;
+}
+
+export interface DisplayVolumeUnits {
+  readonly feedVolume: VolumeUnit;
+  readonly totalSolventVolume: VolumeUnit;
+  readonly stageSolventVolumes: VolumeUnit;
+}
+
+/** Converts display volumes exactly once before canonical validation. */
+export function applyVolumeUnitsAtBoundary(
+  input: SimulationInput,
+  units: DisplayVolumeUnits,
+): SimulationInput {
+  return {
+    ...input,
+    feedVolumeL: convertRawVolume(input.feedVolumeL, units.feedVolume),
+    totalSolventVolumeL: convertRawVolume(input.totalSolventVolumeL, units.totalSolventVolume),
+    stageSolventVolumesL:
+      input.stageSolventVolumesL === null
+        ? null
+        : input.stageSolventVolumesL.map((value) =>
+            convertRawVolume(value, units.stageSolventVolumes),
+          ),
+  };
+}
+
+function convertRawVolume(value: number | string, unit: VolumeUnit): number | string {
+  if (unit === 'L') return value;
+  const parsed = parseFiniteNumber(value);
+  return parsed.ok ? convertVolumeToLitres(parsed.value, unit) : value;
 }
 
 export interface ParsedSimulationInput {

@@ -120,7 +120,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### UI-001 — Build three-region application shell
 
-- **Phase/Priority/Status:** 6 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 6 / P1 / IN PROGRESS.
 - **Dependencies:** ENG-001, `UI_UX_SPEC.md`.
 - **Create:** `src/pages/SingleSimulation/`, layout CSS, mode tabs.
 - **Tests:** responsive order, labels, empty/error/stale states.
@@ -128,7 +128,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### UI-002 — Build InputPanel and split editor
 
-- **Phase/Priority/Status:** 6 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 6 / P1 / IN PROGRESS.
 - **Dependencies:** VAL-001, UI-001.
 - **Create:** `src/components/input/InputPanel.tsx`, `SplitEditor.tsx`, error summary.
 - **Tests:** keyboard, unit labels/converter, custom N rows, provenance warnings.

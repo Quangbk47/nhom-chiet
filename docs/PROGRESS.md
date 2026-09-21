@@ -14,7 +14,7 @@ This repository contains the completed documentation baseline and the merged Pha
 | 3 Domain models/input | IN PROGRESS | canonical models, parser, normalization, typed validation, fixtures and tests implemented locally; review/CI pending |
 | 4 Pure calculation engine | IN PROGRESS | pure deterministic engine and T01–T10 unit coverage implemented on Phase 4 branch; review/CI pending |
 | 5 Engine verification | IN PROGRESS | serialized contract/regression suite passes locally; review/CI pending |
-| 6 Application shell/input UI | NOT STARTED | no source code |
+| 6 Application shell/input UI | IN PROGRESS | responsive shell, accessible boundary-connected form and component tests pass locally; review/CI pending |
 | 7 SVG visualization | NOT STARTED | no source code |
 | 8 Playback state machine | NOT STARTED | no source code |
 | 9 Results/table/charts | NOT STARTED | no source code |
@@ -82,6 +82,15 @@ Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. P
 - Regression review found and fixed two defensive gaps: a direct caller could forge an unsupported `splitMode` or KD `sourceType` and still calculate. The engine now rejects unsupported split modes, KD provenance source types and malformed validity-domain notes before arithmetic.
 - Local verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (66/66) and `pnpm build`. `git diff --check` remains part of the pre-commit gate.
 - No equation, unit, numeric KD default, reference dataset, scientific threshold, experimental classification, React/UI, Firebase, network or deployment behavior changed. Phase 5 remains `IN PROGRESS` pending review/CI.
+
+## Application shell and input UI — 2026-09-21 (uncommitted branch evidence)
+
+- Added a responsive single-simulation shell with desktop/tablet/mobile grid order, semantic regions, visible focus styles and reduced-motion CSS. SVG visualization, playback, result tables and charts remain explicitly deferred.
+- Added an accessible Vietnamese input panel for C0, feed/solvent volumes with L/mL selectors, stage count 1–10, equal/custom split rows, KD value/source/provenance, optional validity domain and the read-only Owner-declared 25 °C V1 condition. No KD value or source is prefilled.
+- Added `applyVolumeUnitsAtBoundary` so displayed mL values are parsed and converted to L exactly once inside domain validation. React passes raw form values to this boundary and invokes the existing pure calculation entry point; it contains no chemistry equation.
+- Added component tests for semantic rendering, keyboard submit, field errors/focus, boundary warnings, mL conversion, stage boundaries, equal/custom split, valid/invalid/stale/reset states. Local verification passes: format, lint, typecheck, 72/72 unit/component tests and production build.
+- Playwright smoke test was updated for the Phase 6 shell, but Chromium is not installed in the local Playwright cache, so E2E execution is not Phase 6 failure evidence. UI-001, UI-002 and Phase 6 remain `IN PROGRESS` pending review/CI and later visual QA.
+- No Firebase, deploy, SVG funnel, playback state machine, result charts, numeric KD default, reference data, scientific threshold, PASS/FAIL or “real-time” claim was added.
 
 ## Update protocol
 
