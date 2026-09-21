@@ -81,7 +81,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### CALC-001 — Implement `calculateStage`
 
-- **Phase/Priority/Status:** 4 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 4 / P0 / IN PROGRESS.
 - **Dependencies:** DOM-001, VAL-001, `CHEMISTRY_MODEL.md`, `CALCULATION_ENGINE.md`.
 - **Create:** `src/domain/calculation/calculateStage.ts`.
 - **Inputs:** stage index, incoming amount, VR, VS,i, KD, n0; all canonical numbers.
@@ -91,7 +91,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### CALC-002 — Implement `calculateSimulation`
 
-- **Phase/Priority/Status:** 4 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 4 / P0 / IN PROGRESS.
 - **Dependencies:** CALC-001, DOM-001.
 - **Create:** `src/domain/calculation/calculateSimulation.ts`, `charts.ts`, `visualPlan.ts`.
 - **Instructions:** create stage 0, generate/evaluate split, loop 1…N with full-precision prior nR, derive final/charts/visual plan and freeze result.
@@ -100,7 +100,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### CALC-003 — Invariant and numeric diagnostics
 
-- **Phase/Priority/Status:** 4 / P0 / NOT STARTED.
+- **Phase/Priority/Status:** 4 / P0 / IN PROGRESS.
 - **Dependencies:** CALC-002.
 - **Create:** `src/domain/calculation/assertInvariants.ts`, numeric tolerance constants.
 - **Instructions:** use named engineering tolerance; report stage index/details; never present tolerance as validation threshold.

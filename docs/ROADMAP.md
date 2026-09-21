@@ -55,7 +55,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T01–T10, worked reference case, deterministic snapshot.
 - **Exit:** engine imports without DOM/React/Firebase/network and returns complete result.
 - **Dependencies/risks:** floating precision; regression in field naming.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 5 — Engine verification and contract tests
 
