@@ -310,6 +310,33 @@ function defensiveValidate(
     errors.push(
       domainError('UNSUPPORTED_CONFIGURATION', 'Model is not supported.', undefined, 'modelId'),
     );
+  if (input.splitMode !== 'equal' && input.splitMode !== 'custom')
+    errors.push(
+      domainError(
+        'UNSUPPORTED_CONFIGURATION',
+        'Solvent split mode is not supported.',
+        undefined,
+        'splitMode',
+      ),
+    );
+  if (input.kd.sourceType !== 'user_supplied' && input.kd.sourceType !== 'project_approved')
+    errors.push(
+      domainError(
+        'INVALID_PROVENANCE',
+        'KD provenance source type is not supported.',
+        undefined,
+        'kd.sourceType',
+      ),
+    );
+  if (input.kd.validityDomainNote !== null && typeof input.kd.validityDomainNote !== 'string')
+    errors.push(
+      domainError(
+        'INVALID_PROVENANCE',
+        'KD validity-domain note must be text or null.',
+        undefined,
+        'kd.validityDomainNote',
+      ),
+    );
   if (input.stageSolventVolumesL.length !== input.stageCount)
     errors.push(
       domainError(

@@ -2,7 +2,7 @@
 
 ## Current authoritative state
 
-This repository contains the completed documentation baseline and the merged Phase 2 engineering foundation. Phase 3 domain models and input-boundary validation are under review on `codex/phase-3-domain-input`; no calculation engine, production UI, database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
+This repository contains the completed documentation baseline and the merged Phase 2 engineering foundation. Phase 3 domain/input work, Phase 4 calculation engine and Phase 5 contract verification exist on their descendant review branches; none is merged or marked complete before review/CI. No production UI, database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
 
 ## Phase ledger
 
@@ -12,8 +12,8 @@ This repository contains the completed documentation baseline and the merged Pha
 | 1 Scientific readiness | IN PROGRESS | B01 and B03 resolved; SCI-001 default-KD evidence and SOP-001 review/approval remain open |
 | 2 Engineering foundation | DONE | PR #1 merged as `046c6a9`; foundation CI check passed on GitHub |
 | 3 Domain models/input | IN PROGRESS | canonical models, parser, normalization, typed validation, fixtures and tests implemented locally; review/CI pending |
-| 4 Pure calculation engine | NOT STARTED | no source code |
-| 5 Engine verification | NOT STARTED | no test runner/fixtures |
+| 4 Pure calculation engine | IN PROGRESS | pure deterministic engine and T01–T10 unit coverage implemented on Phase 4 branch; review/CI pending |
+| 5 Engine verification | IN PROGRESS | serialized contract/regression suite passes locally; review/CI pending |
 | 6 Application shell/input UI | NOT STARTED | no source code |
 | 7 SVG visualization | NOT STARTED | no source code |
 | 8 Playback state machine | NOT STARTED | no source code |
@@ -75,6 +75,13 @@ Review the Phase 3 domain/input-boundary diff on `codex/phase-3-domain-input`. P
 - Unit coverage maps T01–T10: zero solute, 1/10 stages, defensive invalid-stage/KD paths, boundary validation, equal/custom equivalence, the documented software reference fixture, mass-balance/KD-ratio invariants, determinism and input immutability.
 - The documented fixture KD remains software-test-only. V1 temperature is validated as the Owner-declared `25 °C` condition; no numeric KD default, reference dataset, validation threshold, SOP approval, PASS/FAIL classification, React/UI, Firebase, network or deployment code was added.
 - Local verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (55/55) and `pnpm build`. CALC-001 through CALC-003 and Phase 4 remain `IN PROGRESS` pending review/CI; this evidence does not mark them `DONE`.
+
+## Engine verification — 2026-09-21 (uncommitted branch evidence)
+
+- Added `tests/domain/engineContract.test.ts` and enabled `tests/**/*.test.{ts,tsx}` in Vitest/TypeScript discovery. The suite verifies serialized Stage 0…N shape, final/chart derivation, concentration/amount/fraction/mass-balance relationships, zero and 1/10-stage boundaries, ordered custom split/product oracle, warning/provenance propagation, byte determinism, caller-input isolation and deep immutable result containers.
+- Regression review found and fixed two defensive gaps: a direct caller could forge an unsupported `splitMode` or KD `sourceType` and still calculate. The engine now rejects unsupported split modes, KD provenance source types and malformed validity-domain notes before arithmetic.
+- Local verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (66/66) and `pnpm build`. `git diff --check` remains part of the pre-commit gate.
+- No equation, unit, numeric KD default, reference dataset, scientific threshold, experimental classification, React/UI, Firebase, network or deployment behavior changed. Phase 5 remains `IN PROGRESS` pending review/CI.
 
 ## Update protocol
 

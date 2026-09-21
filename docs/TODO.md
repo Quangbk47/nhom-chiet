@@ -107,6 +107,15 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 - **Tests:** conservation, nonnegative/monotonic/range, overflow fault.
 - **Acceptance:** valid result never silently clamped; fault has no animation result.
 
+### TEST-001 — Verify engine and serialized result contract
+
+- **Phase/Priority/Status:** 5 / P0 / IN PROGRESS.
+- **Dependencies:** CALC-001 through CALC-003, `TEST_PLAN.md`, `DATA_MODEL.md`.
+- **Create/modify:** `tests/domain/engineContract.test.ts`, Vitest/TypeScript test discovery, minimal engine corrections proven by regression tests.
+- **Instructions:** verify Stage 0…N, final/chart derivation, serialization, provenance/warnings, equations, mass balance, zero/boundary cases, custom ordering, determinism, deep immutability and defensive direct-call invariants.
+- **Tests:** T01–T11 domain-applicable contract coverage; exclude visual/UI assertions until those phases exist.
+- **Acceptance:** all domain checks pass; no React/Firebase/network import, unapproved scientific constant, display rounding or experimental PASS/FAIL threshold enters the engine.
+
 ## UI / visual / state
 
 ### UI-001 — Build three-region application shell

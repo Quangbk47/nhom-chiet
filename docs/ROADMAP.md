@@ -66,7 +66,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T01–T11 and `TESTING_STRATEGY.md` matrix.
 - **Exit:** all domain gates pass; no unapproved constants in source.
 - **Dependencies/risks:** numericTolerance misrepresented as validation threshold.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 6 — Application shell and input UI
 
