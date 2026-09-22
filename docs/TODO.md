@@ -206,7 +206,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### EXP-001 — Experimental manual/CSV capture
 
-- **Phase/Priority/Status:** 11 / P2 / NOT STARTED.
+- **Phase/Priority/Status:** 11 / P2 / IN PROGRESS.
 - **Dependencies:** DOM-001, OUT-002, `EXPERIMENTAL_VALIDATION.md`.
 - **Create:** validation page, CSV parser/preview, normalized record functions.
 - **Tests:** T19–T21, duplicate/all-or-nothing/raw audit.
@@ -214,7 +214,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### EXP-002 — Validation analytics
 
-- **Phase/Priority/Status:** 11 / P2 / NOT STARTED.
+- **Phase/Priority/Status:** 11 / P2 / IN PROGRESS.
 - **Dependencies:** EXP-001.
 - **Create:** mean/SD/error functions and report components.
 - **Tests:** T22–T25, zero denominator and metric-only wording.

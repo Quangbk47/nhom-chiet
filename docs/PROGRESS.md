@@ -19,7 +19,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 | 8 Playback state machine | DONE | merged to `main` as `5db4390`; 92 local tests, 9/9 E2E and integrated CI passed |
 | 9 Results/table/charts | IN PROGRESS | current-stage fields, final-state summary, Stage 0…N table and three immutable engine-dataset charts implemented locally; review/CI pending |
 | 10 Scenario comparison | IN PROGRESS | named immutable in-memory snapshots, basis mismatch warnings and accessible comparison table implemented locally; review/CI pending |
-| 11 Experimental capture/analytics | NOT STARTED | engineering can proceed; scientific execution awaits approved SOP, KD provenance and experiment evidence |
+| 11 Experimental capture/analytics | IN PROGRESS | local immutable manual/CSV capture and metric-only analytics implemented; review/CI and scientific evidence gates pending |
 | 12 Firebase persistence | NOT STARTED | optional gate not approved/implemented |
 | 13 Responsive/accessibility | NOT STARTED | phase-wide hardening and assistive review remain pending |
 | 14 QA/release | NOT STARTED | release gate has not been executed |
@@ -131,6 +131,13 @@ Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for 
 - The comparison table exposes C0, VR, total solvent, stage count, solvent split, KD source/reference, declared temperature, final concentration/recovery/extracted amount and saved warnings. It warns explicitly when a scenario differs in input basis or KD/temperature provenance, and makes no ranking, `PASS`/`FAIL` or experimental-superiority claim.
 - Stale, invalid and error current results cannot be saved; stored snapshots remain identifiable as prior immutable records. Unit/component coverage includes snapshot immutability, add/rename/remove, basis mismatch and stale guards. Browser coverage exercises create, stale guard, comparison warning and delete across desktop, mobile and reduced-motion projects.
 - Phase 10 and COMP-001 remain `IN PROGRESS` pending review and CI. No Firebase, CSV capture, deploy, numeric KD default, reference data, threshold or new scientific assumption was added.
+
+## Experimental capture and analytics — 2026-09-22 (uncommitted branch evidence)
+
+- Added immutable local manual/CSV experimental capture on `codex/phase-11-experimental-validation`. CSV requires the documented headers, validates finite nonnegative `mol/L` values, existing simulation stages and duplicate condition/replicate/stage keys; invalid imports return all errors and add no partial rows.
+- Added metric-only per-stage mean, sample SD, AE, RE, MAE and RMSE display, including zero-denominator behavior and `INSUFFICIENT_INDEPENDENT_REPLICATES`. The UI displays exactly the validation threshold-pending status and does not state PASS/FAIL, validated or optimal.
+- Captures retain source, canonical unit, UTC entry timestamp and notes. A stale/invalid/error simulation cannot accept or present a linked current validation result. Synthetic fixture values are test-only and not experimental evidence.
+- Phase 11, EXP-001 and EXP-002 remain `IN PROGRESS` pending review/CI. Scientific validation remains blocked by SOP-001 approval, SCI-001 provenance/default decision and real approved-SOP experimental evidence.
 
 ## Update protocol
 

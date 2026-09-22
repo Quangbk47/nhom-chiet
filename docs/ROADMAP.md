@@ -132,7 +132,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T19–T27 and raw immutability audit.
 - **Exit:** reproducible metric-only report under the approved SOP and data governance; no PASS/FAIL classification in V1.
 - **Dependencies/risks:** provenance/condition mismatch, approved SOP and privacy; implementation can proceed, but scientific execution waits for those evidence gates.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 12 — Firebase persistence (optional gate)
 

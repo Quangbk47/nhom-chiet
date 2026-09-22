@@ -33,7 +33,7 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-Phase 9 result-table/chart work remains `IN PROGRESS` pending review/CI. Phase 10 scenario comparison is on `codex/phase-10-scenario-comparison` and remains `IN PROGRESS` pending review/CI; it keeps only named immutable in-memory snapshots, never recalculates in React, exposes basis/provenance/warnings and warns on incompatible comparison conditions. Firebase, experimental CSV capture and deploy remain out of scope.
+Phase 9 and 10 remain `IN PROGRESS` pending review/CI. Phase 11 experimental capture/analytics is on `codex/phase-11-experimental-validation`: local immutable manual/CSV rows, atomic import and metric-only summaries only. It never claims scientific validation; SOP approval, KD provenance/default review and approved-SOP experimental evidence remain blockers. Firebase and deploy remain out of scope.
 
 ## How to verify handover
 

@@ -1,6 +1,7 @@
 import { useMemo, useState, type FormEvent } from 'react';
 
 import { InputPanel, type InputFormState } from '../../components/input/InputPanel';
+import { ExperimentalValidation } from '../../components/experimental/ExperimentalValidation';
 import { ResultCharts } from '../../components/results/ResultCharts';
 import { ResultPanel } from '../../components/results/ResultPanel';
 import { StageTable } from '../../components/results/StageTable';
@@ -227,6 +228,10 @@ export function SingleSimulationPage() {
 
       <ScenarioComparison
         currentResult={previousResult}
+        currentResultIsValid={status === 'valid' && playback.state.phase !== 'STALE'}
+      />
+      <ExperimentalValidation
+        result={previousResult}
         currentResultIsValid={status === 'valid' && playback.state.phase !== 'STALE'}
       />
     </main>

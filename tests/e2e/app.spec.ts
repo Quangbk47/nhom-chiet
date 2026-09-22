@@ -112,3 +112,28 @@ test('creates, compares and removes immutable scenario snapshots', async ({ page
     page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
   ).resolves.toBe(true);
 });
+
+test('captures experimental CSV atomically with metric-only status', async ({ page }) => {
+  await page.goto('/');
+  await page.getByLabel('Nồng độ AcOH ban đầu (C0)').fill('0.5');
+  await page.getByRole('textbox', { name: 'Thể tích pha nước ban đầu (VR)' }).fill('0.1');
+  await page.getByRole('textbox', { name: 'Tổng thể tích etyl axetat (VS,total)' }).fill('0.08');
+  await page.getByLabel('Số bậc chiết (N)').fill('1');
+  await page.getByRole('radio', { name: 'Chia đều theo số bậc' }).check();
+  await page.getByLabel('Hệ số phân bố KD').fill('2');
+  await page.getByLabel('Nguồn KD').selectOption('user_supplied');
+  await page.getByLabel('Ghi chú hoặc mã tham chiếu KD').fill('E2E synthetic test-only');
+  await page.getByRole('button', { name: 'Kiểm tra và chuẩn bị mô phỏng' }).click();
+  await expect(page.getByText(/NOT EVALUATED/)).toBeVisible();
+  await page
+    .getByLabel(/Headers:/)
+    .fill('condition_id,replicate_id,stage_number,cr_mol_per_l\ntest,r1,1,0.2');
+  await page.getByRole('button', { name: /Preview và import atomic/ }).click();
+  await expect(page.getByRole('table', { name: /Dữ liệu metric-only/ })).toBeVisible();
+  await page.getByLabel(/Headers:/).fill('bad\nrow');
+  await page.getByRole('button', { name: /Preview và import atomic/ }).click();
+  await expect(page.getByRole('alert')).toContainText('không lưu dữ liệu một phần');
+  await expect(
+    page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),
+  ).resolves.toBe(true);
+});

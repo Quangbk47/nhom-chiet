@@ -754,6 +754,31 @@ a:focus-visible {
   font-weight: 700;
 }
 
+.experimental-panel fieldset {
+  margin: var(--space-4) 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+}
+.experimental-form {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+.experimental-form label,
+.experimental-panel label {
+  display: grid;
+  gap: var(--space-1);
+  font-weight: 600;
+}
+.experimental-panel textarea {
+  box-sizing: border-box;
+  min-height: 120px;
+  width: 100%;
+  margin: var(--space-2) 0;
+  font: inherit;
+}
+
 button:disabled,
 fieldset:disabled button {
   cursor: not-allowed;

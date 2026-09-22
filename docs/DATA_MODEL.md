@@ -136,6 +136,7 @@ interface ExperimentalStageData {
   measuredRaffinateConcentrationMolPerL: number;
   rawObservationRef?: string; included: boolean;
   exclusionReason?: string; enteredAt: string;
+  source: 'manual' | 'csv'; unit: 'mol/L'; notes: string;
 }
 interface ValidationStageSummary {
   stageNumber: number; modelCRMolPerL: number;
@@ -148,6 +149,8 @@ interface ValidationStageSummary {
 ```
 
 At least three independent extraction replicates are required for compliance. `relativeErrorPercent` is null when the observed mean is zero and prediction is nonzero; it is zero when both are zero.
+
+Phase 11 keeps captured rows in immutable local snapshots. Every row retains input source, canonical unit, UTC entry timestamp and note. CSV parsing is all-or-nothing: errors are reported before any row is added.
 
 ## CSV and persistence
 
