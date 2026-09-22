@@ -110,7 +110,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T12, chart length/Stage 0 checks, table alternative.
 - **Exit:** no chart derives chemistry; units/provenance/warnings visible.
 - **Dependencies/risks:** rounding and tooltip mismatch.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 10 — Scenario comparison
 

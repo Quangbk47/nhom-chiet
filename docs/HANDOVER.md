@@ -33,7 +33,7 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-Phase 9 is the next planned engineering phase, but remains `NOT STARTED` and is out of scope for the Phase 3–8 integration session. Any future work must first read the result/chart contracts and preserve all scientific gates.
+Phase 9 result-table/chart work is on `codex/phase-9-results-charts` and remains `IN PROGRESS` pending Playwright and CI evidence. It must keep reading immutable engine datasets, preserve stale/error hiding and avoid scientific conclusions. Scenario comparison, Firebase, experimental CSV capture and deploy remain out of scope.
 
 ## How to verify handover
 

@@ -172,7 +172,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### OUT-001 — Build result panel/final card
 
-- **Phase/Priority/Status:** 9 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 9 / P1 / IN PROGRESS.
 - **Dependencies:** CALC-002, UI-001, `RESULTS_AND_CHARTS.md`.
 - **Create:** `CurrentResult.tsx`, `FinalResultCard.tsx`, warning/status components.
 - **Tests:** field mapping, units, stage 0, provenance/stale/final states.
@@ -180,7 +180,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### OUT-002 — Build stage table
 
-- **Phase/Priority/Status:** 9 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 9 / P1 / IN PROGRESS.
 - **Dependencies:** OUT-001.
 - **Create:** `StageTable.tsx`, export/accessibility alternative.
 - **Tests:** exact columns/order, stage 0, canonical precision/units.
@@ -188,7 +188,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### OUT-003 — Build three charts
 
-- **Phase/Priority/Status:** 9 / P1 / NOT STARTED.
+- **Phase/Priority/Status:** 9 / P1 / IN PROGRESS.
 - **Dependencies:** CALC-002, OUT-002.
 - **Create:** `src/components/charts/` Recharts wrappers.
 - **Tests:** T12/chart lengths/tooltip units/empty state/table alternative.

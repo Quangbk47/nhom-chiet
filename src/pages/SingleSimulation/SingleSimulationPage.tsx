@@ -1,6 +1,9 @@
 import { useMemo, useState, type FormEvent } from 'react';
 
 import { InputPanel, type InputFormState } from '../../components/input/InputPanel';
+import { ResultCharts } from '../../components/results/ResultCharts';
+import { ResultPanel } from '../../components/results/ResultPanel';
+import { StageTable } from '../../components/results/StageTable';
 import { FunnelVisualization } from '../../components/simulation/FunnelVisualization';
 import { PlaybackControls } from '../../components/simulation/PlaybackControls';
 import { calculateValidatedSimulation } from '../../domain/calculation';
@@ -179,13 +182,47 @@ export function SingleSimulationPage() {
             <p className="step-label">Trạng thái</p>
             <h2 id="status-title">Dữ liệu hiện tại</h2>
           </div>
-          <StatusContent status={status} hasPreviousResult={previousResult !== null} />
+          {status === 'valid' && previousResult !== null ? (
+            <div data-testid="form-status">
+              <span className="visually-hidden">Valid</span>
+              <ResultPanel
+                result={previousResult}
+                stageNumber={playback.state.currentStageNumber}
+                phase={playback.state.phase}
+              />
+            </div>
+          ) : (
+            <StatusContent status={status} hasPreviousResult={previousResult !== null} />
+          )}
         </section>
       </div>
 
-      <section className="deferred-content" aria-label="Chức năng ở phase sau">
-        <p>Bảng kết quả và biểu đồ sẽ sử dụng immutable SimulationResult ở các phase sau.</p>
-      </section>
+      {status === 'valid' && previousResult !== null ? (
+        <section className="results-workspace" aria-label="Bảng và biểu đồ kết quả">
+          <section className="panel" aria-labelledby="stage-table-title">
+            <div className="panel-heading">
+              <p className="step-label">Kết quả</p>
+              <h2 id="stage-table-title">Bảng Stage 0…N</h2>
+            </div>
+            <StageTable result={previousResult} />
+          </section>
+          <section className="panel" aria-labelledby="charts-title">
+            <div className="panel-heading">
+              <p className="step-label">Datasets từ engine</p>
+              <h2 id="charts-title">Biểu đồ kết quả</h2>
+            </div>
+            <ResultCharts result={previousResult} />
+          </section>
+        </section>
+      ) : (
+        <section className="deferred-content" aria-label="Trạng thái kết quả">
+          <p>
+            {status === 'stale'
+              ? 'Bảng và biểu đồ đã ẩn vì input thay đổi; hãy tính lại để xem snapshot hiện tại.'
+              : 'Bảng và biểu đồ xuất hiện sau khi tạo một SimulationResult hợp lệ.'}
+          </p>
+        </section>
+      )}
     </main>
   );
 }

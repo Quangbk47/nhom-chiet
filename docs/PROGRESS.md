@@ -17,7 +17,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 | 6 Application shell/input UI | DONE | merged to `main` as `59381ec`; 72 local tests and integrated CI at `5db4390` passed |
 | 7 SVG visualization | DONE | merged to `main` as `7984508`; 83 local tests, 9/9 E2E and integrated CI at `5db4390` passed |
 | 8 Playback state machine | DONE | merged to `main` as `5db4390`; 92 local tests, 9/9 E2E and integrated CI passed |
-| 9 Results/table/charts | NOT STARTED | no source code |
+| 9 Results/table/charts | IN PROGRESS | current-stage fields, final-state summary, Stage 0…N table and three immutable engine-dataset charts implemented locally; review/CI pending |
 | 10 Scenario comparison | NOT STARTED | no source code |
 | 11 Experimental capture/analytics | NOT STARTED | engineering can proceed; scientific execution awaits approved SOP, KD provenance and experiment evidence |
 | 12 Firebase persistence | NOT STARTED | optional gate not approved/implemented |
@@ -116,6 +116,14 @@ Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for 
 - Ran `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build` and `git diff --check` at each phase SHA. Test totals were 48, 55, 66, 72, 83 and 92 respectively; all passed.
 - Fast-forwarded each verified phase into `main`, ran regression tests after every merge, and pushed `main` from `046c6a9` to `5db4390`. Phase 8 Playwright passed 9/9 across desktop Chromium, Pixel 5 and reduced-motion projects.
 - The public GitHub Actions check `Lint, typecheck, test and build` for `5db4390` completed with `success`: https://github.com/Quangbk47/nhom-chiet/actions/runs/35698086793/job/106649359498. Phase 3–8 are therefore `DONE`.
+
+## Result table and charts — 2026-09-22 (uncommitted branch evidence)
+
+- Added `ResultPanel`, `StageTable` and `ResultCharts`. They read direct fields and chart arrays from one immutable `SimulationResult`; React/Recharts do not import or invoke the calculation engine.
+- The 11-column table retains Stage 0 and all zero values, labels canonical units and has a keyboard-focusable horizontal-scroll region. Current-stage fields include KD/temperature/model provenance and warnings; the final summary appears only at playback `COMPLETED`.
+- The three charts use the engine-owned `raffinateConcentration`, `cumulativeRecovery` and `extractedPerStage` arrays by reference. Animation is disabled; each chart includes axis units, provenance text and a visible table alternative. Stale, invalid and error states do not show a prior result as current.
+- Local evidence: `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (98/98), `pnpm build` and `git diff --check` pass. The production build reports a non-failing Vite warning that the Recharts bundle exceeds 500 kB after minification; code splitting remains a future optimization decision.
+- Playwright evidence and GitHub CI are pending before Phase 9 can be marked `DONE`. No scenario comparison, Firebase/deploy, CSV capture, KD default/reference data, threshold, PASS/FAIL or optimization claim was added.
 
 ## Update protocol
 

@@ -26,6 +26,11 @@ test('renders a responsive stage visualization from valid input', async ({ page 
   await expect(page.getByTestId('form-status')).toContainText('Valid');
   await expect(page.getByTestId('funnel-svg')).toBeVisible();
   await expect(page.getByRole('table', { name: /Thông tin thay thế/ })).toBeVisible();
+  await expect(page.getByRole('table', { name: /Kết quả Stage 0 đến Stage 4/ })).toBeVisible();
+  await expect(page.getByTestId('chart-cr-by-stage')).toBeVisible();
+  await expect(page.getByTestId('chart-cumulative-recovery-by-stage')).toBeVisible();
+  await expect(page.getByTestId('chart-extracted-per-stage')).toBeVisible();
+  await expect(page.getByRole('table', { name: /Dữ liệu thay thế — Nồng độ/ })).toBeVisible();
   await expect(page.getByTestId('playback-status')).toContainText('Sẵn sàng · Bậc 0/4');
 
   const start = page.getByRole('button', { name: 'Bắt đầu' });
@@ -39,6 +44,12 @@ test('renders a responsive stage visualization from valid input', async ({ page 
   await expect(page.getByRole('button', { name: '2×' })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Bậc tiếp theo' }).click();
   await expect(page.getByTestId('playback-status')).toContainText('Hoàn tất bậc · Bậc 1/4');
+
+  const stageTableRegion = page.getByRole('region', {
+    name: 'Bảng kết quả theo bậc, có thể cuộn ngang',
+  });
+  await stageTableRegion.focus();
+  await expect(stageTableRegion).toBeFocused();
   const box = await page.getByTestId('funnel-svg').boundingBox();
   const viewport = page.viewportSize();
   expect(box).not.toBeNull();
@@ -66,4 +77,6 @@ test('marks playback stale and disables controls when an input changes', async (
   await page.getByLabel('Nồng độ AcOH ban đầu (C0)').fill('0.4');
   await expect(page.getByTestId('form-status')).toContainText('Stale result');
   await expect(page.getByTestId('funnel-svg')).toHaveCount(0);
+  await expect(page.getByRole('heading', { name: 'Bảng Stage 0…N' })).toHaveCount(0);
+  await expect(page.getByTestId('chart-cr-by-stage')).toHaveCount(0);
 });
