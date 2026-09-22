@@ -33,7 +33,7 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-Phase 9 result-table/chart work is on `codex/phase-9-results-charts` and remains `IN PROGRESS` pending Playwright and CI evidence. It must keep reading immutable engine datasets, preserve stale/error hiding and avoid scientific conclusions. Scenario comparison, Firebase, experimental CSV capture and deploy remain out of scope.
+Phase 9 result-table/chart work remains `IN PROGRESS` pending review/CI. Phase 10 scenario comparison is on `codex/phase-10-scenario-comparison` and remains `IN PROGRESS` pending review/CI; it keeps only named immutable in-memory snapshots, never recalculates in React, exposes basis/provenance/warnings and warns on incompatible comparison conditions. Firebase, experimental CSV capture and deploy remain out of scope.
 
 ## How to verify handover
 

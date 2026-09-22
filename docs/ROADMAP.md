@@ -117,11 +117,11 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Objective:** compare named immutable snapshots on a common basis.
 - **Prerequisites:** Phase 9; persistence may remain in memory.
 - **Tasks:** COMP-001 names/snapshots; basis mismatch warnings; comparison table/export.
-- **Expected files:** `src/pages/ScenarioComparison/`, compare utilities/tests.
+- **Expected files:** `src/components/scenarios/`, `src/scenarios/`, compare utilities/tests.
 - **Tests/evidence:** common/different basis, no “optimal” claim.
 - **Exit:** deterministic comparison without recalculation or experimental superiority claim.
 - **Dependencies/risks:** version/provenance mismatch.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 11 — Experimental capture and validation analytics
 

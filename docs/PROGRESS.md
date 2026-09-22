@@ -18,7 +18,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 | 7 SVG visualization | DONE | merged to `main` as `7984508`; 83 local tests, 9/9 E2E and integrated CI at `5db4390` passed |
 | 8 Playback state machine | DONE | merged to `main` as `5db4390`; 92 local tests, 9/9 E2E and integrated CI passed |
 | 9 Results/table/charts | IN PROGRESS | current-stage fields, final-state summary, Stage 0…N table and three immutable engine-dataset charts implemented locally; review/CI pending |
-| 10 Scenario comparison | NOT STARTED | no source code |
+| 10 Scenario comparison | IN PROGRESS | named immutable in-memory snapshots, basis mismatch warnings and accessible comparison table implemented locally; review/CI pending |
 | 11 Experimental capture/analytics | NOT STARTED | engineering can proceed; scientific execution awaits approved SOP, KD provenance and experiment evidence |
 | 12 Firebase persistence | NOT STARTED | optional gate not approved/implemented |
 | 13 Responsive/accessibility | NOT STARTED | phase-wide hardening and assistive review remain pending |
@@ -124,6 +124,13 @@ Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for 
 - The three charts use the engine-owned `raffinateConcentration`, `cumulativeRecovery` and `extractedPerStage` arrays by reference. Animation is disabled; each chart includes axis units, provenance text and a visible table alternative. Stale, invalid and error states do not show a prior result as current.
 - Local evidence: `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (98/98), `pnpm build` and `git diff --check` pass. The production build reports a non-failing Vite warning that the Recharts bundle exceeds 500 kB after minification; code splitting remains a future optimization decision.
 - Playwright evidence and GitHub CI are pending before Phase 9 can be marked `DONE`. No scenario comparison, Firebase/deploy, CSV capture, KD default/reference data, threshold, PASS/FAIL or optimization claim was added.
+
+## Scenario comparison — 2026-09-22 (uncommitted branch evidence)
+
+- Added a local-only named-snapshot store and accessible comparison panel on `codex/phase-10-scenario-comparison`. Each saved entry retains the existing immutable canonical input and `SimulationResult`; renaming/removing creates a new collection and the UI does not invoke the calculation engine.
+- The comparison table exposes C0, VR, total solvent, stage count, solvent split, KD source/reference, declared temperature, final concentration/recovery/extracted amount and saved warnings. It warns explicitly when a scenario differs in input basis or KD/temperature provenance, and makes no ranking, `PASS`/`FAIL` or experimental-superiority claim.
+- Stale, invalid and error current results cannot be saved; stored snapshots remain identifiable as prior immutable records. Unit/component coverage includes snapshot immutability, add/rename/remove, basis mismatch and stale guards. Browser coverage exercises create, stale guard, comparison warning and delete across desktop, mobile and reduced-motion projects.
+- Phase 10 and COMP-001 remain `IN PROGRESS` pending review and CI. No Firebase, CSV capture, deploy, numeric KD default, reference data, threshold or new scientific assumption was added.
 
 ## Update protocol
 

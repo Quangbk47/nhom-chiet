@@ -461,6 +461,63 @@ a:focus-visible {
   border: 1px solid var(--border);
 }
 
+.scenario-panel {
+  margin-top: var(--space-4);
+}
+
+.scenario-save {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: end;
+  margin: var(--space-4) 0;
+}
+
+.scenario-save label {
+  grid-column: 1 / -1;
+  font-weight: 700;
+}
+
+.scenario-save input,
+.scenario-table input {
+  width: 100%;
+  border: 1px solid #9eafc2;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 0 var(--space-2);
+}
+
+.scenario-state {
+  color: var(--muted);
+}
+
+.scenario-table {
+  min-width: 1200px;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.scenario-table caption {
+  padding: var(--space-3);
+  font-weight: 700;
+  text-align: left;
+}
+
+.scenario-table th,
+.scenario-table td {
+  border-top: 1px solid var(--border);
+  padding: var(--space-2);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.scenario-table thead th,
+.scenario-table th:first-child {
+  background: var(--surface-muted);
+  text-align: left;
+}
+
 .recharts-wrapper:focus-visible,
 .table-scroll:focus-visible {
   outline: var(--focus-ring);
@@ -740,6 +797,12 @@ fieldset:disabled button {
   }
   .playback-actions .button {
     width: 100%;
+  }
+  .scenario-save {
+    grid-template-columns: 1fr;
+  }
+  .scenario-save label {
+    grid-column: auto;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -4,6 +4,7 @@ import { InputPanel, type InputFormState } from '../../components/input/InputPan
 import { ResultCharts } from '../../components/results/ResultCharts';
 import { ResultPanel } from '../../components/results/ResultPanel';
 import { StageTable } from '../../components/results/StageTable';
+import { ScenarioComparison } from '../../components/scenarios/ScenarioComparison';
 import { FunnelVisualization } from '../../components/simulation/FunnelVisualization';
 import { PlaybackControls } from '../../components/simulation/PlaybackControls';
 import { calculateValidatedSimulation } from '../../domain/calculation';
@@ -121,8 +122,8 @@ export function SingleSimulationPage() {
           <button type="button" className="mode-tab" aria-current="page">
             Mô phỏng đơn
           </button>
-          <button type="button" className="mode-tab" disabled>
-            So sánh — phase sau
+          <button type="button" className="mode-tab" aria-controls="scenario-title">
+            So sánh scenario
           </button>
         </nav>
       </header>
@@ -223,6 +224,11 @@ export function SingleSimulationPage() {
           </p>
         </section>
       )}
+
+      <ScenarioComparison
+        currentResult={previousResult}
+        currentResultIsValid={status === 'valid' && playback.state.phase !== 'STALE'}
+      />
     </main>
   );
 }

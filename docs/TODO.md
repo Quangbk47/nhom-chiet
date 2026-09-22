@@ -198,7 +198,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### COMP-001 — Named scenario comparison
 
-- **Phase/Priority/Status:** 10 / P2 / NOT STARTED.
+- **Phase/Priority/Status:** 10 / P2 / IN PROGRESS.
 - **Dependencies:** OUT-003.
 - **Create:** comparison page/store and common-basis checker.
 - **Tests:** equal/different basis, immutable snapshots, warning/no “optimal” wording.
