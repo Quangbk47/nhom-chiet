@@ -61,7 +61,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### DOM-001 — Implement canonical TypeScript models
 
-- **Phase/Priority/Status:** 3 / P0 / IN PROGRESS.
+- **Phase/Priority/Status:** 3 / P0 / DONE.
 - **Dependencies:** ENG-001.
 - **Create:** `src/domain/models/input.ts`, `result.ts`, `errors.ts`, `provenance.ts`.
 - **Instructions:** copy names/nullability from `DATA_MODEL.md`; `StageResult` has one canonical extracted-amount field; use readonly result arrays.
@@ -70,7 +70,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### VAL-001 — Parse and normalize input
 
-- **Phase/Priority/Status:** 3 / P0 / IN PROGRESS.
+- **Phase/Priority/Status:** 3 / P0 / DONE.
 - **Dependencies:** DOM-001, `INPUT_SPECIFICATION.md`.
 - **Create:** `src/domain/validation/parseInput.ts`, `normalizeInput.ts`, `validateInput.ts`.
 - **Instructions:** trim/reject empty, finite numbers only, allow scientific notation, handle unambiguous decimal separator, convert mL once, validate provenance and equal/custom split.
@@ -81,7 +81,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### CALC-001 — Implement `calculateStage`
 
-- **Phase/Priority/Status:** 4 / P0 / IN PROGRESS.
+- **Phase/Priority/Status:** 4 / P0 / DONE.
 - **Dependencies:** DOM-001, VAL-001, `CHEMISTRY_MODEL.md`, `CALCULATION_ENGINE.md`.
 - **Create:** `src/domain/calculation/calculateStage.ts`.
 - **Inputs:** stage index, incoming amount, VR, VS,i, KD, n0; all canonical numbers.
@@ -91,7 +91,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### CALC-002 — Implement `calculateSimulation`
 
-- **Phase/Priority/Status:** 4 / P0 / IN PROGRESS.
+- **Phase/Priority/Status:** 4 / P0 / DONE.
 - **Dependencies:** CALC-001, DOM-001.
 - **Create:** `src/domain/calculation/calculateSimulation.ts`, `charts.ts`, `visualPlan.ts`.
 - **Instructions:** create stage 0, generate/evaluate split, loop 1…N with full-precision prior nR, derive final/charts/visual plan and freeze result.
@@ -100,7 +100,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### CALC-003 — Invariant and numeric diagnostics
 
-- **Phase/Priority/Status:** 4 / P0 / IN PROGRESS.
+- **Phase/Priority/Status:** 4 / P0 / DONE.
 - **Dependencies:** CALC-002.
 - **Create:** `src/domain/calculation/assertInvariants.ts`, numeric tolerance constants.
 - **Instructions:** use named engineering tolerance; report stage index/details; never present tolerance as validation threshold.
@@ -109,7 +109,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### TEST-001 — Verify engine and serialized result contract
 
-- **Phase/Priority/Status:** 5 / P0 / IN PROGRESS.
+- **Phase/Priority/Status:** 5 / P0 / DONE.
 - **Dependencies:** CALC-001 through CALC-003, `TEST_PLAN.md`, `DATA_MODEL.md`.
 - **Create/modify:** `tests/domain/engineContract.test.ts`, Vitest/TypeScript test discovery, minimal engine corrections proven by regression tests.
 - **Instructions:** verify Stage 0…N, final/chart derivation, serialization, provenance/warnings, equations, mass balance, zero/boundary cases, custom ordering, determinism, deep immutability and defensive direct-call invariants.
@@ -120,7 +120,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### UI-001 — Build three-region application shell
 
-- **Phase/Priority/Status:** 6 / P1 / IN PROGRESS.
+- **Phase/Priority/Status:** 6 / P1 / DONE.
 - **Dependencies:** ENG-001, `UI_UX_SPEC.md`.
 - **Create:** `src/pages/SingleSimulation/`, layout CSS, mode tabs.
 - **Tests:** responsive order, labels, empty/error/stale states.
@@ -128,7 +128,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### UI-002 — Build InputPanel and split editor
 
-- **Phase/Priority/Status:** 6 / P1 / IN PROGRESS.
+- **Phase/Priority/Status:** 6 / P1 / DONE.
 - **Dependencies:** VAL-001, UI-001.
 - **Create:** `src/components/input/InputPanel.tsx`, `SplitEditor.tsx`, error summary.
 - **Tests:** keyboard, unit labels/converter, custom N rows, provenance warnings.
@@ -136,7 +136,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### VIS-001 — Implement funnel SVG layers
 
-- **Phase/Priority/Status:** 7 / P1 / IN PROGRESS.
+- **Phase/Priority/Status:** 7 / P1 / DONE.
 - **Dependencies:** DOM-001, `SIMULATION_VISUAL_SPEC.md`.
 - **Create:** `src/simulation/visualization/FunnelSVG.tsx`, geometry helpers and tests.
 - **Instructions:** defs/clipPath/outline/neck/layers/interface/particles/stopcock/labels/overlay; viewBox 640×720.
@@ -145,7 +145,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### VIS-002 — Implement volume and particle mappings
 
-- **Phase/Priority/Status:** 7 / P1 / IN PROGRESS.
+- **Phase/Priority/Status:** 7 / P1 / DONE.
 - **Dependencies:** VIS-001, CALC-002.
 - **Create:** `volumeToHeight.ts`, `particleMapping.ts`.
 - **Algorithm:** normalize by max(VR,VS), clamp; `round(P*fractionExtracted)` and complement; deterministic positions.
@@ -154,7 +154,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### SIM-001 — Implement playback reducer
 
-- **Phase/Priority/Status:** 8 / P1 / IN PROGRESS.
+- **Phase/Priority/Status:** 8 / P1 / DONE.
 - **Dependencies:** CALC-002, VIS-001, `SIMULATION_STATE_MACHINE.md`.
 - **Create:** `src/simulation/playback/playbackMachine.ts`, events/types/transition tests.
 - **Tests:** T14/T15/T18, every state/guard, stale/error, cursor range.
@@ -162,7 +162,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### SIM-002 — Connect controls, timeline and scheduler
 
-- **Phase/Priority/Status:** 8 / P1 / IN PROGRESS.
+- **Phase/Priority/Status:** 8 / P1 / DONE.
 - **Dependencies:** SIM-001, UI-001.
 - **Create:** playback scheduler hook and controls; timeline remains part of later result presentation.
 - **Tests:** keyboard controls, reduced motion, Next Stage skips visuals without recalculation.

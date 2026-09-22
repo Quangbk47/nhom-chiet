@@ -2,7 +2,7 @@
 
 ## Current authoritative state
 
-This repository contains the completed documentation baseline and the merged Phase 2 engineering foundation. Phase 3–8 engineering work exists on descendant review branches; none is merged or marked complete before review/CI. No database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
+This repository contains the completed documentation baseline and merged Phase 2–8 engineering work. Phase 3–8 were fast-forwarded to `main` on 2026-09-22 after sequential local verification; GitHub Actions `Lint, typecheck, test and build` succeeded for integrated SHA `5db4390`. No database, approved numeric KD record or experimental record exists yet. V1 scientific decisions B01–B04 remain governed by the Project Owner: fixed 25 °C, default-KD product direction with value/provenance still open, metric-only validation with no PASS/FAIL threshold, and SOP construction/review/approval before scientific validation.
 
 ## Phase ledger
 
@@ -11,12 +11,12 @@ This repository contains the completed documentation baseline and the merged Pha
 | 0 Documentation hardening | DONE | authority map, browser-first correction, implementation-ready contracts and second-pass checks completed |
 | 1 Scientific readiness | IN PROGRESS | B01 and B03 resolved; SCI-001 default-KD evidence and SOP-001 review/approval remain open |
 | 2 Engineering foundation | DONE | PR #1 merged as `046c6a9`; foundation CI check passed on GitHub |
-| 3 Domain models/input | IN PROGRESS | canonical models, parser, normalization, typed validation, fixtures and tests implemented locally; review/CI pending |
-| 4 Pure calculation engine | IN PROGRESS | pure deterministic engine and T01–T10 unit coverage implemented on Phase 4 branch; review/CI pending |
-| 5 Engine verification | IN PROGRESS | serialized contract/regression suite passes locally; review/CI pending |
-| 6 Application shell/input UI | IN PROGRESS | responsive shell, accessible boundary-connected form and component tests pass locally; review/CI pending |
-| 7 SVG visualization | IN PROGRESS | deterministic SVG, mappings, accessible alternative and desktop/mobile smoke tests pass locally; review/CI pending |
-| 8 Playback state machine | IN PROGRESS | pure reducer, controlled scheduler, accessible controls and stale/result-reference tests pass locally; review/CI pending |
+| 3 Domain models/input | DONE | merged to `main` as `2c2e927`; 48 local tests and integrated CI at `5db4390` passed |
+| 4 Pure calculation engine | DONE | merged to `main` as `a65e432`; 55 local tests and integrated CI at `5db4390` passed |
+| 5 Engine verification | DONE | merged to `main` as `ddda2ad`; 66 local tests and integrated CI at `5db4390` passed |
+| 6 Application shell/input UI | DONE | merged to `main` as `59381ec`; 72 local tests and integrated CI at `5db4390` passed |
+| 7 SVG visualization | DONE | merged to `main` as `7984508`; 83 local tests, 9/9 E2E and integrated CI at `5db4390` passed |
+| 8 Playback state machine | DONE | merged to `main` as `5db4390`; 92 local tests, 9/9 E2E and integrated CI passed |
 | 9 Results/table/charts | NOT STARTED | no source code |
 | 10 Scenario comparison | NOT STARTED | no source code |
 | 11 Experimental capture/analytics | NOT STARTED | engineering can proceed; scientific execution awaits approved SOP, KD provenance and experiment evidence |
@@ -67,7 +67,7 @@ This repository contains the completed documentation baseline and the merged Pha
 
 ## Next action
 
-Review the stacked Phase 3–8 branches, beginning with the earliest unmerged ancestor. No review branch is `DONE` before review/CI evidence.
+Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for this integration session.
 
 ## Pure calculation engine — 2026-09-21 (uncommitted branch evidence)
 
@@ -109,6 +109,13 @@ Review the stacked Phase 3–8 branches, beginning with the earliest unmerged an
 - Reducer/component coverage maps T14–T18, including the transition matrix, 1/10-stage boundaries, zero-concentration traversal, fake-timer pause behavior, result-reference equality, numerical snapshot immutability and invalid/stale guards.
 - Local verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (92/92), `pnpm build` and `git diff --check`. Playwright passed 9/9 checks across desktop Chromium, Pixel 5 and reduced-motion projects, covering keyboard focus, controls, stale invalidation, responsive SVG width and page overflow. Phase 8 and SIM-001/SIM-002 remain `IN PROGRESS` pending review/CI.
 - No chart, scenario comparison, Firebase/deploy, numeric KD default, reference dataset, threshold, PASS/FAIL classification or additional scientific assumption was added.
+
+## Phase 3–8 integration audit — 2026-09-22
+
+- Confirmed the chain is linear and each phase branch contains `origin/main` Phase 2 plus its immediate predecessor: `2c2e927` → `a65e432` → `ddda2ad` → `59381ec` → `7984508` → `5db4390`.
+- Ran `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build` and `git diff --check` at each phase SHA. Test totals were 48, 55, 66, 72, 83 and 92 respectively; all passed.
+- Fast-forwarded each verified phase into `main`, ran regression tests after every merge, and pushed `main` from `046c6a9` to `5db4390`. Phase 8 Playwright passed 9/9 across desktop Chromium, Pixel 5 and reduced-motion projects.
+- The public GitHub Actions check `Lint, typecheck, test and build` for `5db4390` completed with `success`: https://github.com/Quangbk47/nhom-chiet/actions/runs/35698086793/job/106649359498. Phase 3–8 are therefore `DONE`.
 
 ## Update protocol
 

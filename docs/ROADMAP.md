@@ -44,7 +44,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T04–T08, parsing/locale edge cases.
 - **Exit:** normalized input contract is tested and no UI component owns normalization.
 - **Dependencies/risks:** ambiguous locale input; no scientific defaults.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 4 — Pure calculation engine
 
@@ -55,7 +55,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T01–T10, worked reference case, deterministic snapshot.
 - **Exit:** engine imports without DOM/React/Firebase/network and returns complete result.
 - **Dependencies/risks:** floating precision; regression in field naming.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 5 — Engine verification and contract tests
 
@@ -66,7 +66,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T01–T11 and `TESTING_STRATEGY.md` matrix.
 - **Exit:** all domain gates pass; no unapproved constants in source.
 - **Dependencies/risks:** numericTolerance misrepresented as validation threshold.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 6 — Application shell and input UI
 
@@ -77,7 +77,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** labels, keyboard, responsive and T18.
 - **Exit:** form can produce normalized input but does not calculate locally.
 - **Dependencies/risks:** UI drift from input contract.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 7 — Static and dynamic funnel visualization
 
@@ -88,7 +88,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T16/T17, zero volume, clipping, reduced motion.
 - **Exit:** every visual number maps to a result field; no molecule/physical-time claim.
 - **Dependencies/risks:** accessibility and conventional phase interpretation.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 8 — Playback state machine and integration
 
@@ -99,7 +99,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T14–T18, transition coverage and result-reference equality.
 - **Exit:** Start calculates before animation; pause/speed/restart/reset cannot mutate snapshot.
 - **Dependencies/risks:** timer race; reduced-motion behavior.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 9 — Results, table and charts
 

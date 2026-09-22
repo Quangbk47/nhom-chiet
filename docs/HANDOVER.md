@@ -6,7 +6,7 @@ Liquid–Liquid Extraction Simulator is a browser teaching/research tool for AcO
 
 ## Current state
 
-The repository is documentation-only. The browser-first architecture, toolchain target, domain contracts, UI/state/output/test specifications and student backlog are documented. No `package.json`, `src/`, test runner, Firebase project or scientific dataset exists. B01–B04 are recorded; Phase 1 remains in progress for the unapproved KD reference and SOP review/approval.
+The browser application through Phase 8 is merged on `main`: React/TypeScript/Vite, input boundary, pure engine, verification, app shell, SVG visualization and playback. Local verification and GitHub Actions passed for integrated SHA `5db4390`; Phase 3–8 are `DONE`. Do not infer a scientific validation claim. No Firebase project or scientific dataset exists. B01–B04 are recorded; Phase 1 remains in progress for the unapproved KD reference and SOP review/approval.
 
 ## Decided architecture
 
@@ -33,12 +33,8 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-`ENG-001 — Scaffold Vite React TypeScript`.
-
-- Files: `package.json`, lockfile, `index.html`, `src/app/App.tsx`, `src/main.tsx`, base styles and tool-version file.
-- Tests: install, lint, typecheck, Vitest placeholder, build from a fresh clone.
-- Acceptance: scripts in `TECH_STACK.md` pass; no calculation code, Firebase Auth or server is added.
+Phase 9 is the next planned engineering phase, but remains `NOT STARTED` and is out of scope for the Phase 3–8 integration session. Any future work must first read the result/chart contracts and preserve all scientific gates.
 
 ## How to verify handover
 
-Read `README.md` → `DOCUMENT_AUTHORITY_MAP.md` → `EXPERT_DECISIONS.md` → `TECH_STACK.md` → `DATA_MODEL.md` → `INPUT_SPECIFICATION.md` → `CALCULATION_ENGINE.md` → relevant TODO task. Run the document inventory/link/contradiction checks described in `PROGRESS.md`; after ENG-001 exists, run the committed package scripts.
+Read `README.md` → `DOCUMENT_AUTHORITY_MAP.md` → `EXPERT_DECISIONS.md` → `TECH_STACK.md` → `DATA_MODEL.md` → `INPUT_SPECIFICATION.md` → `CALCULATION_ENGINE.md` → relevant TODO task. Run `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `git diff --check` and relevant Playwright checks.
