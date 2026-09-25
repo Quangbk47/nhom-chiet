@@ -77,7 +77,7 @@ Mỗi stage lấy raffinate stage trước và solvent mới, tính `CR`, `CE`, 
 
 ## 9. Firebase
 
-Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scenarios, experimental datasets và metadata/audit; không bắt buộc cho calculation MVP. Không thêm Firebase Auth chỉ để làm kiến trúc đẹp khi chưa có yêu cầu người dùng/permission. Chi tiết và migration gate ở [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scenarios, experimental datasets và metadata/audit; không bắt buộc cho calculation MVP. Phase 12 cung cấp Firebase Web SDK boundary, serializer, deny-by-default rules và Hosting config. Sao chép `.env.example` thành `.env.local` rồi điền cấu hình project được nhóm cấp; cloud write vẫn phải giữ `false` cho đến khi Project Owner duyệt Authentication/quyền và rules tương ứng. Không commit `.env.local`. Chi tiết và migration gate ở [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## 10. Bản đồ tài liệu
 
@@ -116,7 +116,7 @@ pnpm test
 pnpm build
 ```
 
-`pnpm test:e2e` chạy smoke test Playwright và cần browser của Playwright được cài riêng. Foundation hiện chỉ có shell trung lập; chưa có calculation engine, scientific input hay Firebase integration.
+`pnpm test:e2e` chạy Playwright và cần browser của Playwright được cài riêng. Build và core simulation không cần Firebase config. Repository có cấu hình Hosting sẵn sàng kỹ thuật, nhưng chưa có project ID/quyền nhóm nên chưa deploy.
 
 ## 14. Giới hạn khoa học cần luôn hiển thị
 

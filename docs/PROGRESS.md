@@ -20,7 +20,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 | 9 Results/table/charts | IN PROGRESS | current-stage fields, final-state summary, Stage 0…N table and three immutable engine-dataset charts implemented locally; review/CI pending |
 | 10 Scenario comparison | IN PROGRESS | named immutable in-memory snapshots, basis mismatch warnings and accessible comparison table implemented locally; review/CI pending |
 | 11 Experimental capture/analytics | IN PROGRESS | local immutable manual/CSV capture and metric-only analytics implemented; review/CI and scientific evidence gates pending |
-| 12 Firebase persistence | NOT STARTED | optional gate not approved/implemented |
+| 12 Firebase persistence | IN PROGRESS | typed SDK boundary, serializers, failure fallback, env/Hosting config and deny-by-default rules implemented; Auth/rules/project/deploy approval pending |
 | 13 Responsive/accessibility | NOT STARTED | phase-wide hardening and assistive review remain pending |
 | 14 QA/release | NOT STARTED | release gate has not been executed |
 
@@ -138,6 +138,13 @@ Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for 
 - Added metric-only per-stage mean, sample SD, AE, RE, MAE and RMSE display, including zero-denominator behavior and `INSUFFICIENT_INDEPENDENT_REPLICATES`. The UI displays exactly the validation threshold-pending status and does not state PASS/FAIL, validated or optimal.
 - Captures retain source, canonical unit, UTC entry timestamp and notes. A stale/invalid/error simulation cannot accept or present a linked current validation result. Synthetic fixture values are test-only and not experimental evidence.
 - Phase 11, EXP-001 and EXP-002 remain `IN PROGRESS` pending review/CI. Scientific validation remains blocked by SOP-001 approval, SCI-001 provenance/default decision and real approved-SOP experimental evidence.
+
+## Firebase integration and deployment readiness — 2026-09-25 (branch evidence)
+
+- Added Firebase Web SDK configuration through Vite environment variables, `.env.example` placeholders, typed runtime validation, modular Firestore driver boundary, immutable scenario/experimental serializers and local-preserving error handling for offline, unavailable and permission-denied failures.
+- Added a visible readiness state when Firebase config is absent or cloud writes are disabled. The core application continues to build and run locally without Firebase credentials; domain/calculation modules do not import Firebase.
+- Added Firebase Hosting SPA configuration and Firestore rules that deny all reads/writes. No Firebase project, Authentication provider, public rule, service-account credential, real experimental data or deployment was created.
+- Phase 12 and PERSIST-001 remain `IN PROGRESS (SECURITY GATED)`. Deployment requires the team's Firebase project/web-app config and Hosting access; persistence additionally requires Owner-approved Authentication, user/ownership model, privacy/retention decision and reviewed Firestore rules.
 
 ## Update protocol
 

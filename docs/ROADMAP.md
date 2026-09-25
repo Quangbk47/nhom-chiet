@@ -143,7 +143,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** converter roundtrip, deny-by-default, adapter failure behavior.
 - **Exit:** no engine import from Firebase; core works offline.
 - **Dependencies/risks:** auth/security/PII; can be deferred.
-- **Status:** NOT STARTED.
+- **Status:** IN PROGRESS.
 
 ## Phase 13 — Responsive/accessibility hardening
 

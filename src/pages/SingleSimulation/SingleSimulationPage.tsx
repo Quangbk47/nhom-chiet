@@ -2,6 +2,7 @@ import { useMemo, useState, type FormEvent } from 'react';
 
 import { InputPanel, type InputFormState } from '../../components/input/InputPanel';
 import { ExperimentalValidation } from '../../components/experimental/ExperimentalValidation';
+import { CloudReadinessStatus } from '../../components/firebase/CloudReadinessStatus';
 import { ResultCharts } from '../../components/results/ResultCharts';
 import { ResultPanel } from '../../components/results/ResultPanel';
 import { StageTable } from '../../components/results/StageTable';
@@ -234,6 +235,7 @@ export function SingleSimulationPage() {
         result={previousResult}
         currentResultIsValid={status === 'valid' && playback.state.phase !== 'STALE'}
       />
+      <CloudReadinessStatus />
     </main>
   );
 }

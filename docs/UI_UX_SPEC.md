@@ -104,3 +104,7 @@ Select a saved condition/result first. Display its canonical input and provenanc
 ## 12. Accessibility and QA
 
 All controls have labels, focus states and keyboard activation. Charts expose tabular data and units. Live regions announce state changes without per-frame noise. Reduced-motion preserves learning content. Automated/component checks and manual responsive checks are listed in `TESTING_STRATEGY.md`; UI must pass with mouse, keyboard and screen-reader-oriented text assertions.
+
+## 13. Firebase readiness state
+
+The application must remain usable when Firebase configuration is absent. Show a text status for missing configuration, configured-but-write-disabled, loading, saved and typed cloud errors. Offline, unavailable or permission-denied failures must explicitly state that the immutable local snapshot remains available. A configured Firebase Web API key alone never means persistence is authorized; cloud write stays disabled until Authentication, ownership/privacy and least-privilege rules are approved.

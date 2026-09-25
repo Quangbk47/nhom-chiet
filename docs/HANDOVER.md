@@ -33,7 +33,7 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-Phase 9 and 10 remain `IN PROGRESS` pending review/CI. Phase 11 experimental capture/analytics is on `codex/phase-11-experimental-validation`: local immutable manual/CSV rows, atomic import and metric-only summaries only. It never claims scientific validation; SOP approval, KD provenance/default review and approved-SOP experimental evidence remain blockers. Firebase and deploy remain out of scope.
+Phase 9–11 remain `IN PROGRESS` pending review/CI and scientific gates. Phase 12 Firebase readiness is on `codex/phase-12-firebase-integration`: environment-driven Web SDK, typed persistence boundary, serializers, local fallback, Hosting config and deny-by-default Firestore rules. No deployment or live cloud write is authorized. To deploy, obtain the team Firebase project/web-app config and Hosting role; to enable Firestore, also approve Authentication, ownership, privacy/retention and reviewed least-privilege rules.
 
 ## How to verify handover
 

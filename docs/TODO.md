@@ -222,9 +222,9 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 
 ### PERSIST-001 — Optional Firestore adapter
 
-- **Phase/Priority/Status:** 12 / P3 / NOT STARTED (GATED).
+- **Phase/Priority/Status:** 12 / P3 / IN PROGRESS (SECURITY GATED).
 - **Dependencies:** EXP-001/EXP-002 and an explicit security/privacy decision or Owner approval.
-- **Create:** `src/firebase/` converters, rules/emulator config only after gate.
+- **Create:** `src/firebase/` typed config, converters and adapter; deny-by-default rules and Hosting config. Emulator/rule activation remains gated.
 - **Tests:** snapshot roundtrip, raw append-only, offline/error, deny-by-default.
 - **Acceptance:** engine remains importable/offline; no animation-frame writes.
 
