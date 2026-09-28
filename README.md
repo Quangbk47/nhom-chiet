@@ -77,7 +77,7 @@ Mỗi stage lấy raffinate stage trước và solvent mới, tính `CR`, `CE`, 
 
 ## 9. Firebase
 
-Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scenarios, experimental datasets và metadata/audit; không bắt buộc cho calculation MVP. Phase 12 cung cấp Firebase Web SDK boundary, serializer, deny-by-default rules và Hosting config. Sao chép `.env.example` thành `.env.local` rồi điền cấu hình project được nhóm cấp; cloud write vẫn phải giữ `false` cho đến khi Project Owner duyệt Authentication/quyền và rules tương ứng. Không commit `.env.local`. Chi tiết và migration gate ở [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+Production hiện được deploy tại [nhom-chiet.web.app](https://nhom-chiet.web.app). Firestore là tùy chọn cho saved scenarios, experimental datasets và metadata/audit; không bắt buộc cho calculation MVP. Phase 12 cung cấp Firebase Web SDK boundary, serializer, deny-by-default rules và Hosting config. Sao chép `.env.example` thành `.env.local` rồi điền cấu hình project được nhóm cấp; cloud write vẫn phải giữ `false` cho đến khi Project Owner duyệt Authentication/quyền và rules tương ứng. Không commit `.env.local`. Chi tiết và migration gate ở [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## 10. Bản đồ tài liệu
 
@@ -94,7 +94,7 @@ Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scen
 
 ## 12. Trạng thái hiện tại và task kế tiếp
 
-Phase 2–10 đã hoàn tất và được tích hợp vào `main`; Phase 11 vẫn chờ evidence khoa học, còn Phase 12 đã có Firebase/Hosting readiness nhưng chưa deploy và chưa mở Firestore write. Bốn quyết định Owner B01–B04 vẫn được giữ nguyên: nhiệt độ V1 là 25 °C, default KD vẫn cần provenance/approval, V1 metric-only không có PASS/FAIL threshold, và SOP phải được review/phê duyệt trước scientific validation.
+Phase 2–10 đã hoàn tất và được tích hợp vào `main`; Phase 11 vẫn chờ evidence khoa học. Phase 12 đã deploy Firebase Hosting production nhưng Firestore persistence vẫn security-gated và cloud write chưa được mở. Bốn quyết định Owner B01–B04 vẫn được giữ nguyên: nhiệt độ V1 là 25 °C, default KD vẫn cần provenance/approval, V1 metric-only không có PASS/FAIL threshold, và SOP phải được review/phê duyệt trước scientific validation.
 
 ## 13. Cài đặt và chạy dự án
 
@@ -116,7 +116,7 @@ pnpm test
 pnpm build
 ```
 
-`pnpm test:e2e` chạy Playwright và cần browser của Playwright được cài riêng. Build và core simulation không cần Firebase config. Repository có cấu hình Hosting sẵn sàng kỹ thuật, nhưng chưa có project ID/quyền nhóm nên chưa deploy.
+`pnpm test:e2e` chạy Playwright và cần browser của Playwright được cài riêng. Build và core simulation không cần Firebase config. Firebase project `nhom-chiet` phục vụ production tại [nhom-chiet.web.app](https://nhom-chiet.web.app); cấu hình runtime thật nằm trong `.env.local` bị Git bỏ qua.
 
 ## 14. Giới hạn khoa học cần luôn hiển thị
 

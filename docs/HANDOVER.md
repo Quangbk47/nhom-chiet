@@ -6,7 +6,7 @@ Liquid–Liquid Extraction Simulator is a browser teaching/research tool for AcO
 
 ## Current state
 
-The browser application through Phase 12 engineering readiness is merged on `main` at `4a942f7`; GitHub Actions run `36443364124` passed. Phase 3–10 are `DONE`. Phase 11 remains scientifically gated and Phase 12 remains security/deployment gated. Do not infer a scientific validation claim. No Firebase project or scientific dataset exists yet. B01–B04 remain authoritative.
+The browser application through Phase 12 engineering readiness is merged on `main`; integrated GitHub Actions passed. Phase 3–10 are `DONE`. Firebase project `nhom-chiet` now serves production at `https://nhom-chiet.web.app`, with cloud writes disabled. Phase 11 remains scientifically gated and Phase 12 persistence remains security-gated. Do not infer a scientific validation claim. No approved scientific dataset exists yet. B01–B04 remain authoritative.
 
 ## Decided architecture
 
@@ -33,7 +33,7 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-Create the team-owned Firebase project and deploy Hosting from the integrated `main`. Keep Firestore deny-by-default until Authentication, ownership, privacy/retention and least-privilege rules are approved. Phase 11 still requires SOP/KD provenance and real approved-SOP experimental evidence; Phase 12 still requires a production deployment record.
+Keep Firestore deny-by-default until Authentication, ownership, privacy/retention and least-privilege rules are approved. Phase 11 still requires SOP/KD provenance and real approved-SOP experimental evidence. Phase 12 persistence remains gated even though Hosting production is live.
 
 ## How to verify handover
 

@@ -141,6 +141,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tasks:** PERSIST-001 converters; rules/emulator; snapshot/audit retention; offline errors.
 - **Expected files:** `src/firebase/`, `firestore.rules`, config docs/tests.
 - **Tests/evidence:** converter roundtrip, deny-by-default, adapter failure behavior.
+- **Deployment evidence:** Firebase Hosting production is live at `https://nhom-chiet.web.app`; cloud writes remain disabled and Firestore was not opened.
 - **Exit:** no engine import from Firebase; core works offline.
 - **Dependencies/risks:** auth/security/PII; can be deferred.
 - **Status:** IN PROGRESS.

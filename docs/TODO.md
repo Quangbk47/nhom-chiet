@@ -226,6 +226,7 @@ Status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. Each task below 
 - **Dependencies:** EXP-001/EXP-002 and an explicit security/privacy decision or Owner approval.
 - **Create:** `src/firebase/` typed config, converters and adapter; deny-by-default rules and Hosting config. Emulator/rule activation remains gated.
 - **Tests:** snapshot roundtrip, raw append-only, offline/error, deny-by-default.
+- **Deployment evidence:** Hosting is live at `https://nhom-chiet.web.app`; persistence remains disabled pending the security/privacy decision.
 - **Acceptance:** engine remains importable/offline; no animation-frame writes.
 
 ## QA / release

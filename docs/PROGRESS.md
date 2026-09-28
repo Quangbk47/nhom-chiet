@@ -20,7 +20,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 | 9 Results/table/charts | DONE | merged to `main` as `afa1363`; local tests/E2E and integrated CI run `36443364124` passed |
 | 10 Scenario comparison | DONE | merged to `main` as `26bb048`; immutable snapshot/component/E2E evidence and integrated CI run `36443364124` passed |
 | 11 Experimental capture/analytics | IN PROGRESS | local immutable manual/CSV capture and metric-only analytics implemented; review/CI and scientific evidence gates pending |
-| 12 Firebase persistence | IN PROGRESS | typed SDK boundary, serializers, failure fallback, env/Hosting config and deny-by-default rules implemented; Auth/rules/project/deploy approval pending |
+| 12 Firebase persistence | IN PROGRESS | Hosting production deployed at `https://nhom-chiet.web.app`; typed SDK boundary and deny-by-default rules exist, but Auth/ownership/privacy/rules approval keeps persistence gated |
 | 13 Responsive/accessibility | NOT STARTED | phase-wide hardening and assistive review remain pending |
 | 14 QA/release | NOT STARTED | release gate has not been executed |
 
@@ -67,7 +67,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 
 ## Next action
 
-Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific evidence gates are satisfied; Phase 12 remains security/deployment gated.
+Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific evidence gates are satisfied; Phase 12 Hosting is deployed, while persistence remains security-gated.
 
 ## Pure calculation engine — 2026-09-21 (uncommitted branch evidence)
 
@@ -143,14 +143,21 @@ Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific e
 
 - Added Firebase Web SDK configuration through Vite environment variables, `.env.example` placeholders, typed runtime validation, modular Firestore driver boundary, immutable scenario/experimental serializers and local-preserving error handling for offline, unavailable and permission-denied failures.
 - Added a visible readiness state when Firebase config is absent or cloud writes are disabled. The core application continues to build and run locally without Firebase credentials; domain/calculation modules do not import Firebase.
-- Added Firebase Hosting SPA configuration and Firestore rules that deny all reads/writes. No Firebase project, Authentication provider, public rule, service-account credential, real experimental data or deployment was created.
-- Phase 12 and PERSIST-001 remain `IN PROGRESS (SECURITY GATED)`. Deployment requires the team's Firebase project/web-app config and Hosting access; persistence additionally requires Owner-approved Authentication, user/ownership model, privacy/retention decision and reviewed Firestore rules.
+- Added Firebase Hosting SPA configuration and Firestore rules that deny all reads/writes. At branch-evidence time, no Firebase project, Authentication provider, public rule, service-account credential, real experimental data or deployment had been created.
+- Phase 12 and PERSIST-001 remained `IN PROGRESS (SECURITY GATED)` at branch-evidence time. Persistence requires Owner-approved Authentication, user/ownership model, privacy/retention decision and reviewed Firestore rules.
 
 ## Phase 9–12 integration — 2026-09-28
 
 - Fast-forwarded the verified linear chain `afa1363` → `26bb048` → `b497305` → `4a942f7` into `main` and pushed without rewriting history.
 - GitHub Actions CI run `36443364124` succeeded for integrated SHA `4a942f7d2f7cf3739b3a96a8a46b2fac8629dcc1`.
-- Phase 9 and Phase 10 meet their engineering exit evidence and are `DONE`. Phase 11 remains `IN PROGRESS` because approved SOP/KD provenance/real experimental evidence are absent. Phase 12 remains `IN PROGRESS` until secure Firebase ownership/configuration and deployment evidence exist.
+- Phase 9 and Phase 10 meet their engineering exit evidence and are `DONE`. Phase 11 remains `IN PROGRESS` because approved SOP/KD provenance/real experimental evidence are absent. Phase 12 remains `IN PROGRESS` pending the persistence security/privacy decisions; Hosting deployment evidence is recorded below.
+
+## Firebase Hosting production deployment — 2026-09-28
+
+- Created Firebase project/web app `nhom-chiet` under the team-provided Google account and deployed the production `dist` through Firebase Hosting only.
+- Production URL: `https://nhom-chiet.web.app`. Post-deploy verification returned HTTP `200`, the expected React root, and a rendered responsive application shell.
+- Runtime Web config is stored only in ignored `.env.local`; no credential, service-account JSON or environment file was committed. `VITE_FIREBASE_CLOUD_WRITES_ENABLED=false` remains enforced.
+- Firestore rules were not deployed or opened. Phase 12/PERSIST-001 remains `IN PROGRESS (SECURITY GATED)` until Authentication, ownership, privacy/retention and least-privilege rules receive explicit approval and tests.
 
 ## Update protocol
 
