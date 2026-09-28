@@ -6,7 +6,7 @@ Liquid–Liquid Extraction Simulator is a browser teaching/research tool for AcO
 
 ## Current state
 
-The browser application through Phase 8 is merged on `main`: React/TypeScript/Vite, input boundary, pure engine, verification, app shell, SVG visualization and playback. Local verification and GitHub Actions passed for integrated SHA `5db4390`; Phase 3–8 are `DONE`. Do not infer a scientific validation claim. No Firebase project or scientific dataset exists. B01–B04 are recorded; Phase 1 remains in progress for the unapproved KD reference and SOP review/approval.
+The browser application through Phase 12 engineering readiness is merged on `main` at `4a942f7`; GitHub Actions run `36443364124` passed. Phase 3–10 are `DONE`. Phase 11 remains scientifically gated and Phase 12 remains security/deployment gated. Do not infer a scientific validation claim. No Firebase project or scientific dataset exists yet. B01–B04 remain authoritative.
 
 ## Decided architecture
 
@@ -33,7 +33,7 @@ Scientific: SCI-001 default KD/source/domain and SOP-001 draft/review/approval; 
 
 ## Exact next task
 
-Phase 9–11 remain `IN PROGRESS` pending review/CI and scientific gates. Phase 12 Firebase readiness is on `codex/phase-12-firebase-integration`: environment-driven Web SDK, typed persistence boundary, serializers, local fallback, Hosting config and deny-by-default Firestore rules. No deployment or live cloud write is authorized. To deploy, obtain the team Firebase project/web-app config and Hosting role; to enable Firestore, also approve Authentication, ownership, privacy/retention and reviewed least-privilege rules.
+Create the team-owned Firebase project and deploy Hosting from the integrated `main`. Keep Firestore deny-by-default until Authentication, ownership, privacy/retention and least-privilege rules are approved. Phase 11 still requires SOP/KD provenance and real approved-SOP experimental evidence; Phase 12 still requires a production deployment record.
 
 ## How to verify handover
 

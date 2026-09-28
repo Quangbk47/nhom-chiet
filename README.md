@@ -94,7 +94,7 @@ Firebase Hosting là deployment target. Firestore là tùy chọn cho saved scen
 
 ## 12. Trạng thái hiện tại và task kế tiếp
 
-Documentation hardening và Phase 2 engineering foundation đã hoàn tất. Phase 3 đang triển khai canonical domain models cùng input validation/normalization; calculation engine chưa được triển khai. Bốn quyết định Owner B01–B04 vẫn được giữ nguyên: nhiệt độ V1 là 25 °C, sản phẩm sẽ hỗ trợ default KD nhưng giá trị/provenance vẫn cần xác lập, V1 metric-only không có PASS/FAIL threshold, và SOP phải được xây dựng/review/phê duyệt trước scientific validation.
+Phase 2–10 đã hoàn tất và được tích hợp vào `main`; Phase 11 vẫn chờ evidence khoa học, còn Phase 12 đã có Firebase/Hosting readiness nhưng chưa deploy và chưa mở Firestore write. Bốn quyết định Owner B01–B04 vẫn được giữ nguyên: nhiệt độ V1 là 25 °C, default KD vẫn cần provenance/approval, V1 metric-only không có PASS/FAIL threshold, và SOP phải được review/phê duyệt trước scientific validation.
 
 ## 13. Cài đặt và chạy dự án
 

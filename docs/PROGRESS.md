@@ -17,8 +17,8 @@ This repository contains the completed documentation baseline and merged Phase 2
 | 6 Application shell/input UI | DONE | merged to `main` as `59381ec`; 72 local tests and integrated CI at `5db4390` passed |
 | 7 SVG visualization | DONE | merged to `main` as `7984508`; 83 local tests, 9/9 E2E and integrated CI at `5db4390` passed |
 | 8 Playback state machine | DONE | merged to `main` as `5db4390`; 92 local tests, 9/9 E2E and integrated CI passed |
-| 9 Results/table/charts | IN PROGRESS | current-stage fields, final-state summary, Stage 0…N table and three immutable engine-dataset charts implemented locally; review/CI pending |
-| 10 Scenario comparison | IN PROGRESS | named immutable in-memory snapshots, basis mismatch warnings and accessible comparison table implemented locally; review/CI pending |
+| 9 Results/table/charts | DONE | merged to `main` as `afa1363`; local tests/E2E and integrated CI run `36443364124` passed |
+| 10 Scenario comparison | DONE | merged to `main` as `26bb048`; immutable snapshot/component/E2E evidence and integrated CI run `36443364124` passed |
 | 11 Experimental capture/analytics | IN PROGRESS | local immutable manual/CSV capture and metric-only analytics implemented; review/CI and scientific evidence gates pending |
 | 12 Firebase persistence | IN PROGRESS | typed SDK boundary, serializers, failure fallback, env/Hosting config and deny-by-default rules implemented; Auth/rules/project/deploy approval pending |
 | 13 Responsive/accessibility | NOT STARTED | phase-wide hardening and assistive review remain pending |
@@ -67,7 +67,7 @@ This repository contains the completed documentation baseline and merged Phase 2
 
 ## Next action
 
-Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for this integration session.
+Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific evidence gates are satisfied; Phase 12 remains security/deployment gated.
 
 ## Pure calculation engine — 2026-09-21 (uncommitted branch evidence)
 
@@ -123,14 +123,14 @@ Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for 
 - The 11-column table retains Stage 0 and all zero values, labels canonical units and has a keyboard-focusable horizontal-scroll region. Current-stage fields include KD/temperature/model provenance and warnings; the final summary appears only at playback `COMPLETED`.
 - The three charts use the engine-owned `raffinateConcentration`, `cumulativeRecovery` and `extractedPerStage` arrays by reference. Animation is disabled; each chart includes axis units, provenance text and a visible table alternative. Stale, invalid and error states do not show a prior result as current.
 - Local evidence: `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (98/98), `pnpm build` and `git diff --check` pass. The production build reports a non-failing Vite warning that the Recharts bundle exceeds 500 kB after minification; code splitting remains a future optimization decision.
-- Playwright evidence and GitHub CI are pending before Phase 9 can be marked `DONE`. No scenario comparison, Firebase/deploy, CSV capture, KD default/reference data, threshold, PASS/FAIL or optimization claim was added.
+- Phase 9 was merged to `main` and integrated CI passed on 2026-09-28. No scientific threshold, PASS/FAIL or optimization claim was added.
 
 ## Scenario comparison — 2026-09-22 (uncommitted branch evidence)
 
 - Added a local-only named-snapshot store and accessible comparison panel on `codex/phase-10-scenario-comparison`. Each saved entry retains the existing immutable canonical input and `SimulationResult`; renaming/removing creates a new collection and the UI does not invoke the calculation engine.
 - The comparison table exposes C0, VR, total solvent, stage count, solvent split, KD source/reference, declared temperature, final concentration/recovery/extracted amount and saved warnings. It warns explicitly when a scenario differs in input basis or KD/temperature provenance, and makes no ranking, `PASS`/`FAIL` or experimental-superiority claim.
 - Stale, invalid and error current results cannot be saved; stored snapshots remain identifiable as prior immutable records. Unit/component coverage includes snapshot immutability, add/rename/remove, basis mismatch and stale guards. Browser coverage exercises create, stale guard, comparison warning and delete across desktop, mobile and reduced-motion projects.
-- Phase 10 and COMP-001 remain `IN PROGRESS` pending review and CI. No Firebase, CSV capture, deploy, numeric KD default, reference data, threshold or new scientific assumption was added.
+- Phase 10 and COMP-001 were merged to `main`; integrated CI passed on 2026-09-28. No numeric KD default, reference data, threshold or new scientific assumption was added.
 
 ## Experimental capture and analytics — 2026-09-22 (uncommitted branch evidence)
 
@@ -145,6 +145,12 @@ Phase 3–8 are complete. Phase 9 remains `NOT STARTED` and is out of scope for 
 - Added a visible readiness state when Firebase config is absent or cloud writes are disabled. The core application continues to build and run locally without Firebase credentials; domain/calculation modules do not import Firebase.
 - Added Firebase Hosting SPA configuration and Firestore rules that deny all reads/writes. No Firebase project, Authentication provider, public rule, service-account credential, real experimental data or deployment was created.
 - Phase 12 and PERSIST-001 remain `IN PROGRESS (SECURITY GATED)`. Deployment requires the team's Firebase project/web-app config and Hosting access; persistence additionally requires Owner-approved Authentication, user/ownership model, privacy/retention decision and reviewed Firestore rules.
+
+## Phase 9–12 integration — 2026-09-28
+
+- Fast-forwarded the verified linear chain `afa1363` → `26bb048` → `b497305` → `4a942f7` into `main` and pushed without rewriting history.
+- GitHub Actions CI run `36443364124` succeeded for integrated SHA `4a942f7d2f7cf3739b3a96a8a46b2fac8629dcc1`.
+- Phase 9 and Phase 10 meet their engineering exit evidence and are `DONE`. Phase 11 remains `IN PROGRESS` because approved SOP/KD provenance/real experimental evidence are absent. Phase 12 remains `IN PROGRESS` until secure Firebase ownership/configuration and deployment evidence exist.
 
 ## Update protocol
 

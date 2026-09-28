@@ -110,7 +110,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** T12, chart length/Stage 0 checks, table alternative.
 - **Exit:** no chart derives chemistry; units/provenance/warnings visible.
 - **Dependencies/risks:** rounding and tooltip mismatch.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 10 — Scenario comparison
 
@@ -121,7 +121,7 @@ Allowed status values: `NOT STARTED`, `IN PROGRESS`, `BLOCKED`, `DONE`. A phase 
 - **Tests/evidence:** common/different basis, no “optimal” claim.
 - **Exit:** deterministic comparison without recalculation or experimental superiority claim.
 - **Dependencies/risks:** version/provenance mismatch.
-- **Status:** IN PROGRESS.
+- **Status:** DONE.
 
 ## Phase 11 — Experimental capture and validation analytics
 
