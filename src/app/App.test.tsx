@@ -7,6 +7,10 @@ describe('Phase 6 app shell and input UI', () => {
   it('renders the semantic shell and neutral deferred UI', () => {
     render(<App />);
     expect(screen.getByRole('heading', { name: 'Mô phỏng chiết lỏng–lỏng' })).toBeInTheDocument();
+    expect(
+      screen.getByText('Khám phá sự phân bố chất tan giữa hai pha lỏng không trộn lẫn'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Mô hình cân bằng vật chất')).toBeInTheDocument();
     expect(screen.getByRole('navigation', { name: 'Chế độ ứng dụng' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Dữ liệu mô phỏng' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Không gian mô phỏng' })).toBeInTheDocument();

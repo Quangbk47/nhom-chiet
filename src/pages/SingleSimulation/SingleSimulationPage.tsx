@@ -116,18 +116,34 @@ export function SingleSimulationPage() {
   return (
     <main className="app-shell">
       <header className="app-header">
-        <div>
-          <p className="eyebrow">Liquid–Liquid Extraction Simulator</p>
-          <h1>Mô phỏng chiết lỏng–lỏng</h1>
+        <div className="brand-lockup">
+          <span className="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 56" focusable="false">
+              <path d="M16 3h16M21 3v15L8 39a11 11 0 0 0 9 14h14a11 11 0 0 0 9-14L27 18V3" />
+              <path d="M12 39h24c2 7-2 10-6 10H18c-4 0-8-3-6-10Z" className="brand-liquid" />
+              <path d="M16 34c4-4 12 4 17-1" className="brand-wave" />
+            </svg>
+          </span>
+          <div>
+            <p className="eyebrow">Liquid–Liquid Extraction Simulator</p>
+            <h1>Mô phỏng chiết lỏng–lỏng</h1>
+            <p className="brand-subtitle">
+              Khám phá sự phân bố chất tan giữa hai pha lỏng không trộn lẫn
+            </p>
+          </div>
         </div>
-        <nav aria-label="Chế độ ứng dụng">
-          <button type="button" className="mode-tab" aria-current="page">
-            Mô phỏng đơn
-          </button>
-          <button type="button" className="mode-tab" aria-controls="scenario-title">
-            So sánh scenario
-          </button>
-        </nav>
+        <div className="header-context">
+          <p className="context-title">Mô hình cân bằng vật chất</p>
+          <p className="context-copy">Từ hệ số phân bố KD và cân bằng khối lượng</p>
+          <nav aria-label="Chế độ ứng dụng">
+            <button type="button" className="mode-tab" aria-current="page">
+              Mô phỏng đơn
+            </button>
+            <button type="button" className="mode-tab" aria-controls="scenario-title">
+              So sánh scenario
+            </button>
+          </nav>
+        </div>
       </header>
 
       <p className="assumption-banner">

@@ -54,6 +54,12 @@ These are software presentation tokens, not scientific constants:
 --status-warning: #9a5a00; --status-error: #b42318;
 ```
 
+The teaching surface uses a restrained laboratory-dashboard treatment: navy/blue status and
+focus affordances, warm neutral background, white panels, and an optional decorative flask
+mark. Serif display text may establish hierarchy, but labels, controls and numerical output
+remain highly legible sans-serif text. Decorative visuals must not imply a laboratory photograph,
+real experiment, selected solvent, default KD or pre-computed outcome.
+
 Typography hierarchy: page title 28px/700, panel title 20px/700, field label 14px/600, value 16px, help/error 13px. Status uses text and icon/pattern in addition to color. Buttons have primary Start, secondary playback, and quiet Reset hierarchy.
 
 ## 5. Input panel

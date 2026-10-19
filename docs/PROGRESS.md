@@ -159,6 +159,12 @@ Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific e
 - Runtime Web config is stored only in ignored `.env.local`; no credential, service-account JSON or environment file was committed. `VITE_FIREBASE_CLOUD_WRITES_ENABLED=false` remains enforced.
 - Firestore rules were not deployed or opened. Phase 12/PERSIST-001 remains `IN PROGRESS (SECURITY GATED)` until Authentication, ownership, privacy/retention and least-privilege rules receive explicit approval and tests.
 
+## Laboratory dashboard visual refresh — 2026-10-19
+
+- Restyled the existing browser UI as a responsive laboratory dashboard: branded header, three-column desktop hierarchy, visual-panel treatment, sticky desktop input/result panels, clearer stage/status presentation and responsive mobile adjustments.
+- The change is presentation-only: the existing input boundary, immutable result, playback, SVG, table/chart contracts and accessibility labels remain intact. No prefilled solute, solvent, KD, experimental data, outcome, PASS/FAIL claim or scientific assumption was added.
+- Verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, 119 unit/component tests, `pnpm build`, `git diff --check`, and 15 Playwright checks across desktop, mobile and reduced-motion Chromium.
+
 ## Update protocol
 
 At session end record changed task/phase, evidence links, tests/checks, unresolved blockers, next action and publication commit SHA. Never change a phase to DONE because a document or screen merely exists.
