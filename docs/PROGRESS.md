@@ -163,6 +163,8 @@ Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific e
 
 - Restyled the existing browser UI as a responsive laboratory dashboard: branded header, three-column desktop hierarchy, visual-panel treatment, sticky desktop input/result panels, clearer stage/status presentation and responsive mobile adjustments.
 - The change is presentation-only: the existing input boundary, immutable result, playback, SVG, table/chart contracts and accessibility labels remain intact. No prefilled solute, solvent, KD, experimental data, outcome, PASS/FAIL claim or scientific assumption was added.
+- Published code revision `806125a` to branch `codex/ui-lab-dashboard` and released the same build to Firebase Hosting at `https://nhom-chiet.web.app`.
+- Evidence for this revision: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (119 tests), `pnpm build`, `git diff --check`, and `pnpm test:e2e` (15 Playwright checks) passed before publication. The production build reports a non-blocking JavaScript chunk-size warning (668 kB before gzip); code-splitting remains a follow-up optimization.
 - Verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, 119 unit/component tests, `pnpm build`, `git diff --check`, and 15 Playwright checks across desktop, mobile and reduced-motion Chromium.
 
 ## Update protocol
