@@ -172,6 +172,8 @@ export function SingleSimulationPage() {
               <FunnelVisualization
                 result={previousResult}
                 stageNumber={playback.state.currentStageNumber}
+                playbackPhase={playback.state.phase}
+                reducedMotion={playback.reducedMotion}
               />
               <PlaybackControls
                 state={playback.state}

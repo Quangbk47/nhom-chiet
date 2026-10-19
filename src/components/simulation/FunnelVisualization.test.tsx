@@ -29,7 +29,14 @@ describe('FunnelVisualization', () => {
   });
 
   it('maps selected-stage values and exposes a table alternative', () => {
-    render(<FunnelVisualization result={result()} stageNumber={3} />);
+    render(
+      <FunnelVisualization
+        result={result()}
+        stageNumber={3}
+        playbackPhase="MIXING"
+        reducedMotion={false}
+      />,
+    );
     expect(screen.getByRole('img', { name: /Phễu chiết — bậc 3/ })).toBeInTheDocument();
     expect(
       screen.getByRole('table', { name: 'Thông tin thay thế cho visualization bậc 3' }),
@@ -37,6 +44,8 @@ describe('FunnelVisualization', () => {
     expect(screen.getByText(/Stage 3\/4/)).toBeInTheDocument();
     expect(screen.getByText('nominal organic phase (EtOAc)')).toBeInTheDocument();
     expect(screen.getByText('nominal aqueous phase (water)')).toBeInTheDocument();
+    expect(screen.getByTestId('funnel-svg')).toHaveAttribute('data-playback-phase', 'MIXING');
+    expect(screen.getByTestId('funnel-svg')).toHaveAttribute('data-reduced-motion', 'false');
   });
 
   it('omits organic phase at Stage 0 and keeps symbols in aqueous phase', () => {

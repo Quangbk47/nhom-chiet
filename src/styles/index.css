@@ -1151,10 +1151,16 @@ body {
 }
 
 .lab-scene-backdrop {
-  fill: #092843;
+  fill: #021426;
+  opacity: 0.38;
   stroke: #82c6e7;
-  stroke-opacity: 0.35;
+  stroke-opacity: 0.7;
   stroke-width: 2;
+}
+
+.lab-scene-image {
+  clip-path: inset(0 round 28px);
+  opacity: 0.92;
 }
 
 .lab-light-orbs circle {
@@ -1232,6 +1238,109 @@ body {
 
 .funnel-figure-immersive .svg-label {
   fill: #0b3157;
+}
+
+.funnel-figure-immersive .liquid-layer {
+  transform-origin: 320px 470px;
+}
+
+.funnel-figure-immersive .solute-particle {
+  transform-origin: center;
+}
+
+.funnel-drain-stream {
+  fill: none;
+  stroke: #9deaff;
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='LOADING_FEED'] .liquid-layer {
+    animation: liquid-settle-in 1s ease-out both;
+  }
+
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='ADDING_SOLVENT'] .liquid-layer {
+    animation: solvent-arrival 1.1s ease-in-out infinite alternate;
+  }
+
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='MIXING'] .liquid-layer,
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='EQUILIBRATING'] .liquid-layer {
+    animation: liquid-agitation 0.7s ease-in-out infinite alternate;
+  }
+
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='MIXING'] .solute-particle,
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='EQUILIBRATING'] .solute-particle {
+    animation: particle-drift 1.2s ease-in-out infinite alternate;
+  }
+
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='SEPARATING'] .liquid-layer {
+    animation: layer-separation 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .funnel-svg[data-reduced-motion='false'][data-playback-phase='DRAINING'] .funnel-drain-stream {
+    animation: drain-flow 0.5s linear infinite;
+  }
+}
+
+@keyframes liquid-settle-in {
+  from {
+    opacity: 0.3;
+    transform: translateY(60px) scaleY(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+  }
+}
+
+@keyframes solvent-arrival {
+  from {
+    transform: translateY(-5px) scaleX(0.985);
+  }
+  to {
+    transform: translateY(3px) scaleX(1.015);
+  }
+}
+
+@keyframes liquid-agitation {
+  from {
+    transform: translate(-4px, 1px) rotate(-0.8deg);
+  }
+  to {
+    transform: translate(4px, -1px) rotate(0.8deg);
+  }
+}
+
+@keyframes particle-drift {
+  from {
+    transform: translate(-3px, 2px);
+  }
+  to {
+    transform: translate(4px, -3px);
+  }
+}
+
+@keyframes layer-separation {
+  from {
+    filter: saturate(1.45) blur(1px);
+    transform: scaleX(1.025);
+  }
+  to {
+    filter: saturate(1) blur(0);
+    transform: scaleX(1);
+  }
+}
+
+@keyframes drain-flow {
+  from {
+    stroke-dasharray: 6 6;
+    stroke-dashoffset: 12;
+  }
+  to {
+    stroke-dasharray: 6 6;
+    stroke-dashoffset: 0;
+  }
 }
 
 .funnel-outline,

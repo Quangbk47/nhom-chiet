@@ -1,21 +1,30 @@
 import type { SimulationResult } from '../../domain/models';
+import type { PlaybackPhase } from '../../simulation/playback';
 import {
   FUNNEL_VIEWBOX,
   allocateParticles,
   createParticlePoints,
   mapPhaseVolumes,
 } from '../../simulation/visualization/visualMapping';
+import laboratoryHero from '../../assets/lab-extraction-hero.png';
 
 interface FunnelVisualizationProps {
   readonly result: SimulationResult;
   readonly stageNumber: number;
+  readonly playbackPhase?: PlaybackPhase;
+  readonly reducedMotion?: boolean;
 }
 
 /**
  * Glass, depth and lighting are presentation only. Liquid heights and symbols
  * stay derived exclusively from the immutable SimulationResult.
  */
-export function FunnelVisualization({ result, stageNumber }: FunnelVisualizationProps) {
+export function FunnelVisualization({
+  result,
+  stageNumber,
+  playbackPhase = 'SHOWING_STAGE_RESULT',
+  reducedMotion = false,
+}: FunnelVisualizationProps) {
   const stage = result.stages[stageNumber];
   if (stage === undefined) {
     return <p role="alert">Không có dữ liệu visualization cho bậc đã chọn.</p>;
@@ -50,6 +59,8 @@ export function FunnelVisualization({ result, stageNumber }: FunnelVisualization
         tabIndex={0}
         aria-labelledby={`${titleId} ${descriptionId}`}
         data-testid="funnel-svg"
+        data-playback-phase={playbackPhase}
+        data-reduced-motion={reducedMotion}
       >
         <title id={titleId}>Phễu chiết — bậc {stageNumber}</title>
         <desc id={descriptionId}>
@@ -94,6 +105,16 @@ export function FunnelVisualization({ result, stageNumber }: FunnelVisualization
           </pattern>
         </defs>
 
+        <image
+          className="lab-scene-image"
+          href={laboratoryHero}
+          x="104"
+          y="36"
+          width="432"
+          height="620"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        />
         <rect className="lab-scene-backdrop" x="20" y="36" width="600" height="620" rx="28" />
         <g className="lab-light-orbs" aria-hidden="true">
           <circle cx="94" cy="166" r="35" />
@@ -108,7 +129,11 @@ export function FunnelVisualization({ result, stageNumber }: FunnelVisualization
             d="M170 92 H470 L420 360 Q405 420 350 480 V590 H290 V480 Q235 420 220 360 Z"
             fill={`url(#${glassGradientId})`}
           />
-          <g clipPath={`url(#${clipId})`} data-testid="clipped-liquid-layer">
+          <g
+            className="liquid-layer"
+            clipPath={`url(#${clipId})`}
+            data-testid="clipped-liquid-layer"
+          >
             {heights.extractHeight > 0 && (
               <rect
                 data-testid="organic-phase"
@@ -148,6 +173,7 @@ export function FunnelVisualization({ result, stageNumber }: FunnelVisualization
             {particles.map((particle) => (
               <circle
                 key={particle.id}
+                className="solute-particle"
                 data-particle-phase={particle.phase}
                 cx={particle.x}
                 cy={particle.y}
@@ -173,6 +199,9 @@ export function FunnelVisualization({ result, stageNumber }: FunnelVisualization
           <path className="funnel-rim" d="M177 93 H463" />
           <path className="funnel-stopcock" d="M270 590 H370 M320 570 V630 M292 630 H348" />
           <rect className="funnel-valve" x="300" y="579" width="40" height="22" rx="7" />
+          {playbackPhase === 'DRAINING' && (
+            <path className="funnel-drain-stream" d="M320 630 V680" />
+          )}
         </g>
         <line className="phase-interface" x1="190" x2="450" y1={aqueousY} y2={aqueousY} />
         <text
