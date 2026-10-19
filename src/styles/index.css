@@ -1252,6 +1252,28 @@ body {
   transform-origin: center;
 }
 
+.liquid-surface {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.liquid-surface-organic {
+  stroke: rgb(255 242 184 / 82%);
+  stroke-width: 4;
+}
+
+.liquid-surface-aqueous {
+  stroke: rgb(225 252 255 / 78%);
+  stroke-width: 4;
+}
+
+.liquid-reflection {
+  fill: none;
+  stroke: rgb(239 253 255 / 42%);
+  stroke-linecap: round;
+  stroke-width: 5;
+}
+
 .funnel-drain-stream {
   fill: none;
   stroke: #d7f7ff;

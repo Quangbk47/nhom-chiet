@@ -49,6 +49,7 @@ export function FunnelVisualization({
   const aqueousGradientId = `funnel-aqueous-${stageNumber}`;
   const organicGradientId = `funnel-organic-${stageNumber}`;
   const shadowId = `funnel-shadow-${stageNumber}`;
+  const liquidTextureId = `funnel-liquid-texture-${stageNumber}`;
 
   return (
     <figure className="funnel-figure funnel-figure-immersive">
@@ -98,12 +99,22 @@ export function FunnelVisualization({
             <stop offset="0.42" stopColor="#f5bd43" stopOpacity="0.86" />
             <stop offset="1" stopColor="#ce7812" stopOpacity="0.9" />
           </linearGradient>
-          <pattern id="aqueous-pattern" width="16" height="16" patternUnits="userSpaceOnUse">
-            <path d="M0 12 Q4 8 8 12 T16 12" fill="none" stroke="#1769aa" strokeWidth="2" />
-          </pattern>
-          <pattern id="organic-pattern" width="14" height="14" patternUnits="userSpaceOnUse">
-            <path d="M0 2 L14 12 M-4 8 L4 16 M10 -2 L18 6" stroke="#9a5a00" strokeWidth="2" />
-          </pattern>
+          <filter id={liquidTextureId} x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.014 0.08"
+              numOctaves="2"
+              seed={stageNumber + 31}
+              result="ripples"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="ripples"
+              scale="2"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
         </defs>
 
         <image
@@ -128,6 +139,7 @@ export function FunnelVisualization({
           <g
             className="liquid-layer"
             clipPath={`url(#${clipId})`}
+            filter={`url(#${liquidTextureId})`}
             data-testid="clipped-liquid-layer"
           >
             {heights.extractHeight > 0 && (
@@ -148,24 +160,20 @@ export function FunnelVisualization({
               height={heights.raffinateHeight}
               fill={`url(#${aqueousGradientId})`}
             />
-            <rect
-              x="160"
-              y={aqueousY}
-              width="320"
-              height={heights.raffinateHeight}
-              fill="url(#aqueous-pattern)"
-              opacity="0.28"
-            />
             {heights.extractHeight > 0 && (
-              <rect
-                x="160"
-                y={organicY}
-                width="320"
-                height={heights.extractHeight}
-                fill="url(#organic-pattern)"
-                opacity="0.25"
+              <path
+                className="liquid-surface liquid-surface-organic"
+                d={`M170 ${organicY} Q220 ${organicY - 5} 270 ${organicY} T370 ${organicY} T470 ${organicY}`}
               />
             )}
+            <path
+              className="liquid-surface liquid-surface-aqueous"
+              d={`M170 ${aqueousY} Q220 ${aqueousY - 5} 270 ${aqueousY} T370 ${aqueousY} T470 ${aqueousY}`}
+            />
+            <path
+              className="liquid-reflection"
+              d={`M230 ${aqueousY + 18} Q260 ${aqueousY + 8} 292 ${aqueousY + 18} M330 ${aqueousY + 54} Q358 ${aqueousY + 44} 386 ${aqueousY + 54}`}
+            />
             {particles.map((particle) => (
               <circle
                 key={particle.id}
