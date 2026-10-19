@@ -165,6 +165,7 @@ Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific e
 - The change is presentation-only: the existing input boundary, immutable result, playback, SVG, table/chart contracts and accessibility labels remain intact. No prefilled solute, solvent, KD, experimental data, outcome, PASS/FAIL claim or scientific assumption was added.
 - Published code revision `806125a` to branch `codex/ui-lab-dashboard` and released the same build to Firebase Hosting at `https://nhom-chiet.web.app`.
 - Evidence for this revision: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (119 tests), `pnpm build`, `git diff --check`, and `pnpm test:e2e` (15 Playwright checks) passed before publication. The production build reports a non-blocking JavaScript chunk-size warning (668 kB before gzip); code-splitting remains a follow-up optimization.
+- Reworked the static funnel renderer as a 3D-style SVG scene with glass highlights, depth, lighting and shadows. The visual remains deterministic and maps only the already-computed phase heights and particle allocation; it does not portray a real experiment or add a scientific result.
 - Verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, 119 unit/component tests, `pnpm build`, `git diff --check`, and 15 Playwright checks across desktop, mobile and reduced-motion Chromium.
 
 ## Update protocol

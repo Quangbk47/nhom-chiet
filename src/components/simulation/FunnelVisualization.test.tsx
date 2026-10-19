@@ -21,7 +21,7 @@ describe('FunnelVisualization', () => {
     expect(graphic).toHaveAttribute('tabindex', '0');
     expect(screen.getByTestId('clipped-liquid-layer')).toHaveAttribute(
       'clip-path',
-      'url(#funnel-body-clip)',
+      'url(#funnel-body-clip-1)',
     );
     expect(container.querySelectorAll('[data-particle-phase]')).toHaveLength(
       simulation.visualPlan.particleCapacity,

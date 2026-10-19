@@ -1138,6 +1138,102 @@ body {
   min-height: 370px;
 }
 
+.funnel-figure-immersive {
+  border: 1px solid #bdd5e5;
+  background: linear-gradient(145deg, rgb(255 255 255 / 90%), rgb(223 240 249 / 82%)), #eaf5fb;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 88%),
+    0 14px 28px rgb(7 50 85 / 9%);
+}
+
+.funnel-figure-immersive .funnel-svg {
+  border-radius: 13px;
+}
+
+.lab-scene-backdrop {
+  fill: #092843;
+  stroke: #82c6e7;
+  stroke-opacity: 0.35;
+  stroke-width: 2;
+}
+
+.lab-light-orbs circle {
+  fill: #9ce8ff;
+  opacity: 0.08;
+}
+
+.funnel-floor-shadow {
+  fill: #00172a;
+  opacity: 0.24;
+}
+
+.funnel-glass-base {
+  stroke: #d8f3ff;
+  stroke-width: 8;
+}
+
+.funnel-glass-sheen {
+  fill: #fff;
+  opacity: 0.25;
+}
+
+.funnel-glass-sheen-right {
+  fill: #bdeeff;
+  opacity: 0.18;
+}
+
+.funnel-rim {
+  fill: none;
+  stroke: #f8fdff;
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.funnel-valve {
+  fill: #d6edf7;
+  stroke: #0b3157;
+  stroke-width: 3;
+}
+
+.funnel-figure-immersive .funnel-outline,
+.funnel-figure-immersive .funnel-stopcock {
+  stroke: #e3f8ff;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 7;
+}
+
+.funnel-figure-immersive .phase-interface {
+  stroke: #f9feff;
+  stroke-width: 3;
+  stroke-dasharray: none;
+}
+
+.funnel-figure-immersive .svg-label,
+.funnel-figure-immersive .svg-stage-label,
+.funnel-figure-immersive .svg-caption {
+  paint-order: stroke;
+  stroke: #eefaff;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.funnel-figure-immersive .svg-stage-label {
+  fill: #eaf8ff;
+  stroke: #12334f;
+  stroke-width: 1px;
+}
+
+.funnel-figure-immersive .svg-caption {
+  fill: #c6e8fa;
+  stroke: #12334f;
+  stroke-width: 1px;
+}
+
+.funnel-figure-immersive .svg-label {
+  fill: #0b3157;
+}
+
 .funnel-outline,
 .funnel-stopcock {
   stroke: #12284a;
