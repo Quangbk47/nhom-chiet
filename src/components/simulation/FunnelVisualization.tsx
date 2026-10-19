@@ -6,7 +6,7 @@ import {
   createParticlePoints,
   mapPhaseVolumes,
 } from '../../simulation/visualization/visualMapping';
-import laboratoryHero from '../../assets/lab-extraction-hero.png';
+import laboratoryBackground from '../../assets/laboratory-background.png';
 
 interface FunnelVisualizationProps {
   readonly result: SimulationResult;
@@ -107,15 +107,15 @@ export function FunnelVisualization({
 
         <image
           className="lab-scene-image"
-          href={laboratoryHero}
-          x="104"
+          href={laboratoryBackground}
+          x="20"
           y="36"
-          width="432"
+          width="600"
           height="620"
-          preserveAspectRatio="xMidYMid meet"
+          preserveAspectRatio="xMidYMid slice"
           aria-hidden="true"
         />
-        <rect className="lab-scene-backdrop" x="20" y="36" width="600" height="620" rx="28" />
+        <rect className="lab-scene-scrim" x="20" y="36" width="600" height="620" rx="28" />
         <g className="lab-light-orbs" aria-hidden="true">
           <circle cx="94" cy="166" r="35" />
           <circle cx="550" cy="136" r="55" />
@@ -199,10 +199,15 @@ export function FunnelVisualization({
           <path className="funnel-rim" d="M177 93 H463" />
           <path className="funnel-stopcock" d="M270 590 H370 M320 570 V630 M292 630 H348" />
           <rect className="funnel-valve" x="300" y="579" width="40" height="22" rx="7" />
-          {playbackPhase === 'DRAINING' && (
-            <path className="funnel-drain-stream" d="M320 630 V680" />
-          )}
         </g>
+        <g className="collection-beaker" aria-hidden="true">
+          <path className="beaker-glass" d="M245 650 H395 L380 710 H260 Z" />
+          {playbackPhase === 'DRAINING' && (
+            <path className="beaker-liquid" d="M264 686 H376 L370 706 H270 Z" />
+          )}
+          <path className="beaker-rim" d="M245 650 H395" />
+        </g>
+        {playbackPhase === 'DRAINING' && <path className="funnel-drain-stream" d="M320 630 V680" />}
         <line className="phase-interface" x1="190" x2="450" y1={aqueousY} y2={aqueousY} />
         <text
           x="625"
@@ -224,7 +229,7 @@ export function FunnelVisualization({
           Stage {stageNumber}/{result.inputCanonical.stageCount}
         </text>
         <text x="52" y="122" className="svg-caption">
-          3D-style static representation
+          Minh họa phễu thủy tinh 3D
         </text>
       </svg>
 

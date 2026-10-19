@@ -1150,11 +1150,11 @@ body {
   border-radius: 13px;
 }
 
-.lab-scene-backdrop {
+.lab-scene-scrim {
   fill: #021426;
-  opacity: 0.38;
+  opacity: 0.22;
   stroke: #82c6e7;
-  stroke-opacity: 0.7;
+  stroke-opacity: 0.45;
   stroke-width: 2;
 }
 
@@ -1250,9 +1250,29 @@ body {
 
 .funnel-drain-stream {
   fill: none;
-  stroke: #9deaff;
+  stroke: #d7f7ff;
   stroke-linecap: round;
-  stroke-width: 7;
+  stroke-width: 6;
+}
+
+.collection-beaker .beaker-glass {
+  fill: rgb(213 247 255 / 14%);
+  stroke: #d9f6ff;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.collection-beaker .beaker-liquid {
+  fill: rgb(91 194 231 / 68%);
+  stroke: #b9f4ff;
+  stroke-width: 1.5;
+}
+
+.collection-beaker .beaker-rim {
+  fill: none;
+  stroke: #f4feff;
+  stroke-linecap: round;
+  stroke-width: 5;
 }
 
 @media (prefers-reduced-motion: no-preference) {
