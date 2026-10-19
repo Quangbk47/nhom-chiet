@@ -1163,6 +1163,10 @@ body {
   opacity: 0.92;
 }
 
+.glass-apparatus-image {
+  pointer-events: none;
+}
+
 .lab-light-orbs circle {
   fill: #9ce8ff;
   opacity: 0.08;
@@ -1264,6 +1268,12 @@ body {
 
 .collection-beaker .beaker-liquid {
   fill: rgb(91 194 231 / 68%);
+  stroke: #b9f4ff;
+  stroke-width: 1.5;
+}
+
+.beaker-liquid {
+  fill: rgb(91 194 231 / 58%);
   stroke: #b9f4ff;
   stroke-width: 1.5;
 }

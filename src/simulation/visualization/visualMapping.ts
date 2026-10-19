@@ -4,6 +4,7 @@ export const FUNNEL_VIEWBOX = '0 0 640 720';
 export const MIN_PHASE_HEIGHT = 64;
 export const MAX_PHASE_HEIGHT = 168;
 const SMALL_POSITIVE = 1e-12;
+const LIQUID_BOTTOM_Y = 420;
 
 export interface PhaseHeights {
   readonly raffinateHeight: number;
@@ -55,11 +56,10 @@ export function createParticlePoints(
   allocation: ParticleAllocation,
   heights: PhaseHeights,
 ): readonly ParticlePoint[] {
-  const liquidBottom = 470;
-  const raffinateTop = liquidBottom - heights.raffinateHeight;
+  const raffinateTop = LIQUID_BOTTOM_Y - heights.raffinateHeight;
   const extractTop = raffinateTop - heights.extractHeight;
   const raffinate = Array.from({ length: allocation.raffinateCount }, (_, index) =>
-    point(stageNumber, index, 'raffinate', raffinateTop, liquidBottom),
+    point(stageNumber, index, 'raffinate', raffinateTop, LIQUID_BOTTOM_Y),
   );
   const extract = Array.from({ length: allocation.extractCount }, (_, index) =>
     point(stageNumber, index, 'extract', extractTop, raffinateTop),

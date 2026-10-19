@@ -63,7 +63,7 @@ describe('visual mapping', () => {
     expect(second).toEqual(first);
     expect(first).toHaveLength(100);
     expect(first.every(({ x }) => x >= 228 && x <= 412)).toBe(true);
-    expect(first.every(({ y }) => y >= 126 && y <= 470)).toBe(true);
+    expect(first.every(({ y }) => y >= 126 && y <= 420)).toBe(true);
   });
 
   it('returns no NaN or Infinity for a zero-height phase', () => {

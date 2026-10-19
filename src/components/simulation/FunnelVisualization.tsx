@@ -7,6 +7,7 @@ import {
   mapPhaseVolumes,
 } from '../../simulation/visualization/visualMapping';
 import laboratoryBackground from '../../assets/laboratory-background.png';
+import glassSeparatoryApparatus from '../../assets/glass-separatory-apparatus.png';
 
 interface FunnelVisualizationProps {
   readonly result: SimulationResult;
@@ -38,7 +39,7 @@ export function FunnelVisualization({
   const heights = mapPhaseVolumes(raffinateVolumeL, extractVolumeL);
   const allocation = allocateParticles(stage, result.visualPlan);
   const particles = createParticlePoints(stageNumber, allocation, heights);
-  const liquidBottom = 470;
+  const liquidBottom = 420;
   const aqueousY = liquidBottom - heights.raffinateHeight;
   const organicY = aqueousY - heights.extractHeight;
   const titleId = `funnel-title-${stageNumber}`;
@@ -69,7 +70,7 @@ export function FunnelVisualization({
         </desc>
         <defs>
           <clipPath id={clipId}>
-            <path d="M170 92 H470 L420 360 Q405 420 350 480 V590 H290 V480 Q235 420 220 360 Z" />
+            <path d="M205 170 C205 126 435 126 435 170 V230 C435 275 405 315 380 345 L345 420 H295 L260 345 C235 315 205 275 205 230 Z" />
           </clipPath>
           <filter id={shadowId} x="-30%" y="-20%" width="170%" height="170%">
             <feDropShadow
@@ -124,11 +125,6 @@ export function FunnelVisualization({
         <ellipse className="funnel-floor-shadow" cx="320" cy="642" rx="156" ry="20" />
 
         <g filter={`url(#${shadowId})`}>
-          <path
-            className="funnel-glass-base"
-            d="M170 92 H470 L420 360 Q405 420 350 480 V590 H290 V480 Q235 420 220 360 Z"
-            fill={`url(#${glassGradientId})`}
-          />
           <g
             className="liquid-layer"
             clipPath={`url(#${clipId})`}
@@ -184,31 +180,22 @@ export function FunnelVisualization({
               />
             ))}
           </g>
-          <path
-            className="funnel-glass-sheen"
-            d="M188 108 H252 L239 174 Q226 265 250 357 Q261 402 286 431 V482 H267 Q227 428 213 363 Z"
-          />
-          <path
-            className="funnel-glass-sheen funnel-glass-sheen-right"
-            d="M445 108 H462 L426 362 Q413 426 358 484 V572 H344 V478 Q397 425 407 358 Z"
-          />
-          <path
-            className="funnel-outline"
-            d="M170 92 H470 L420 360 Q405 420 350 480 V590 H290 V480 Q235 420 220 360 Z"
-          />
-          <path className="funnel-rim" d="M177 93 H463" />
-          <path className="funnel-stopcock" d="M270 590 H370 M320 570 V630 M292 630 H348" />
-          <rect className="funnel-valve" x="300" y="579" width="40" height="22" rx="7" />
         </g>
-        <g className="collection-beaker" aria-hidden="true">
-          <path className="beaker-glass" d="M245 650 H395 L380 710 H260 Z" />
-          {playbackPhase === 'DRAINING' && (
-            <path className="beaker-liquid" d="M264 686 H376 L370 706 H270 Z" />
-          )}
-          <path className="beaker-rim" d="M245 650 H395" />
-        </g>
-        {playbackPhase === 'DRAINING' && <path className="funnel-drain-stream" d="M320 630 V680" />}
-        <line className="phase-interface" x1="190" x2="450" y1={aqueousY} y2={aqueousY} />
+        {playbackPhase === 'DRAINING' && (
+          <path className="beaker-liquid" d="M250 605 H390 L378 670 H262 Z" />
+        )}
+        <line className="phase-interface" x1="205" x2="435" y1={aqueousY} y2={aqueousY} />
+        <image
+          className="glass-apparatus-image"
+          href={glassSeparatoryApparatus}
+          x="84"
+          y="4"
+          width="472"
+          height="708"
+          preserveAspectRatio="xMidYMid meet"
+          aria-hidden="true"
+        />
+        {playbackPhase === 'DRAINING' && <path className="funnel-drain-stream" d="M320 482 V545" />}
         <text
           x="625"
           y={Math.max(116, organicY + heights.extractHeight / 2)}
