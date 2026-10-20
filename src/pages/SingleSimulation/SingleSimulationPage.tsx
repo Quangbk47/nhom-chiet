@@ -174,6 +174,7 @@ export function SingleSimulationPage() {
                 stageNumber={playback.state.currentStageNumber}
                 playbackPhase={playback.state.phase}
                 reducedMotion={playback.reducedMotion}
+                speed={playback.state.speed}
               />
               <PlaybackControls
                 state={playback.state}

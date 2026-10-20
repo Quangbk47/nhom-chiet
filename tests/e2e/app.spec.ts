@@ -24,7 +24,8 @@ test('renders a responsive stage visualization from valid input', async ({ page 
   await page.getByRole('button', { name: 'Kiểm tra và chuẩn bị mô phỏng' }).click();
 
   await expect(page.getByTestId('form-status')).toContainText('Valid');
-  await expect(page.getByTestId('funnel-svg')).toBeVisible();
+  await expect(page.getByTestId('three-extraction-scene')).toBeVisible();
+  await expect(page.getByTestId('three-extraction-scene').locator('canvas')).toBeVisible();
   await expect(page.getByRole('table', { name: /Thông tin thay thế/ })).toBeVisible();
   await expect(page.getByRole('table', { name: /Kết quả Stage 0 đến Stage 4/ })).toBeVisible();
   await expect(page.getByTestId('chart-cr-by-stage')).toBeVisible();
@@ -32,6 +33,8 @@ test('renders a responsive stage visualization from valid input', async ({ page 
   await expect(page.getByTestId('chart-extracted-per-stage')).toBeVisible();
   await expect(page.getByRole('table', { name: /Dữ liệu thay thế — Nồng độ/ })).toBeVisible();
   await expect(page.getByTestId('playback-status')).toContainText('Sẵn sàng · Bậc 0/4');
+  await page.clock.install();
+  await page.clock.pauseAt(new Date());
 
   const start = page.getByRole('button', { name: 'Bắt đầu' });
   await start.focus();
@@ -50,7 +53,7 @@ test('renders a responsive stage visualization from valid input', async ({ page 
   });
   await stageTableRegion.focus();
   await expect(stageTableRegion).toBeFocused();
-  const box = await page.getByTestId('funnel-svg').boundingBox();
+  const box = await page.getByTestId('three-extraction-scene').boundingBox();
   const viewport = page.viewportSize();
   expect(box).not.toBeNull();
   expect(viewport).not.toBeNull();
@@ -76,7 +79,7 @@ test('marks playback stale and disables controls when an input changes', async (
 
   await page.getByLabel('Nồng độ AcOH ban đầu (C0)').fill('0.4');
   await expect(page.getByTestId('form-status')).toContainText('Stale result');
-  await expect(page.getByTestId('funnel-svg')).toHaveCount(0);
+  await expect(page.getByTestId('three-extraction-scene')).toHaveCount(0);
   await expect(page.getByRole('heading', { name: 'Bảng Stage 0…N' })).toHaveCount(0);
   await expect(page.getByTestId('chart-cr-by-stage')).toHaveCount(0);
 });

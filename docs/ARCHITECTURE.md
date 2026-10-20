@@ -16,7 +16,7 @@ flowchart LR
   N --> E[Pure calculation engine]
   E --> R[Immutable SimulationResult]
   R --> S[Simulation state machine]
-  S --> SVG[SVG visualizer]
+  S --> W[WebGL 3D visualizer]
   R --> O[Result cards/table/charts]
   R --> X[Experimental comparison]
   UI -. save/load only when enabled .-> F[Firebase SDK adapter]
@@ -34,7 +34,7 @@ Firebase is adjacent to the core path. A user can calculate, replay and inspect 
 | Boundary validation | parse user text, check field contract, normalize units | changing scientific input silently |
 | Domain models | stable TypeScript types and discriminated statuses | React state or Firestore SDK |
 | Calculation | all stage arithmetic, invariants, chart arrays, visual plan | DOM, timers, database, clock, random |
-| Visualization | deterministic SVG geometry, particles, labels | new scientific values |
+| Visualization | deterministic WebGL geometry, display-only fluid motion, labels | new scientific values or chemistry |
 | State machine | playback cursor/state transitions and controls | mutating `SimulationResult` |
 | Persistence | serialize/restore saved snapshots and raw experiment records | running chemistry or overwriting raw data |
 | Firebase Hosting | serve built static assets | calculation authority |
@@ -63,7 +63,7 @@ src/
     constants/         software-only limits/tolerance/particle count
   simulation/
     state-machine/     events, reducer, transition table, playback scheduler
-    visualization/     fill and particle mappings, SVG geometry
+    visualization/     integrated funnel profile and display-volume mapping
   firebase/            optional save/load adapters and Firestore converters
   pages/               SingleSimulation, ScenarioComparison, Validation
   hooks/               useSimulationPlayback and UI-only hooks

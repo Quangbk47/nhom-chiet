@@ -172,6 +172,16 @@ Phase 3–10 are complete. Phase 11 remains `IN PROGRESS` until its scientific e
 - Improved the dynamic liquid treatment by removing schematic hatch fills and adding deterministic fine surface displacement, curved menisci and reflection streaks inside the glass-body clip path. Phase colors remain a visual convention rather than a claim about observed liquid color.
 - Verification passed: `pnpm format`, `pnpm lint`, `pnpm typecheck`, 119 unit/component tests, `pnpm build`, `git diff --check`, and 15 Playwright checks across desktop, mobile and reduced-motion Chromium.
 
+## WebGL extraction-scene correction — 2026-10-20 (branch evidence)
+
+- Replaced the foreground-glass-image plus SVG-liquid composite with one Three.js/WebGL scene. The glass shell, liquid meshes, stopcock, drain stream, receiver and laboratory backdrop now share a camera and lighting.
+- Added an integrated inner-funnel profile and numerical inverse-volume mapping. Display liquid levels are generated from the same revolved profile as the vessel, rather than a linear litre-to-height interpolation. The run's feed-plus-solvent volume only calibrates display capacity; it is not new scientific input or physical glassware calibration.
+- Stable scenes render no decorative bubbles/solute dots. Deterministic droplets appear only while the existing playback state is mixing or separating. Draining transfers the visual lower-phase volume from funnel to receiver without changing `SimulationResult`; the effect is explicitly presentation-only, not CFD or experimental timing.
+- The scene remains specific to the documented EtOAc–water teaching view. Dynamic solvent ordering is blocked until reviewed density/provenance fields exist in the input model; no density data was invented.
+- The renderer/GPU context persists across playback transitions. Pause freezes its presentation clock; resume continues the frame, speed affects presentation time, and completed drainage remains in the receiver. Fixed a wrongly oriented meniscus, camera cropping, the floor occluding the receiver, repeated mesh reconstruction and drain completion on low frame rates.
+- Verification: `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test` (123 tests), `pnpm build` and `git diff --check` passed. All 18 Playwright checks passed across desktop, Pixel 5 and reduced-motion Chromium. The new controlled-clock test records ready/mixing/separating/draining/completed images, checks canvas identity, paused volume, drainage conservation and page overflow. Screenshots/test artefacts remain ignored.
+- Limits: optical materials and waves/droplet coalescence are simplified. There is no CFD solver, density dataset, physically calibrated vessel, or model of liquid in flight. Funnel/receiver bookkeeping conserves nominal display volume; a stream is a visual connection. Build reports a non-blocking 1.2 MB pre-gzip JavaScript chunk warning. Engineering evidence does not establish photorealism or scientific validation.
+
 ## Update protocol
 
 At session end record changed task/phase, evidence links, tests/checks, unresolved blockers, next action and publication commit SHA. Never change a phase to DONE because a document or screen merely exists.

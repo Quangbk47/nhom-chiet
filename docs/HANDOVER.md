@@ -37,4 +37,6 @@ Keep Firestore deny-by-default until Authentication, ownership, privacy/retentio
 
 ## How to verify handover
 
+The `codex/ui-lab-dashboard` branch replaces the old SVG/photo composite with `ThreeExtractionScene.tsx` and the integrated-volume profile in `funnelGeometry.ts`. Its 2026-10-20 evidence is recorded in `PROGRESS.md`. Check the new `tests/e2e/threeScene.spec.ts` for ready, mixing, separation, pause and conserved lower-phase drainage. This is a simplified WebGL presentation; physical-time, CFD and arbitrary-solvent density behaviour remain outside the implemented model.
+
 Read `README.md` → `DOCUMENT_AUTHORITY_MAP.md` → `EXPERT_DECISIONS.md` → `TECH_STACK.md` → `DATA_MODEL.md` → `INPUT_SPECIFICATION.md` → `CALCULATION_ENGINE.md` → relevant TODO task. Run `pnpm install --frozen-lockfile`, `pnpm format`, `pnpm lint`, `pnpm typecheck`, `pnpm test`, `pnpm build`, `git diff --check` and relevant Playwright checks.

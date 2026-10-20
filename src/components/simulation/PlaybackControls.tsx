@@ -22,7 +22,7 @@ const PHASE_LABELS: Readonly<Record<PlaybackPhase, string>> = {
   EQUILIBRATING: 'Cân bằng theo mô hình đã tính',
   SEPARATING: 'Phân lớp',
   SHOWING_STAGE_RESULT: 'Hiển thị kết quả bậc',
-  DRAINING: 'Thu pha chiết (minh họa)',
+  DRAINING: 'Xả pha dưới vào cốc (minh họa)',
   STAGE_COMPLETE: 'Hoàn tất bậc',
   PREPARING_NEXT_STAGE: 'Chuẩn bị bậc kế tiếp',
   COMPLETED: 'Hoàn tất playback',

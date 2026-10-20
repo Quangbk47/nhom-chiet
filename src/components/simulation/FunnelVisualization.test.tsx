@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { calculateValidatedSimulation } from '../../domain/calculation';
 import type { SimulationResult } from '../../domain/models';
@@ -12,20 +12,13 @@ function result(c0MolPerL: string = '0.5'): SimulationResult {
 }
 
 describe('FunnelVisualization', () => {
-  it('renders an accessible, focusable and clipped SVG for a result stage', () => {
-    const simulation = result();
-    const { container } = render(<FunnelVisualization result={simulation} stageNumber={1} />);
-    const graphic = screen.getByRole('img', { name: /Phễu chiết — bậc 1/ });
-    expect(graphic).toHaveAttribute('viewBox', '0 0 640 720');
-    expect(graphic).toHaveAttribute('preserveAspectRatio', 'xMidYMid meet');
+  it('renders an accessible, focusable WebGL scene contract for a result stage', () => {
+    render(<FunnelVisualization result={result()} stageNumber={1} />);
+    const graphic = screen.getByRole('img', { name: /Phễu chiết 3D — bậc 1\/4/ });
     expect(graphic).toHaveAttribute('tabindex', '0');
-    expect(screen.getByTestId('clipped-liquid-layer')).toHaveAttribute(
-      'clip-path',
-      'url(#funnel-body-clip-1)',
-    );
-    expect(container.querySelectorAll('[data-particle-phase]')).toHaveLength(
-      simulation.visualPlan.particleCapacity,
-    );
+    expect(graphic).toHaveAttribute('data-playback-phase', 'SHOWING_STAGE_RESULT');
+    expect(screen.getByTestId('three-extraction-scene')).toBeInTheDocument();
+    expect(screen.queryByTestId('clipped-liquid-layer')).not.toBeInTheDocument();
   });
 
   it('maps selected-stage values and exposes a table alternative', () => {
@@ -37,31 +30,30 @@ describe('FunnelVisualization', () => {
         reducedMotion={false}
       />,
     );
-    expect(screen.getByRole('img', { name: /Phễu chiết — bậc 3/ })).toBeInTheDocument();
+    expect(screen.getByRole('img', { name: /Phễu chiết 3D — bậc 3\/4/ })).toBeInTheDocument();
     expect(
       screen.getByRole('table', { name: 'Thông tin thay thế cho visualization bậc 3' }),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Stage 3\/4/)).toBeInTheDocument();
-    expect(screen.getByText('nominal organic phase (EtOAc)')).toBeInTheDocument();
-    expect(screen.getByText('nominal aqueous phase (water)')).toBeInTheDocument();
-    expect(screen.getByTestId('funnel-svg')).toHaveAttribute('data-playback-phase', 'MIXING');
-    expect(screen.getByTestId('funnel-svg')).toHaveAttribute('data-reduced-motion', 'false');
-  });
-
-  it('omits organic phase at Stage 0 and keeps symbols in aqueous phase', () => {
-    const simulation = result();
-    const { container } = render(<FunnelVisualization result={simulation} stageNumber={0} />);
-    expect(screen.queryByTestId('organic-phase')).not.toBeInTheDocument();
-    expect(container.querySelectorAll('[data-particle-phase="extract"]')).toHaveLength(0);
-    expect(container.querySelectorAll('[data-particle-phase="raffinate"]')).toHaveLength(
-      simulation.visualPlan.particleCapacity,
+    expect(screen.getByTestId('three-extraction-scene')).toHaveAttribute(
+      'data-playback-phase',
+      'MIXING',
+    );
+    expect(screen.getByTestId('three-extraction-scene')).toHaveAttribute(
+      'data-reduced-motion',
+      'false',
     );
   });
 
-  it('renders no particles for a zero-solute result', () => {
-    const { container } = render(<FunnelVisualization result={result('0')} stageNumber={1} />);
-    expect(container.querySelectorAll('[data-particle-phase]')).toHaveLength(0);
-    expect(screen.getByText(/AcOH symbols: aqueous 0, organic 0/)).toBeInTheDocument();
+  it('keeps a stage-zero scene free of fabricated organic volume', () => {
+    render(<FunnelVisualization result={result()} stageNumber={0} />);
+    expect(screen.getByText('Pha hữu cơ danh nghĩa (EtOAc, ở trên)')).toBeInTheDocument();
+    const organicRow = screen.getByRole('row', { name: 'Pha hữu cơ danh nghĩa 0 L' });
+    expect(within(organicRow).getByRole('cell')).toHaveTextContent(/^0 L$/);
+  });
+
+  it('renders no fabricated solute symbols for a zero-solute result', () => {
+    render(<FunnelVisualization result={result('0')} stageNumber={1} />);
+    expect(screen.getByText(/aqueous 0, organic 0/)).toBeInTheDocument();
   });
 
   it('returns an accessible error for an unknown stage', () => {
